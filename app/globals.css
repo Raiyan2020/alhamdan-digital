@@ -1,26 +1,420 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-ibm-plex-arabic);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-ibm-plex-arabic);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --motion-duration-instant: 80ms;
+  --motion-duration-fast: 140ms;
+  --motion-duration-medium: 240ms;
+  --motion-duration-slow: 420ms;
+  --motion-duration-cinematic: 720ms;
+
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --motion-ease-emphasized: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --motion-distance-xs: 4px;
+  --motion-distance-sm: 8px;
+  --motion-distance-md: 16px;
+  --motion-distance-lg: 28px;
+  --motion-distance-xl: 48px;
+
+  --motion-scale-hover: 1.015;
+  --motion-scale-press: 0.985;
+  --motion-blur-soft: 8px;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+  body {
+    @apply bg-background text-foreground;
+    direction: ltr;
+  }
+  html {
+    @apply font-sans;
+    direction: ltr;
+  }
+  [data-ar] {
+    direction: rtl;
+    text-align: right;
+    unicode-bidi: plaintext;
+  }
+  [data-figma-canvas] {
+    direction: ltr;
+  }
+  [data-figma-canvas] :where(h1, h2, h3, p, li, button, a) {
+    direction: rtl;
+    unicode-bidi: plaintext;
+  }
+  [data-figma-canvas] :where([data-bidi="ltr"]) {
+    direction: ltr;
+    unicode-bidi: normal;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ── Motion system (Motion library handles animations in components) ── */
+
+.motion-nav-link {
+  position: relative;
+  transition: color var(--motion-duration-fast) var(--motion-ease-out);
+}
+
+.motion-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--motion-duration-fast) var(--motion-ease-out);
+}
+
+.motion-nav-link:hover::after,
+.motion-nav-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.motion-header-link {
+  /* legacy alias — prefer motion-glass-link */
+}
+
+/* ── Glassy shiny hover ───────────────────────────────────────── */
+
+@keyframes motion-glass-shine {
+  from {
+    transform: translateX(-160%) skewX(-14deg);
+  }
+  to {
+    transform: translateX(160%) skewX(-14deg);
+  }
+}
+
+.motion-glass-btn,
+.motion-glass-link,
+.motion-glass-icon-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    transform var(--motion-duration-fast) var(--motion-ease-out),
+    box-shadow var(--motion-duration-medium) var(--motion-ease-out),
+    border-color var(--motion-duration-fast) var(--motion-ease-out),
+    background var(--motion-duration-fast) var(--motion-ease-out),
+    color var(--motion-duration-fast) var(--motion-ease-out);
+}
+
+.motion-glass-btn::before,
+.motion-glass-link::before,
+.motion-glass-icon-btn::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  z-index: 1;
+  background: linear-gradient(
+    105deg,
+    transparent 32%,
+    rgba(255, 255, 255, 0.08) 40%,
+    rgba(255, 255, 255, 0.65) 48%,
+    rgba(255, 255, 255, 0.2) 54%,
+    transparent 62%
+  );
+  transform: translateX(-160%) skewX(-14deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.motion-glass-content {
+  position: relative;
+  z-index: 2;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .motion-glass-btn:hover::before,
+  .motion-glass-link:not(.motion-glass-link--active):hover::before,
+  .motion-glass-icon-btn:hover::before,
+  .motion-glass-btn:focus-visible::before,
+  .motion-glass-link:not(.motion-glass-link--active):focus-visible::before,
+  .motion-glass-icon-btn:focus-visible::before {
+    opacity: 1;
+    animation: motion-glass-shine 0.7s var(--motion-ease-out) forwards;
+  }
+
+  .motion-glass-btn:hover,
+  .motion-glass-btn:focus-visible {
+    transform: translateY(-2px);
+    box-shadow:
+      0 12px 40px rgba(1, 37, 97, 0.38),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+
+  .motion-glass-link:not(.motion-glass-link--active):hover,
+  .motion-glass-link:not(.motion-glass-link--active):focus-visible {
+    color: #0d0d0d;
+    background: rgba(255, 255, 255, 0.58);
+    backdrop-filter: blur(16px) saturate(1.5);
+    -webkit-backdrop-filter: blur(16px) saturate(1.5);
+    border-color: rgba(255, 255, 255, 0.72);
+    box-shadow:
+      0 8px 28px rgba(8, 37, 87, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
+  }
+
+  .motion-glass-link--pill:not(.motion-glass-link--active):hover,
+  .motion-glass-link--pill:not(.motion-glass-link--active):focus-visible {
+    color: #0d0d0d;
+    background: rgba(255, 255, 255, 0.62);
+    backdrop-filter: blur(18px) saturate(1.55);
+    -webkit-backdrop-filter: blur(18px) saturate(1.55);
+    border-color: rgba(255, 255, 255, 0.78);
+    box-shadow:
+      0 10px 32px rgba(8, 37, 87, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.22);
+    transform: translateY(-1px);
+  }
+
+  .motion-glass-link--active:hover,
+  .motion-glass-link--active:focus-visible {
+    background: #012561;
+    border-color: #012561;
+    box-shadow:
+      0 8px 24px rgba(1, 37, 97, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    transform: none;
+  }
+
+  .motion-glass-link--on-dark:not(.motion-glass-link--active):hover,
+  .motion-glass-link--on-dark:not(.motion-glass-link--active):focus-visible {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(14px) saturate(1.3);
+    -webkit-backdrop-filter: blur(14px) saturate(1.3);
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px);
+  }
+
+  .motion-glass-icon-btn:hover,
+  .motion-glass-icon-btn:focus-visible {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px) saturate(1.5);
+    -webkit-backdrop-filter: blur(16px) saturate(1.5);
+    border-color: rgba(255, 255, 255, 0.65);
+    box-shadow:
+      0 10px 32px rgba(8, 37, 87, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+}
+
+.motion-glass-icon-btn {
+  border: 1px solid transparent;
+}
+
+.motion-glass-link {
+  border: 1px solid transparent;
+}
+
+/* Header nav pills — frosted glass at rest, shine on hover */
+.motion-glass-link--pill:not(.motion-glass-link--active) {
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(14px) saturate(1.45);
+  -webkit-backdrop-filter: blur(14px) saturate(1.45);
+  border-color: rgba(255, 255, 255, 0.58);
+  box-shadow:
+    0 4px 18px rgba(8, 37, 87, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.motion-glass-link--pill.motion-glass-link--active {
+  background: #012561;
+  border-color: #012561;
+  box-shadow:
+    0 4px 16px rgba(1, 37, 97, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.motion-glass-link--active::before {
+  display: none;
+}
+
+html[data-low-battery] [data-parallax],
+html[data-low-battery] [data-ambient-motion] {
+  transform: none !important;
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+html.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+html.motion-fast-scroll * {
+  transition-duration: 0.15s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+
+  [data-parallax],
+  [data-ambient-motion] {
+    transform: none !important;
+  }
+
+  .motion-glass-btn:hover,
+  .motion-glass-link:hover,
+  .motion-glass-icon-btn:hover {
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .motion-glass-btn:hover::before,
+  .motion-glass-link:hover::before,
+  .motion-glass-icon-btn:hover::before {
+    animation: none !important;
+    opacity: 0 !important;
+  }
 }

@@ -1,0 +1,33 @@
+import type { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { DesktopHome } from "@/components/home/DesktopHome";
+import { ResponsiveHome } from "@/components/home/ResponsiveHome";
+import { getHomeContent } from "@/lib/i18n/home-content";
+import type { Locale } from "@/i18n/routing";
+
+type Props = {
+  params: Promise<{ locale: Locale }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "metadata" });
+
+  return {
+    title: t("homeTitle"),
+    description: t("homeDescription"),
+  };
+}
+
+export default async function HomePage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const content = await getHomeContent();
+
+  return (
+    <main className="min-h-screen max-w-full overflow-x-clip bg-[#fcfcfc]">
+      <ResponsiveHome content={content} />
+      <DesktopHome content={content} />
+    </main>
+  );
+}

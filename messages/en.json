@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "homeTitle": "Al Hamdan Digital | Smart Digital Products",
+    "homeDescription": "We build smart digital products powered by AI and human expertise — app development, digital marketing, and integrated digital solutions.",
+    "siteTitle": "Al Hamdan Digital",
+    "siteDescription": "Digital products powered by artificial intelligence and human expertise."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "products": "Our Apps",
+    "services": "Services",
+    "why": "Why Us",
+    "menu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchToEnglish": "Switch to English",
+    "switchToArabic": "Switch to Arabic"
+  },
+  "hero": {
+    "titleLine1": "We build smart digital products",
+    "titleLine2Prefix": "with",
+    "titleCycleAi": "AI",
+    "titleCycleExpertise": "human expertise",
+    "body": "At Al Hamdan Digital, we combine the power of artificial intelligence with a specialized team to build applications, develop digital products, and manage digital marketing faster and more efficiently.",
+    "cta": "Explore Us"
+  },
+  "about": {
+    "cards": {
+      "ai": {
+        "title": "AI-Powered",
+        "body": "We use artificial intelligence across project phases to increase speed and improve efficiency."
+      },
+      "scale": {
+        "title": "Scalable Solutions",
+        "body": "We design products and services that scale as businesses grow."
+      },
+      "expertise": {
+        "title": "Specialized Human Expertise",
+        "body": "Every deliverable is reviewed and refined by a professional team before launch."
+      },
+      "mindset": {
+        "title": "Product-Building Mindset",
+        "body": "We think like digital product owners, not just service providers."
+      }
+    },
+    "heading": "About Al Hamdan",
+    "body": "A modern technology company specialized in smart app development, digital solutions, and digital marketing. We combine AI speed with human precision to deliver more efficient, higher-quality, and scalable solutions. We also own our own digital products, giving us real hands-on experience building, launching, and growing products in the market—not just delivering client projects."
+  },
+  "visionMission": {
+    "visionTitle": "Our Vision",
+    "visionBody": "For Al Hamdan Digital to be an influential technology company driving digital transformation through practical applications, smart services, and AI-powered solutions without sacrificing human expertise.",
+    "missionTitle": "Our Mission",
+    "missionBody": "Deliver integrated digital solutions that help companies and projects enter the market with confidence through professional apps, effective digital marketing, and AI to accelerate work, improve quality, and reduce wasted time and cost."
+  },
+  "process": {
+    "title": "How We Turn Ideas Into Successful Digital Products",
+    "body": "We rely on a methodology that combines AI and human expertise to ensure fast execution, quality output, and the best results.",
+    "steps": {
+      "1": { "title": "Discovery & Needs Analysis", "body": "Understanding the project, goals, and target audience." },
+      "2": { "title": "AI-Powered Analysis", "body": "Analyzing requirements and generating initial ideas and insights." },
+      "3": { "title": "Planning & Strategy", "body": "Building the roadmap and defining features and priorities." },
+      "4": { "title": "User Experience Design", "body": "Designing a clear and easy experience for the audience." },
+      "5": { "title": "Development & Testing", "body": "Building and testing the product for quality and performance." },
+      "6": { "title": "Launch & Continuous Improvement", "body": "Launching the product and evolving it based on usage data." }
+    }
+  },
+  "products": {
+    "title": "Digital Products We Build and Develop Ourselves",
+    "body": "We own a portfolio of digital applications serving vital and in-demand market sectors, giving us direct hands-on experience building and operating digital products.",
+    "cta": "View More",
+    "items": {
+      "bohamdan": { "title": "Bo Hamdan", "body": "A platform for professionally showcasing, selling, and renting cars with ease." },
+      "diddeed": { "title": "Did Deed", "body": "An app that simplifies transport requests with a fast, clear user experience." },
+      "road80": { "title": "Road 80", "body": "A modern real estate platform for organized property sales and rentals." },
+      "nafas": { "title": "NAFAS", "body": "A fitness app helping users build a healthier, more active lifestyle." }
+    }
+  },
+  "services": {
+    "title": "Integrated Digital Services for Business Growth",
+    "body": "We offer digital services that help companies and projects build a strong presence and achieve sustainable growth.",
+    "carouselLabel": "Our services",
+    "activeService": "Active service: {service}",
+    "goToService": "{service} — Go to service {index}",
+    "items": {
+      "mobile": { "title": "Mobile App Development", "body": "We design and develop apps from idea to launch, focusing on performance, UX, and scalability." },
+      "marketing": { "title": "Digital Marketing", "body": "We help companies reach their audience through professional content, campaigns, and effective digital strategies." },
+      "ai": { "title": "AI Solutions", "body": "We use AI to improve operations, develop ideas, and boost business and marketing performance." },
+      "products": { "title": "Digital Product Building & Management", "body": "We help companies turn ideas into clear digital products ready to launch and grow in the market." }
+    }
+  },
+  "sectors": {
+    "title": "Diverse Sectors, Flexible Solutions",
+    "body": "We serve a wide range of sectors and projects seeking to build a strong digital presence.",
+    "carouselLabel": "Sectors we serve",
+    "items": {
+      "companies": "Companies & Institutions",
+      "cars": "Car Showrooms",
+      "realestate": "Real Estate Offices",
+      "transport": "Transport Companies",
+      "health": "Health & Sports",
+      "startups": "Startups",
+      "commerce": "Commerce & Services",
+      "any": "Any Sector"
+    }
+  },
+  "why": {
+    "title": "Why Al Hamdan Digital?",
+    "reasons": {
+      "1": "A real understanding of market and customer challenges.",
+      "2": "Faster execution and higher quality.",
+      "3": "Development and marketing integrated in one system.",
+      "4": "Practical use of AI across workflow stages.",
+      "5": "Professional human review of every deliverable.",
+      "6": "Hands-on experience through products we own and operate."
+    }
+  },
+  "market": {
+    "title": "From Idea to Market",
+    "body1": "We don't just build apps or run marketing campaigns—we help clients move from idea to product, and from product to real market growth.",
+    "body2": "We rely on modern technology, AI, and practical experience to deliver solutions with real, measurable value.",
+    "outcomes": {
+      "1": "Speed in execution",
+      "2": "Scalable, evolvable solutions",
+      "3": "Clarity in vision and plan",
+      "4": "Quality backed by human review",
+      "5": "Long-term partnership, not a one-off"
+    }
+  },
+  "footer": {
+    "contactTitle": "Contact Us",
+    "quickLinks": "Quick Links",
+    "products": "Our Products",
+    "contact": "Contact Us",
+    "description": "Al Hamdan Digital is a technology company specialized in app development, digital marketing, AI-powered solutions, and building digital products.",
+    "copyright": "All rights reserved © Al Hamdan Digital",
+    "backToTop": "Back to top",
+    "kuwait": "Kuwait",
+    "youtube": "YouTube",
+    "linkedin": "LinkedIn",
+    "instagram": "Instagram",
+    "facebook": "Facebook"
+  }
+}
