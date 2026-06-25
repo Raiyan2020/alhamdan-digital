@@ -46,6 +46,36 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-on: var(--brand-on);
+  --color-page: var(--page);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-tertiary: var(--ink-tertiary);
+  --color-ink-heading: var(--ink-heading);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-neutral: var(--ink-neutral);
+  --color-card-surface: var(--card-surface);
+  --color-card-muted: var(--card-muted);
+  --color-border-soft: var(--border-soft);
+  --color-border-muted: var(--border-muted);
+  --color-dashboard-canvas: var(--dashboard-canvas);
+  --color-dashboard-surface: var(--dashboard-surface);
+  --color-dashboard-sand: var(--dashboard-sand);
+  --color-dashboard-gulf: var(--dashboard-gulf);
+  --color-dashboard-gulf-light: var(--dashboard-gulf-light);
+  --color-dashboard-palm: var(--dashboard-palm);
+  --color-dashboard-palm-light: var(--dashboard-palm-light);
+  --color-dashboard-dune: var(--dashboard-dune);
+  --color-dashboard-dune-light: var(--dashboard-dune-light);
+  --color-dashboard-coral: var(--dashboard-coral);
+  --color-dashboard-coral-light: var(--dashboard-coral-light);
+  --color-dashboard-ink: var(--dashboard-ink);
+  --color-dashboard-ink-muted: var(--dashboard-ink-muted);
+  --shadow-dashboard: var(--dashboard-shadow);
+  --shadow-dashboard-lg: var(--dashboard-shadow-lg);
 }
 
 :root {
@@ -102,6 +132,65 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Marketing / brand palette */
+  --brand: #012561;
+  --brand-deep: #082557;
+  --brand-on: #fbfbfb;
+  --page: #fcfcfc;
+  --ink: #0d0d0d;
+  --ink-muted: #777777;
+  --ink-secondary: #4e4e4e;
+  --ink-tertiary: #525252;
+  --ink-heading: #0a1020;
+  --ink-soft: #5b6577;
+  --ink-neutral: #666666;
+  --card-surface: #ffffff;
+  --card-muted: #f3f3f3;
+  --border-soft: #e8e8e8;
+  --border-muted: #d1d5db;
+  --gradient-brand-from: #012561;
+  --gradient-brand-via: #0b3d8f;
+  --gradient-brand-to: #1e5fbf;
+  --about-card-ai: #e9eef6;
+  --about-card-scale: #ecf1fb;
+  --about-card-expertise: #e6efff;
+  --about-card-mindset: #e8f0fc;
+  --header-fade: rgba(237, 237, 237, 0);
+  --header-fill: #f0f0f0;
+  --sheet-gradient-top: #f4f6fa;
+  --sheet-gradient-mid: #ffffff;
+  --glass-hover-text: #0d0d0d;
+  --glass-rest-bg: rgba(255, 255, 255, 0.42);
+  --glass-rest-border: rgba(255, 255, 255, 0.58);
+  --glass-hover-bg: rgba(255, 255, 255, 0.58);
+  --glass-hover-border: rgba(255, 255, 255, 0.72);
+  --shadow-header: 0 4px 24px rgba(8, 37, 87, 0.04);
+  --shadow-sheet: 0 12px 48px rgba(8, 37, 87, 0.14);
+  --ink-inactive: #b8b8b8;
+  --ink-inactive-soft: #c8c8c8;
+  --process-accent: #4da3ff;
+  --process-muted: #64748b;
+  --process-bar: #eef5fc;
+  --accent-glow: #5aa8ff;
+  --accent-glow-soft: #b8dcff;
+
+  /* Dashboard defaults (overridden inside .dashboard-theme) */
+  --dashboard-canvas: #f4f7fb;
+  --dashboard-surface: #ffffff;
+  --dashboard-sand: #e8eef5;
+  --dashboard-gulf: #006ab4;
+  --dashboard-gulf-light: #e0f4fc;
+  --dashboard-palm: #00bcf5;
+  --dashboard-palm-light: #e6f8fe;
+  --dashboard-dune: #03396c;
+  --dashboard-dune-light: #e6edf5;
+  --dashboard-coral: #e9314c;
+  --dashboard-coral-light: #fde8ec;
+  --dashboard-ink: #272424;
+  --dashboard-ink-muted: #5e5c5c;
+  --dashboard-shadow: 0 8px 28px rgba(3, 57, 108, 0.08);
+  --dashboard-shadow-lg: 0 18px 48px rgba(3, 57, 108, 0.16);
 }
 
 .dark {
@@ -136,6 +225,174 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  --brand: #3d7dd4;
+  --brand-deep: #1a4a9e;
+  --brand-on: #fbfbfb;
+  --page: oklch(0.12 0.018 260);
+  --ink: oklch(0.94 0 0);
+  --ink-muted: oklch(0.62 0 0);
+  --ink-secondary: oklch(0.72 0 0);
+  --ink-tertiary: oklch(0.68 0 0);
+  --ink-heading: oklch(0.96 0 0);
+  --ink-soft: oklch(0.7 0.02 260);
+  --ink-neutral: oklch(0.65 0 0);
+  --card-surface: oklch(0.18 0.018 260);
+  --card-muted: oklch(0.22 0.018 260);
+  --border-soft: oklch(1 0 0 / 12%);
+  --border-muted: oklch(1 0 0 / 18%);
+  --gradient-brand-from: #5aa8ff;
+  --gradient-brand-via: #3d7dd4;
+  --gradient-brand-to: #2563b8;
+  --about-card-ai: oklch(0.22 0.03 260);
+  --about-card-scale: oklch(0.23 0.035 260);
+  --about-card-expertise: oklch(0.21 0.04 260);
+  --about-card-mindset: oklch(0.22 0.038 260);
+  --header-fade: rgba(12, 16, 28, 0);
+  --header-fill: rgba(24, 30, 44, 0.92);
+  --sheet-gradient-top: oklch(0.16 0.02 260);
+  --sheet-gradient-mid: oklch(0.14 0.018 260);
+  --glass-hover-text: oklch(0.94 0 0);
+  --glass-rest-bg: rgba(255, 255, 255, 0.06);
+  --glass-rest-border: rgba(255, 255, 255, 0.12);
+  --glass-hover-bg: rgba(255, 255, 255, 0.12);
+  --glass-hover-border: rgba(255, 255, 255, 0.2);
+  --shadow-header: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --shadow-sheet: 0 12px 48px rgba(0, 0, 0, 0.45);
+  --ink-inactive: oklch(0.52 0 0);
+  --ink-inactive-soft: oklch(0.58 0 0);
+  --process-accent: #6eb6ff;
+  --process-muted: oklch(0.68 0.02 260);
+  --process-bar: oklch(0.2 0.025 260);
+  --accent-glow: #5aa8ff;
+  --accent-glow-soft: #3d7dd4;
+
+  --dashboard-canvas: #272424;
+  --dashboard-surface: #303335;
+  --dashboard-sand: #3a3d42;
+  --dashboard-gulf: #00bcf5;
+  --dashboard-gulf-light: #0a2d4a;
+  --dashboard-palm: #00bcf5;
+  --dashboard-palm-light: #0d3548;
+  --dashboard-dune: #006ab4;
+  --dashboard-dune-light: #0a2840;
+  --dashboard-coral: #e9314c;
+  --dashboard-coral-light: #3d2228;
+  --dashboard-ink: #f5f5f5;
+  --dashboard-ink-muted: #a8a6a6;
+  --dashboard-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+  --dashboard-shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.38);
+}
+
+/*
+ * Dashboard design system — Al Hamdan brand palette
+ * #e9314c red · #00bcf5 cyan · #006ab4 blue · #03396c navy · #272424 charcoal
+ */
+.dashboard-theme {
+  --background: var(--dashboard-canvas);
+  --foreground: #272424;
+  --card: var(--dashboard-surface);
+  --card-foreground: #272424;
+  --popover: var(--dashboard-surface);
+  --popover-foreground: #272424;
+  --primary: var(--dashboard-gulf);
+  --primary-foreground: #ffffff;
+  --secondary: #e8eef5;
+  --secondary-foreground: #272424;
+  --muted: #eef2f7;
+  --muted-foreground: #5e5c5c;
+  --accent: var(--dashboard-gulf-light);
+  --accent-foreground: var(--dashboard-gulf);
+  --destructive: #e9314c;
+  --border: #dde5ee;
+  --input: #dde5ee;
+  --ring: var(--dashboard-gulf);
+  --sidebar: var(--dashboard-surface);
+  --sidebar-foreground: #272424;
+  --sidebar-primary: var(--dashboard-gulf);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--dashboard-gulf-light);
+  --sidebar-accent-foreground: var(--dashboard-gulf);
+  --sidebar-border: #dde5ee;
+  --sidebar-ring: var(--dashboard-gulf);
+  --brand: var(--dashboard-gulf);
+  --brand-deep: #03396c;
+  --brand-on: #ffffff;
+}
+
+/* Dashboard layout + nav contrast (global inside .dashboard-theme) */
+.dashboard-theme {
+  width: 100%;
+  min-height: 100vh;
+  flex: 1;
+  align-self: stretch;
+  color: var(--dashboard-ink);
+  background: var(--dashboard-canvas);
+  --dashboard-ink: #272424;
+  --dashboard-ink-muted: #5e5c5c;
+}
+
+.dashboard-theme .dashboard-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+.dashboard-theme .dashboard-nav-item {
+  color: var(--dashboard-ink);
+  background-color: color-mix(in oklab, var(--dashboard-sand) 55%, var(--dashboard-surface));
+  border-color: color-mix(in oklab, var(--dashboard-ink) 12%, transparent);
+}
+
+.dashboard-theme .dashboard-nav-item:hover {
+  color: var(--dashboard-ink);
+  background-color: var(--dashboard-gulf-light);
+  border-color: color-mix(in oklab, var(--dashboard-gulf) 30%, transparent);
+}
+
+.dashboard-theme .dashboard-nav-item[data-active="true"] {
+  color: var(--brand-on);
+  background-color: var(--dashboard-gulf);
+  border-color: color-mix(in oklab, var(--dashboard-gulf) 70%, transparent);
+}
+
+.dashboard-theme .dashboard-nav-item[data-active="true"] svg {
+  color: var(--brand-on);
+}
+
+.dark .dashboard-theme {
+  --dashboard-ink: #f5f5f5;
+  --dashboard-ink-muted: #a8a6a6;
+  --background: var(--dashboard-canvas);
+  --foreground: #f5f5f5;
+  --card: var(--dashboard-surface);
+  --card-foreground: #f5f5f5;
+  --popover: var(--dashboard-surface);
+  --popover-foreground: #f5f5f5;
+  --primary: var(--dashboard-gulf);
+  --primary-foreground: #272424;
+  --secondary: #3a3d42;
+  --secondary-foreground: #f5f5f5;
+  --muted: #3a3d42;
+  --muted-foreground: #a8a6a6;
+  --accent: var(--dashboard-gulf-light);
+  --accent-foreground: #00bcf5;
+  --destructive: #e9314c;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: var(--dashboard-gulf);
+  --sidebar: var(--dashboard-surface);
+  --sidebar-foreground: #f5f5f5;
+  --sidebar-primary: var(--dashboard-gulf);
+  --sidebar-primary-foreground: #272424;
+  --sidebar-accent: var(--dashboard-gulf-light);
+  --sidebar-accent-foreground: #00bcf5;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: var(--dashboard-gulf);
+  --brand: #00bcf5;
+  --brand-deep: #006ab4;
+  --brand-on: #ffffff;
 }
 
 @layer base {
@@ -147,13 +404,16 @@
     max-width: 100%;
     overflow-x: clip;
   }
-  body {
-    @apply bg-background text-foreground;
-    direction: ltr;
-  }
   html {
     @apply font-sans;
-    direction: ltr;
+    scrollbar-gutter: stable;
+    background-color: var(--page);
+  }
+  body {
+    @apply bg-page text-ink;
+  }
+  :where(button, a):not(:disabled):not([aria-disabled="true"]) {
+    cursor: pointer;
   }
   [data-ar] {
     direction: rtl;
@@ -171,6 +431,25 @@
     direction: ltr;
     unicode-bidi: normal;
   }
+}
+
+/*
+ * Radix Select/Dialog use react-remove-scroll, which adds body padding to
+ * compensate for the hidden scrollbar. With scrollbar-gutter: stable on html,
+ * that double-compensation causes horizontal layout shift and edge gaps.
+ * @see https://github.com/radix-ui/primitives/issues/3251
+ */
+html[data-scroll-locked],
+html body[data-scroll-locked] {
+  --removed-body-scroll-bar-size: 0 !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+html body[data-scroll-locked] {
+  overflow: hidden !important;
 }
 
 /* ── Motion system (Motion library handles animations in components) ── */
@@ -275,11 +554,11 @@
 
   .motion-glass-link:not(.motion-glass-link--active):hover,
   .motion-glass-link:not(.motion-glass-link--active):focus-visible {
-    color: #0d0d0d;
-    background: rgba(255, 255, 255, 0.58);
+    color: var(--glass-hover-text);
+    background: var(--glass-hover-bg);
     backdrop-filter: blur(16px) saturate(1.5);
     -webkit-backdrop-filter: blur(16px) saturate(1.5);
-    border-color: rgba(255, 255, 255, 0.72);
+    border-color: var(--glass-hover-border);
     box-shadow:
       0 8px 28px rgba(8, 37, 87, 0.12),
       inset 0 1px 0 rgba(255, 255, 255, 0.85),
@@ -289,8 +568,8 @@
 
   .motion-glass-link--pill:not(.motion-glass-link--active):hover,
   .motion-glass-link--pill:not(.motion-glass-link--active):focus-visible {
-    color: #0d0d0d;
-    background: rgba(255, 255, 255, 0.62);
+    color: var(--glass-hover-text);
+    background: var(--glass-hover-bg);
     backdrop-filter: blur(18px) saturate(1.55);
     -webkit-backdrop-filter: blur(18px) saturate(1.55);
     border-color: rgba(255, 255, 255, 0.78);
@@ -303,8 +582,8 @@
 
   .motion-glass-link--active:hover,
   .motion-glass-link--active:focus-visible {
-    background: #012561;
-    border-color: #012561;
+    background: var(--brand);
+    border-color: var(--brand);
     box-shadow:
       0 8px 24px rgba(1, 37, 97, 0.32),
       inset 0 1px 0 rgba(255, 255, 255, 0.18);
@@ -347,10 +626,10 @@
 
 /* Header nav pills — frosted glass at rest, shine on hover */
 .motion-glass-link--pill:not(.motion-glass-link--active) {
-  background: rgba(255, 255, 255, 0.42);
+  background: var(--glass-rest-bg);
   backdrop-filter: blur(14px) saturate(1.45);
   -webkit-backdrop-filter: blur(14px) saturate(1.45);
-  border-color: rgba(255, 255, 255, 0.58);
+  border-color: var(--glass-rest-border);
   box-shadow:
     0 4px 18px rgba(8, 37, 87, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.72),
@@ -358,8 +637,8 @@
 }
 
 .motion-glass-link--pill.motion-glass-link--active {
-  background: #012561;
-  border-color: #012561;
+  background: var(--brand);
+  border-color: var(--brand);
   box-shadow:
     0 4px 16px rgba(1, 37, 97, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.16);

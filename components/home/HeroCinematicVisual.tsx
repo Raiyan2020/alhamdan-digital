@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useId, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useState } from "react";
+import { motion, useReducedMotion, type Transition } from "motion/react";
 import { cn } from "@/lib/utils";
 
 type HeroCinematicVisualProps = {
@@ -10,122 +10,104 @@ type HeroCinematicVisualProps = {
   imageClassName?: string;
   entranceDelayMs?: number;
   priority?: boolean;
+  personImage?: string;
+  personImageAlt?: string;
 };
 
-const brushStrokes = [
-  {
-    d: "M36 305 C112 228 248 182 440 224 C512 240 556 276 584 314",
-    width: 138,
-    delay: 0,
-    duration: 1.1,
-  },
-  {
-    d: "M44 348 C156 284 310 258 558 300",
-    width: 96,
-    delay: 0.36,
-    duration: 1,
-  },
-  {
-    d: "M64 402 C194 342 378 332 570 382",
-    width: 86,
-    delay: 0.68,
-    duration: 0.94,
-  },
-  {
-    d: "M80 452 C214 412 396 410 566 432",
-    width: 62,
-    delay: 0.96,
-    duration: 0.8,
-  },
-] as const;
+const PERSON_REVEAL_OFFSET_S = 0.12;
+const CINEMATIC_EASE = [0.16, 1, 0.3, 1] as const;
 
-const PERSON_REVEAL_OFFSET_S = 1.62;
+function floatLoop(duration: number, delay = 0): Transition {
+  return {
+    duration,
+    delay,
+    ease: "easeInOut",
+    repeat: Infinity,
+    repeatType: "mirror",
+  };
+}
 
 export function HeroCinematicVisual({
   className,
   imageClassName,
   entranceDelayMs = 0,
   priority = false,
+  personImage = "/figma/hero-person-layer.webp",
+  personImageAlt = "",
 }: HeroCinematicVisualProps) {
   const reducedMotion = useReducedMotion();
   const shouldAnimate = !reducedMotion;
-  const maskId = `hero-brush-reveal-${useId().replace(/:/g, "")}`;
   const [replayKey, setReplayKey] = useState(0);
   const replayDelay = replayKey === 0 ? entranceDelayMs / 1000 : 0;
 
   return (
     <motion.div
       className={cn(
-        "relative mx-auto aspect-[604/500] w-full max-w-[604px] overflow-visible",
-        className
+        "relative isolate mx-auto aspect-604/500 w-full max-w-[604px] overflow-visible",
+        className,
       )}
-      aria-hidden
+      aria-hidden={personImageAlt ? undefined : true}
       onHoverStart={() => {
         if (shouldAnimate) setReplayKey((key) => key + 1);
       }}
     >
-      <svg
-        key={`brush-${replayKey}`}
-        viewBox="0 0 604 500"
-        className="absolute inset-0 h-full w-full overflow-visible"
-        role="presentation"
-      >
-        <defs>
-          <mask id={maskId} maskUnits="userSpaceOnUse">
-            <rect width="604" height="500" fill="black" />
-            {brushStrokes.map((stroke) => (
-              <motion.path
-                key={stroke.d}
-                d={stroke.d}
-                fill="none"
-                stroke="white"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={stroke.width}
-                pathLength={1}
-                initial={shouldAnimate ? { pathLength: 0, opacity: 0.98 } : false}
-                animate={shouldAnimate ? { pathLength: 1, opacity: 0.98 } : undefined}
-                transition={{
-                  delay: replayDelay + stroke.delay,
-                  duration: stroke.duration,
-                  ease: [0.42, 0, 0.2, 1],
-                }}
-              />
-            ))}
-          </mask>
-        </defs>
-        <image
-          href="/figma/hero-brush-layer.webp"
-          width="604"
-          height="500"
-          preserveAspectRatio="xMidYMid meet"
-          mask={`url(#${maskId})`}
-        />
-      </svg>
-
+      {/* Entrance + breathing wrapper */}
       <motion.div
         key={`person-${replayKey}`}
-        className="absolute inset-0"
-        initial={shouldAnimate ? { opacity: 0, y: 28, scale: 0.965, filter: "blur(5px)" } : false}
+        className="absolute inset-0 flex items-end justify-center"
+        initial={shouldAnimate ? { opacity: 0, y: 40, scale: 0.94, filter: "blur(8px)" } : false}
         animate={shouldAnimate ? { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" } : undefined}
         transition={{
           delay: replayDelay + PERSON_REVEAL_OFFSET_S,
-          duration: 0.72,
-          ease: [0.16, 1, 0.3, 1],
+          duration: 0.9,
+          ease: CINEMATIC_EASE,
         }}
       >
-        <Image
-          src="/figma/hero-person-layer.webp"
-          alt=""
-          width={604}
-          height={500}
-          priority={priority}
-          sizes="(min-width: 1440px) 604px, (min-width: 768px) 48vw, 100vw"
-          className={cn(
-            "h-full w-full object-contain object-center",
-            imageClassName
-          )}
-        />
+        {/* Slow ambient float */}
+        <motion.div
+          className="relative h-full w-full"
+          animate={
+            shouldAnimate
+              ? { y: [0, -14, 0], rotate: [0, 0.6, 0] }
+              : undefined
+          }
+          transition={{
+            y: floatLoop(6.5, replayDelay + 0.9),
+            rotate: floatLoop(9, replayDelay + 0.9),
+          }}
+          style={{ transformOrigin: "center bottom" }}
+        >
+          {/* Grounding shadow — moves opposite to the float for depth */}
+          <motion.div
+            className={cn(
+              "pointer-events-none absolute bottom-[3%] left-1/2 h-[7%] w-[52%] -translate-x-1/2 rounded-[100%]",
+              "bg-[radial-gradient(ellipse_at_center,rgba(1,37,97,0.28),transparent_70%)] blur-md",
+              "dark:bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55),transparent_70%)]",
+            )}
+            animate={
+              shouldAnimate
+                ? { scaleX: [1, 0.82, 1], opacity: [0.55, 0.32, 0.55] }
+                : undefined
+            }
+            transition={floatLoop(6.5, replayDelay + 0.9)}
+            aria-hidden
+          />
+
+          <Image
+            src={personImage}
+            alt={personImageAlt}
+            width={604}
+            height={500}
+            priority={priority}
+            sizes="(min-width: 1440px) 604px, (min-width: 768px) 48vw, 100vw"
+            className={cn(
+              "relative z-10 h-full w-full object-contain object-bottom",
+              "drop-shadow-[0_30px_55px_-22px_rgba(1,37,97,0.45)]",
+              "dark:drop-shadow-[0_30px_55px_-20px_rgba(0,0,0,0.7)]",
+              imageClassName,
+            )}
+          />
+        </motion.div>
       </motion.div>
     </motion.div>
   );

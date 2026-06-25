@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { HomeContent } from "@/lib/i18n/home-content";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import { MotionLinkButton, Reveal } from "@/components/motion";
+import { RichTextHtml } from "@/lib/cms/rich-text";
 import { cn } from "@/lib/utils";
 import { sectionIds } from "./data";
 import {
@@ -18,6 +19,7 @@ type ProductCardProps = {
   title: string;
   body: string;
   image: string;
+  imageAlt?: string;
   layout: ProductItem["layout"];
   index?: number;
   className?: string;
@@ -42,6 +44,7 @@ export function ProductCard({
   title,
   body,
   image,
+  imageAlt = "",
   layout,
   index = 0,
   className,
@@ -53,7 +56,7 @@ export function ProductCard({
     <motion.article
       data-ar
       className={cn(
-        "group relative z-10 h-[317px] overflow-hidden rounded-[32px] bg-white",
+        "group relative z-10 h-[317px] overflow-hidden rounded-[32px] bg-card-surface",
         className
       )}
       initial={reducedMotion ? false : "hidden"}
@@ -76,8 +79,11 @@ export function ProductCard({
           imageOnRight ? "left-10" : "right-10"
         )}
       >
-        <h3 className="text-[28px] font-bold leading-10 text-[#012561]">{title}</h3>
-        <p className="mt-3 text-[20px] font-medium leading-8 text-[#525252]">{body}</p>
+        <h3 className="text-[28px] font-bold leading-10 text-brand">{title}</h3>
+        <RichTextHtml
+          html={body}
+          className="mt-3 text-[20px] font-medium leading-8 text-ink-tertiary"
+        />
       </div>
 
       <motion.div
@@ -90,7 +96,7 @@ export function ProductCard({
       >
         <Image
           src={image}
-          alt=""
+          alt={imageAlt}
           width={280}
           height={300}
           className={cn(
@@ -110,12 +116,12 @@ type ProductsSectionProps = {
   showCta?: boolean;
 };
 
-function ProductsCta({ cta }: { cta: string }) {
+function ProductsCta({ cta, href }: { cta: string; href: string }) {
   return (
     <Reveal variant="fade-up">
       <MotionLinkButton
-        href="/about"
-        className="inline-flex h-[76px] min-w-[220px] items-center justify-center rounded-2xl border border-white/20 bg-[#012561] px-10 text-[24px] font-medium text-white shadow-[0_16px_48px_rgba(0,0,0,0.28)]"
+        href={href}
+        className="inline-flex h-[76px] min-w-[220px] items-center justify-center rounded-2xl border border-white/20 bg-brand px-10 text-[24px] font-medium text-white shadow-[0_16px_48px_rgba(0,0,0,0.28)]"
       >
         {cta}
       </MotionLinkButton>
@@ -140,19 +146,18 @@ function ProductsHeading({
         <h2
           className={cn(
             "text-[42px] font-medium leading-[61px] tracking-[-0.02em]",
-            onDark ? "text-white" : "text-[#0d0d0d]"
+            onDark ? "text-white" : "text-ink"
           )}
         >
           {title}
         </h2>
-        <p
+        <RichTextHtml
+          html={body}
           className={cn(
             "mx-auto mt-2 max-w-[710px] text-[15px] leading-[25px]",
-            onDark ? "text-white/78" : "text-[#777]"
+            onDark ? "text-white/78" : "text-ink-muted"
           )}
-        >
-          {body}
-        </p>
+        />
       </div>
     </Reveal>
   );
@@ -164,7 +169,7 @@ export function ProductsSection({
   headingClassName,
   showCta = true,
 }: ProductsSectionProps) {
-  const { title, body, cta, items } = products;
+  const { title, body, cta, ctaHref, items } = products;
 
   return (
     <section id={sectionIds.products} className={cn("relative", className)}>
@@ -186,7 +191,7 @@ export function ProductsSection({
 
       {showCta ? (
         <div className="relative z-20 mt-10 flex justify-center">
-          <ProductsCta cta={cta} />
+          <ProductsCta cta={cta} href={ctaHref} />
         </div>
       ) : null}
     </section>
@@ -200,13 +205,13 @@ export function ProductsSectionDesktop({
 }) {
   return (
     <div className="absolute left-1/2 top-[2112px] z-10 w-screen -translate-x-1/2">
-      <div className="bg-[#012561]">
+      <div className="bg-brand">
         <div className="relative mx-auto w-full max-w-[1440px] overflow-visible px-20 pb-6 pt-16">
           <ProductsSection products={products} showCta={false} />
         </div>
       </div>
-      <div className="flex justify-center bg-[#fcfcfc] px-20 pb-2 pt-10">
-        <ProductsCta cta={products.cta} />
+      <div className="flex justify-center bg-page px-20 pb-2 pt-10">
+        <ProductsCta cta={products.cta} href={products.ctaHref} />
       </div>
     </div>
   );
@@ -219,13 +224,13 @@ export function ProductsSectionMobile({
 }) {
   return (
     <div className="sm:mx-auto sm:max-w-7xl">
-      <div className="relative mx-5 overflow-visible bg-[#012561] pt-12 sm:px-8">
+      <div className="relative mx-5 overflow-visible bg-brand pt-12 sm:px-8">
         <div className="overflow-visible rounded-t-[32px] px-5 pb-6 sm:px-0">
           <ProductsSection products={products} showCta={false} />
         </div>
       </div>
-      <div className="flex justify-center px-5 py-10">
-        <ProductsCta cta={products.cta} />
+      <div className="flex justify-center px-5 pt-5 pb-3 md:py-10">
+        <ProductsCta cta={products.cta} href={products.ctaHref} />
       </div>
     </div>
   );

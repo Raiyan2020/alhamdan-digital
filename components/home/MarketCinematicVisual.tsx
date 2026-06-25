@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-const IMAGE_SRC = "/figma/market-visual.webp";
-
 type MarketCinematicVisualProps = {
   className?: string;
+  image?: string;
+  imageAlt?: string;
   /** Align image to the start edge (RTL: right bleed) */
   bleedStart?: boolean;
   /** Align image to the end edge (LTR: right bleed) */
@@ -13,6 +13,8 @@ type MarketCinematicVisualProps = {
 
 export function MarketCinematicVisual({
   className,
+  image = "/figma/market-visual.webp",
+  imageAlt = "",
   bleedStart = false,
   bleedEnd = false,
 }: MarketCinematicVisualProps) {
@@ -26,8 +28,8 @@ export function MarketCinematicVisual({
       aria-hidden
     >
       <Image
-        src={IMAGE_SRC}
-        alt=""
+        src={image}
+        alt={imageAlt}
         width={603}
         height={550}
         sizes="(min-width: 1440px) 603px, 100vw"

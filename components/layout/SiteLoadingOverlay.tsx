@@ -1,22 +1,23 @@
 "use client";
 
+import { useCallback, useEffect, useRef, useState } from "react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useLocale } from "next-intl";
-import { usePathname } from "@/i18n/navigation";
 import { useReducedMotion } from "@/components/motion";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname } from "@/i18n/navigation";
 
-const LOTTIE_SRC = "/loading-kuwait.lottie";
 const MIN_INITIAL_MS = 900;
 const MIN_ROUTE_MS = 650;
 const FADE_MS = 450;
 
-export function SiteLoadingOverlay() {
-  const locale = useLocale();
+type SiteLoadingOverlayProps = {
+  label: string;
+  animation: string;
+};
+
+export function SiteLoadingOverlay({ label, animation }: SiteLoadingOverlayProps) {
   const pathname = usePathname();
   const reducedMotion = useReducedMotion();
-  const loadingLabel = locale === "ar" ? "جاري التحميل" : "Loading";
   const [visible, setVisible] = useState(true);
   const isFirstPathname = useRef(true);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -36,7 +37,7 @@ export function SiteLoadingOverlay() {
         hideTimerRef.current = null;
       }, delayMs);
     },
-    [clearHideTimer]
+    [clearHideTimer],
   );
 
   useEffect(() => {
@@ -90,8 +91,8 @@ export function SiteLoadingOverlay() {
           role="status"
           aria-live="polite"
           aria-busy="true"
-          aria-label={loadingLabel}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#fcfcfc]"
+          aria-label={label}
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-page"
           initial={reducedMotion ? false : { opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={reducedMotion ? undefined : { opacity: 0 }}
@@ -99,10 +100,10 @@ export function SiteLoadingOverlay() {
         >
           <div className="flex w-[min(88vw,280px)] flex-col items-center">
             <div className="h-[min(52vw,220px)] w-full">
-              <DotLottieReact src={LOTTIE_SRC} loop autoplay />
+              <DotLottieReact src={animation} loop autoplay />
             </div>
-            <p className="mt-2 text-sm font-medium tracking-[0.2em] text-[#012561]/70 uppercase">
-              {loadingLabel}
+            <p className="mt-2 text-sm font-medium tracking-[0.2em] text-brand/70 uppercase">
+              {label}
             </p>
           </div>
         </motion.div>

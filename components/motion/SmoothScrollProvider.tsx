@@ -5,6 +5,7 @@ import { useReducedMotion } from "motion/react";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { SCROLL_HEADER_OFFSET } from "@/lib/scroll/constants";
+import { findScrollTarget } from "@/lib/scroll/find-scroll-target";
 import {
   createContext,
   useCallback,
@@ -24,11 +25,15 @@ type SmoothScrollContextValue = {
 
 const SmoothScrollContext = createContext<SmoothScrollContextValue | null>(null);
 
-function fallbackScrollToId(id: string, smooth: boolean) {
-  const el = document.getElementById(id);
-  if (!el) return;
+function fallbackScrollToElement(el: HTMLElement, smooth: boolean) {
   const top = el.getBoundingClientRect().top + window.scrollY - SCROLL_HEADER_OFFSET;
   window.scrollTo({ top, behavior: smooth ? "smooth" : "auto" });
+}
+
+function fallbackScrollToId(id: string, smooth: boolean) {
+  const el = findScrollTarget(id);
+  if (!el) return;
+  fallbackScrollToElement(el, smooth);
 }
 
 function isHomePath(pathname: string) {
@@ -62,13 +67,14 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const lenisRef = useRef<Lenis | null>(null);
   const reducedMotionRef = useRef(reducedMotion);
+  const isDashboard = pathname.startsWith("/dashboard");
 
   useEffect(() => {
     reducedMotionRef.current = reducedMotion;
   }, [reducedMotion]);
 
   const scrollToId = useCallback((id: string) => {
-    const el = document.getElementById(id);
+    const el = findScrollTarget(id);
     if (!el) return;
 
     const lenis = lenisRef.current;
@@ -79,7 +85,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    fallbackScrollToId(id, !reducedMotionRef.current);
+    fallbackScrollToElement(el, !reducedMotionRef.current);
   }, []);
 
   const scrollToTop = useCallback(() => {
@@ -108,7 +114,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      const target = document.getElementById(hash);
+      const target = findScrollTarget(hash);
       if (!target) {
         router.push(localizedHomeHash(locale, hash));
         return;
@@ -121,7 +127,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   );
 
   useEffect(() => {
-    if (reducedMotion) return;
+    if (reducedMotion || isDashboard) return;
 
     const lenis = new Lenis({
       duration: 1.15,
@@ -149,7 +155,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
       lenis.destroy();
       lenisRef.current = null;
     };
-  }, [reducedMotion]);
+  }, [isDashboard, reducedMotion]);
 
   useEffect(() => {
     const hash = window.location.hash.replace(/^#/, "");

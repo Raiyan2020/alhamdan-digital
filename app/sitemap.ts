@@ -1,7 +1,11 @@
 import type { MetadataRoute } from "next";
+import { getPublishedBlogPosts } from "@/lib/cms/blog-service";
+import { getEnabledProjectSlugs } from "@/lib/cms/project-service";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://alhamdan.digital";
+  const posts = await getPublishedBlogPosts();
+  const projectSlugs = await getEnabledProjectSlugs();
 
   return [
     {
@@ -16,5 +20,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    ...posts.map((post) => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: new Date(post.updatedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+    ...projectSlugs.map((slug) => ({
+      url: `${baseUrl}/projects/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
   ];
 }

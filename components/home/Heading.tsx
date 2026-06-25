@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/motion/Reveal";
+import { RichTextHtml } from "@/lib/cms/rich-text";
 
 type HeadingProps = {
   title: string;
@@ -21,12 +22,13 @@ export function Heading({ title, body, y, contained }: HeadingProps) {
       style={{ top: y }}
     >
       <div data-ar>
-        <h2 className="text-[42px] font-medium leading-[61px] tracking-[-0.02em] text-[#0d0d0d]">
+        <h2 className="text-[42px] font-medium leading-[61px] tracking-[-0.02em] text-ink">
           {title}
         </h2>
-        <p className="mx-auto mt-2 w-[710px] text-[15px] leading-[25px] text-[#777]">
-          {body}
-        </p>
+        <RichTextHtml
+          html={body}
+          className="mx-auto mt-2 w-[710px] text-[15px] leading-[25px] text-ink-muted"
+        />
       </div>
     </Reveal>
   );

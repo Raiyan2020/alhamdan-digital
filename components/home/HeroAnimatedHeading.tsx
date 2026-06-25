@@ -122,7 +122,7 @@ export function HeroAnimatedHeading({
   return (
     <h1
       className={cn(
-        "font-medium tracking-[-0.03em] text-[#0d0d0d]",
+        "font-medium tracking-[-0.03em] text-ink",
         className
       )}
     >
@@ -168,7 +168,7 @@ export function HeroAnimatedHeading({
             {(prefixWords.length > 0 || typedPhrase.length > 0) && "\u00A0"}
             <motion.span
               className={cn(
-                "inline-block bg-gradient-to-l from-[#012561] via-[#0b3d8f] to-[#1e5fbf] bg-clip-text font-semibold tracking-[-0.02em] text-transparent",
+                "inline-block bg-gradient-to-l from-[var(--gradient-brand-from)] via-[var(--gradient-brand-via)] to-[var(--gradient-brand-to)] bg-clip-text font-semibold tracking-[-0.02em] text-transparent",
                 "drop-shadow-[0_1px_0_rgba(1,37,97,0.08)]"
               )}
               initial={false}
@@ -178,7 +178,7 @@ export function HeroAnimatedHeading({
               {showCursor && (
                 <motion.span
                   aria-hidden
-                  className="ms-0.5 inline-block h-[0.9em] w-[3px] translate-y-[0.08em] rounded-full bg-[#012561]"
+                  className="ms-0.5 inline-block h-[0.9em] w-[3px] translate-y-[0.08em] rounded-full bg-brand"
                   animate={{ opacity: [1, 0.2, 1] }}
                   transition={{
                     duration: 0.85,

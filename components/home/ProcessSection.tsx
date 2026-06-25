@@ -1,7 +1,16 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { HomeContent } from "@/lib/i18n/home-content";
 import { motion, useReducedMotion, type Variants } from "motion/react";
+import { useLocale } from "next-intl";
+import { RichTextHtml } from "@/lib/cms/rich-text";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 import { Heading } from "./Heading";
 import { MobileHeading } from "./MobileHeading";
@@ -43,25 +52,25 @@ function ProcessStepCell({
   return (
     <div
       className={cn(
-        "relative flex min-h-[220px] min-w-[11.5rem] flex-1 flex-col items-center justify-start px-2 py-8 text-center sm:px-3 md:min-h-[276px] md:min-w-0 md:py-10",
+        "relative flex min-h-0 flex-col items-center justify-start px-3 py-5 text-center sm:px-4 md:min-h-[276px] md:flex-1 md:px-2 md:py-10",
         className
       )}
     >
       {showDivider ? (
         <span
           aria-hidden
-          className="absolute inset-y-6 start-0 hidden w-px bg-[#012561]/12 md:block"
+          className="absolute inset-y-6 start-0 hidden w-px bg-brand/12 md:block"
         />
       ) : null}
 
       <motion.p
         dir="rtl"
-        className="inline-flex items-center gap-1.5 text-[14px] font-semibold tracking-wide text-[#012561]"
+        className="inline-flex items-center gap-1.5 text-[14px] font-semibold tracking-wide text-brand"
         variants={contentVariants}
         transition={transitionFor(0)}
         {...motionProps}
       >
-        <span className="text-[#4da3ff]" aria-hidden>
+        <span className="text-[var(--process-accent)]" aria-hidden>
           •
         </span>
         <span data-bidi="ltr">{number}</span>
@@ -69,7 +78,7 @@ function ProcessStepCell({
 
       <motion.h3
         dir="rtl"
-        className="mt-4 whitespace-nowrap text-[13px] font-bold leading-snug text-[#0d0d0d] md:text-[14px]"
+        className="mt-3 text-sm font-bold leading-snug text-ink md:mt-4 md:whitespace-nowrap md:text-[14px]"
         variants={contentVariants}
         transition={transitionFor(0.14)}
         {...motionProps}
@@ -77,16 +86,61 @@ function ProcessStepCell({
         {title.replace(/\s*\n\s*/g, " ")}
       </motion.h3>
 
-      <motion.p
+      <motion.div
         dir="rtl"
-        className="mt-2 max-w-[11rem] text-[12px] leading-[18px] text-[#64748b] md:max-w-[12.5rem] md:text-[13px] md:leading-5"
+        className="mt-2 max-w-[16rem] text-xs leading-5 text-[var(--process-muted)] sm:max-w-[18rem] sm:text-[13px] md:max-w-[12.5rem] md:leading-5"
         variants={contentVariants}
         transition={transitionFor(0.28)}
         {...motionProps}
       >
-        {body}
-      </motion.p>
+        <RichTextHtml html={body} />
+      </motion.div>
     </div>
+  );
+}
+
+function ProcessStepsMobileCarousel({ steps }: { steps: ProcessStep[] }) {
+  const locale = useLocale();
+  const isRtl = locale === "ar";
+  const [api, setApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    if (!api) return;
+
+    const scrollToStart = () => {
+      api.scrollTo(0, true);
+    };
+
+    scrollToStart();
+    api.on("reInit", scrollToStart);
+
+    return () => {
+      api.off("reInit", scrollToStart);
+    };
+  }, [api, isRtl]);
+
+  return (
+    <Carousel
+      key={locale}
+      dir={isRtl ? "rtl" : "ltr"}
+      setApi={setApi}
+      opts={{
+        align: "start",
+        direction: isRtl ? "rtl" : "ltr",
+        containScroll: "trimSnaps",
+      }}
+      className="w-full"
+    >
+      <CarouselContent>
+        {steps.map((step, index) => (
+          <CarouselItem key={step.number} className="basis-[84%] sm:basis-[70%]">
+            <div className="rounded-[24px] bg-[var(--process-bar)]">
+              <ProcessStepCell {...step} index={index} />
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+    </Carousel>
   );
 }
 
@@ -101,7 +155,7 @@ function ProcessStepsBar({
     <div
       dir="rtl"
       className={cn(
-        "flex overflow-hidden rounded-[24px] bg-[#eef5fc] md:rounded-[28px]",
+        "flex overflow-hidden rounded-[24px] bg-[var(--process-bar)] md:rounded-[28px]",
         className
       )}
     >
@@ -138,15 +192,10 @@ export function ProcessSectionMobile({
   process: HomeContent["process"];
 }) {
   return (
-    <section className="py-12">
+    <section className="py-8 md:py-12">
       <MobileHeading title={process.title} body={process.body} />
-      <div className="mx-auto mt-8 max-w-7xl px-5">
-        <div className="-mx-5 overflow-x-auto px-5 pb-1 [scrollbar-width:thin] md:overflow-visible">
-          <ProcessStepsBar
-            steps={process.steps}
-            className="min-w-[1140px] md:min-w-0"
-          />
-        </div>
+      <div className="mx-auto mt-6 max-w-7xl px-5 md:mt-8">
+        <ProcessStepsMobileCarousel steps={process.steps} />
       </div>
     </section>
   );

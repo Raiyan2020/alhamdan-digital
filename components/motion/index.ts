@@ -11,4 +11,4 @@ export {
 } from "./MotionInteractive";
 export { MotionHeaderShell, HeaderEntrance, useHeaderEntrance } from "./MotionHeader";
 export { useReducedMotion } from "motion/react";
-export { useInViewOnce, recheckAllInView } from "./useInViewOnce";
+export { WordRevealText, richTextToPlainText, splitWords, getWordRevealDuration } from "./WordRevealText";

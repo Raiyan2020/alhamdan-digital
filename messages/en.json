@@ -126,6 +126,123 @@
       "5": "Long-term partnership, not a one-off"
     }
   },
+  "shell": {
+    "mobileSubtitle": "Al Hamdan Digital",
+    "loadingLabel": "Loading",
+    "themeLight": "Switch to light mode",
+    "themeDark": "Switch to dark mode"
+  },
+  "adminAuth": {
+    "title": "Welcome to Al Hamdan Digital",
+    "subtitle": "Sign in to manage website content.",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "remember": "Remember me",
+    "signIn": "Sign In",
+    "signingIn": "Signing in...",
+    "signOut": "Sign Out",
+    "signingOut": "Signing out...",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "dashboardLabel": "Content Dashboard",
+    "validationFailed": "Please fix the highlighted fields before signing in."
+  },
+  "validation": {
+    "required": "This field is required.",
+    "arabicRequired": "Arabic value is required.",
+    "englishRequired": "English value is required.",
+    "invalidEmail": "Enter a valid email address.",
+    "passwordRequired": "Password is required.",
+    "invalidSlug": "Use lowercase letters, numbers, and hyphens only.",
+    "invalidUrl": "Enter a valid URL."
+  },
+  "dashboard": {
+    "brandTagline": "Content Dashboard",
+    "sectionOverview": "Overview",
+    "sectionSettings": "Settings",
+    "navOverview": "Dashboard",
+    "navHome": "Home Page",
+    "navAbout": "About Page",
+    "navBlog": "Blog",
+    "navSettings": "Settings",
+    "navLogout": "Logout",
+    "signingOut": "Signing out...",
+    "openMenu": "Open menu",
+    "searchPlaceholder": "Search dashboard sections...",
+    "notifications": "Notifications",
+    "welcomeEyebrow": "CMS Workspace",
+    "welcomeTitle": "Manage your website content with confidence",
+    "welcomeBody": "Edit bilingual pages, upload media, and keep your marketing site up to date from one place.",
+    "viewWebsite": "View website",
+    "cardHome": "Home page",
+    "cardHomeValue": "{sections} sections · {products} products",
+    "cardAbout": "About page",
+    "cardAboutValue": "{products} product sections",
+    "cardMedia": "Media assets",
+    "cardMediaValue": "{count} managed media fields",
+    "continueEditing": "Continue editing",
+    "continueEditingBody": "Jump back into the page you were working on.",
+    "openHomeCms": "Open Home CMS",
+    "openAboutCms": "Open About CMS",
+    "statsTitle": "Statistic",
+    "greeting": "Good morning, {name}",
+    "statsBody": "Your CMS coverage based on configured home and about content.",
+    "quickLinksTitle": "Quick links",
+    "linkHome": "Preview home page",
+    "linkAbout": "Preview about page",
+    "seeAll": "See all pages",
+    "tipsTitle": "Editor tips",
+    "tipOne": "Save drafts after major section changes to avoid losing work.",
+    "tipTwo": "Use Arabic and English fields together to keep locales aligned.",
+    "tipThree": "Upload WebP-ready images for faster public page loads."
+  },
+  "aboutPage": {
+    "seo": {
+      "metaTitle": "Our Digital Products | Al Hamdan Digital",
+      "metaDescription": "Explore the digital products owned and developed by Al Hamdan Digital.",
+      "ogTitle": "Our Digital Products",
+      "ogDescription": "Digital products serving multiple active sectors."
+    },
+    "hero": {
+      "title": "Our Digital Products",
+      "body": "At Al Hamdan Digital, we do not only provide technical services. We also own and develop digital products that serve different vital sectors, giving us hands-on experience in building and operating digital products.",
+      "cta": "Explore us"
+    },
+    "labels": {
+      "offers": "What does it offer?",
+      "audience": "Who is it for?",
+      "downloadTitle": "Download the app and order now",
+      "storePreLabel": "Get it on"
+    },
+    "products": {
+      "bohamdan": {
+        "title": "Bohamdan",
+        "body": "A specialized platform for professionally listing and selling cars, helping sellers and buyers reach options quickly and clearly.",
+        "offers": ["Car listings", "Advanced search", "Clear details", "Smooth experience"],
+        "audience": ["Car showrooms", "Individuals", "Buyers"]
+      },
+      "nafas": {
+        "title": "Nafas",
+        "body": "A sports and wellness platform that encourages physical activity and healthy lifestyles through incentives and specialized offers.",
+        "offers": ["Coach access", "Sports offers", "Motivation", "Activity tracking"],
+        "audience": ["Sports clubs", "Coaches", "Individuals"]
+      },
+      "diddeed": {
+        "title": "Did Deed",
+        "body": "An app for requesting transportation and taxi services, focused on usability and fast access to service.",
+        "offers": ["Trip requests", "Trip tracking", "Easy booking", "Simple user experience"],
+        "audience": ["Daily users", "Drivers", "Transport companies"]
+      },
+      "road80": {
+        "title": "Road 80",
+        "body": "A modern real estate platform for listing properties for sale and rent in an organized way.",
+        "offers": ["Property search", "Option comparison", "Listing management", "Details"],
+        "audience": ["Real estate offices", "Property companies", "Investors"]
+      }
+    }
+  },
   "footer": {
     "contactTitle": "Contact Us",
     "quickLinks": "Quick Links",
@@ -139,5 +256,435 @@
     "linkedin": "LinkedIn",
     "instagram": "Instagram",
     "facebook": "Facebook"
+  },
+  "cms": {
+    "editor": {
+      "placeholder": "Write content here...",
+      "linkPrompt": "Enter link URL",
+      "bold": "Bold",
+      "italic": "Italic",
+      "underline": "Underline",
+      "strike": "Strikethrough",
+      "heading2": "Heading 2",
+      "heading3": "Heading 3",
+      "bulletList": "Bullet list",
+      "orderedList": "Numbered list",
+      "blockquote": "Quote",
+      "divider": "Divider",
+      "link": "Link",
+      "alignStart": "Align start",
+      "alignCenter": "Align center",
+      "alignEnd": "Align end",
+      "undo": "Undo",
+      "redo": "Redo"
+    },
+    "common": {
+      "saveDraft": "Save Draft",
+      "saveAboutDraft": "Save About Draft",
+      "saving": "Saving...",
+      "draftSaved": "Draft saved.",
+      "validationFailed": "Fix {count} required fields before saving. We jumped to the first section that needs attention.",
+      "arabic": "Arabic",
+      "english": "English",
+      "ctaUrl": "CTA URL",
+      "sectionTitle": "Section title",
+      "sectionDescription": "Section description",
+      "ctaLabel": "CTA label",
+      "heading": "Heading",
+      "description": "Description",
+      "label": "Label",
+      "url": "URL",
+      "urlPlaceholder": "https://...",
+      "visible": "Visible",
+      "visibleOnSite": "Visible on public site",
+      "visibleOnAbout": "Visible on public About page",
+      "add": "Add",
+      "addProduct": "Add product",
+      "addStore": "Add store",
+      "uploading": "Uploading...",
+      "replaceImage": "Replace image",
+      "uploadImage": "Upload image",
+      "altText": "Alt text",
+      "clearOgImage": "Clear Open Graph image",
+      "addOgImage": "Add Open Graph image",
+      "left": "Left",
+      "right": "Right",
+      "number": "Number",
+      "imageSide": "Image side",
+      "chooseSection": "Choose section",
+      "item": "Item {index}",
+      "cardKey": "Card key",
+      "icon": "Icon",
+      "stepNumber": "Step number",
+      "productKey": "Product key",
+      "layout": "Layout",
+      "productImage": "Product image",
+      "phoneImage": "Phone image",
+      "visualImage": "Visual image",
+      "reason": "Reason",
+      "outcome": "Outcome",
+      "type": "Type",
+      "value": "Value",
+      "displayValue": "Display value",
+      "linkUrl": "Link URL",
+      "network": "Network",
+      "cardKeys": {
+        "ai": "AI",
+        "scale": "Scale",
+        "expertise": "Expertise",
+        "mindset": "Mindset"
+      },
+      "icons": {
+        "brain": "Brain",
+        "rocket": "Rocket",
+        "users": "Users",
+        "lightbulb": "Light bulb",
+        "eye": "Eye",
+        "send": "Send",
+        "building2": "Buildings",
+        "carFront": "Cars",
+        "truck": "Transport",
+        "dumbbell": "Fitness",
+        "store": "Store",
+        "globe2": "Globe"
+      },
+      "productKeys": {
+        "diddeed": "Did Deed",
+        "bohamdan": "Bo Hamdan",
+        "nafas": "NAFAS",
+        "road80": "Road 80"
+      },
+      "layouts": {
+        "text-start": "Text first",
+        "text-end": "Text last"
+      },
+      "contactTypes": {
+        "phone": "Phone",
+        "email": "Email",
+        "address": "Address"
+      },
+      "socialNetworks": {
+        "youtube": "YouTube",
+        "linkedin": "LinkedIn",
+        "instagram": "Instagram",
+        "facebook": "Facebook"
+      }
+    },
+    "mediaUpload": {
+      "pickerHint": "Upload a shared image for both languages. Crop and resize before saving. Add Arabic or English overrides only when the visual contains language-specific text.",
+      "emptyPreview": "No image selected yet.",
+      "clickToUpload": "Click here to upload",
+      "uploadImage": "Upload image",
+      "uploadSuccess": "Image uploaded successfully and linked to this field.",
+      "replaceImage": "Replace image",
+      "removeImage": "Remove image",
+      "uploading": "Uploading...",
+      "processing": "Processing...",
+      "cropTitle": "Crop and resize",
+      "cropDescription": "Drag to reposition, use the zoom slider, then choose an output size.",
+      "uploadMode": "Upload mode",
+      "modeCrop": "Crop and resize",
+      "modeOriginal": "Use original dimensions",
+      "originalModeHint": "The full image will be uploaded without cropping or resizing its dimensions.",
+      "zoom": "Zoom",
+      "cropBoxWidth": "Crop box width",
+      "cropBoxHeight": "Crop box height",
+      "resetCropBox": "Reset crop box",
+      "outputSize": "Output width",
+      "sizeOriginal": "Keep crop size",
+      "size1920": "Large (1920px)",
+      "size1200": "Medium (1200px)",
+      "size800": "Small (800px)",
+      "size400": "Thumbnail (400px)",
+      "cancel": "Cancel",
+      "confirmCrop": "Upload cropped image",
+      "confirmOriginal": "Upload original image",
+      "fileTooLarge": "Image must be 8MB or smaller.",
+      "cropFailed": "Unable to crop this image. Try another file.",
+      "sharedUrl": "Shared/default image URL",
+      "arabicOverrideUrl": "Arabic image override URL",
+      "englishOverrideUrl": "English image override URL"
+    },
+    "home": {
+      "title": "Home Page CMS",
+      "subtitle": "Manage bilingual home content, media, and repeaters.",
+      "draftSaved": "Home page draft saved. Your Arabic and English content is stored and ready to continue editing.",
+      "groups": {
+        "settings": "Site settings",
+        "hero": "Hero area",
+        "content": "Content sections",
+        "footer": "Footer"
+      },
+      "sections": {
+        "seo": "SEO",
+        "shell": "Header & loading",
+        "nav": "Navigation",
+        "hero": "Hero",
+        "about": "About summary",
+        "vision": "Vision & mission",
+        "process": "Process",
+        "products": "Products",
+        "services": "Services",
+        "sectors": "Sectors",
+        "why": "Why us",
+        "market": "Market",
+        "footer": "Footer"
+      },
+      "fields": {
+        "metaTitle": "Meta title",
+        "metaDescription": "Meta description",
+        "ogTitle": "Open Graph title",
+        "ogDescription": "Open Graph description",
+        "ogImage": "Open Graph image",
+        "brandName": "Brand name",
+        "mobileSubtitle": "Mobile menu subtitle",
+        "switchToArabic": "Switch to Arabic label",
+        "switchToEnglish": "Switch to English label",
+        "headerLogo": "Header logo",
+        "loadingLabel": "Loading label",
+        "loadingAnimation": "Loading animation",
+        "titleLine1": "Title line 1",
+        "titleLine2Prefix": "Title line 2 prefix",
+        "heroDescription": "Hero description",
+        "heroBrushImage": "Hero brush image",
+        "heroPersonImage": "Hero person image",
+        "carouselLabel": "Carousel label",
+        "activeService": "Active service label",
+        "goToService": "Go to service label",
+        "phoneFrameImage": "Phone frame image",
+        "screenImage": "Screen image",
+        "descriptionPart1": "Description (part 1)",
+        "descriptionPart2": "Description (part 2)",
+        "marketVisualImage": "Market visual image",
+        "contactTitle": "Contact title",
+        "quickLinksTitle": "Quick links title",
+        "footerDescription": "Footer description",
+        "copyright": "Copyright",
+        "backToTop": "Back to top label",
+        "kuwaitLabel": "Kuwait label",
+        "footerLogo": "Footer logo"
+      },
+      "repeaters": {
+        "navLinks": "Navigation links",
+        "navItem": "Nav item {index}",
+        "footerLinks": "Footer quick links",
+        "heroPhrases": "Hero title cycle phrases",
+        "phrase": "Phrase",
+        "aboutCards": "About cards",
+        "visionMission": "Vision & mission",
+        "processSteps": "Process steps",
+        "productItems": "Product items",
+        "serviceItems": "Service items",
+        "sectorItems": "Sector items",
+        "whyReasons": "Why reasons",
+        "marketOutcomes": "Market outcomes",
+        "contactMethods": "Contact methods",
+        "socialLinks": "Social links"
+      }
+    },
+    "about": {
+      "title": "About Page CMS",
+      "subtitle": "Manage bilingual about content and product sections.",
+      "draftSaved": "About page draft saved. Your product sections and bilingual content are stored.",
+      "groups": {
+        "settings": "Page settings",
+        "content": "Content"
+      },
+      "sections": {
+        "seo": "SEO",
+        "hero": "Hero",
+        "products": "Products"
+      },
+      "fields": {
+        "metaTitle": "Meta title",
+        "metaDescription": "Meta description",
+        "ogTitle": "Open Graph title",
+        "ogDescription": "Open Graph description",
+        "ogImage": "Open Graph image",
+        "title": "Title",
+        "productImage": "Product image",
+        "offersLabel": "Offers label",
+        "audienceLabel": "Audience label",
+        "downloadTitle": "Download title",
+        "preLabel": "Pre-label",
+        "storeLabel": "Store label",
+        "storeUrl": "Store URL"
+      },
+      "repeaters": {
+        "productSections": "Product sections",
+        "product": "Product {index}",
+        "offers": "Offers",
+        "audience": "Audience",
+        "offersItem": "Offers item",
+        "audienceItem": "Audience item",
+        "storeButtons": "Store buttons"
+      },
+      "productsUi": {
+        "hint": "Each product appears as a card. Click Edit to open its details.",
+        "empty": "No products yet. Click Add product to get started.",
+        "hidden": "Hidden",
+        "visible": "Visible",
+        "edit": "Edit",
+        "delete": "Delete",
+        "moveUp": "Move up",
+        "moveDown": "Move down",
+        "deleteTitle": "Delete product?",
+        "deleteBody": "Are you sure you want to delete “{title}”? Save the draft to apply this change.",
+        "cancel": "Cancel",
+        "confirmDelete": "Yes, delete",
+        "editTitle": "Edit product {index}",
+        "createTitle": "New product",
+        "dialogHint": "Edit the product details here, then click Done to close this window.",
+        "saveReminder": "Changes are not saved until you click Save About Draft at the top of the page.",
+        "done": "Done",
+        "detailEnabled": "Detail page enabled"
+      },
+      "detailPage": {
+        "title": "Project detail page",
+        "body": "Create a dedicated page at /projects/slug with extra information beyond the About section.",
+        "enable": "Enable project detail page",
+        "slug": "Project URL slug",
+        "tagline": "Hero tagline",
+        "overview": "Extended overview",
+        "highlights": "Key highlights",
+        "highlightItem": "Highlight",
+        "stats": "Project stats",
+        "statItem": "Stat",
+        "statValue": "Stat value",
+        "statLabel": "Stat label",
+        "gallery": "Gallery",
+        "galleryItem": "Image",
+        "galleryImage": "Gallery image",
+        "galleryCaption": "Image caption",
+        "seoTitle": "Detail page SEO",
+        "ctaLabel": "External CTA label",
+        "ctaHref": "External CTA URL",
+        "slugPlaceholder": "bohamdan"
+      }
+    },
+    "blog": {
+      "managerTitle": "Blog posts",
+      "managerBody": "Create bilingual articles with SEO metadata, cover images, categories, and tags. Save drafts or publish when ready.",
+      "newPost": "New post",
+      "editPost": "Edit post",
+      "edit": "Edit",
+      "loading": "Loading posts...",
+      "emptyTitle": "No blog posts yet",
+      "emptyBody": "Create your first article to start publishing insights, news, and guides.",
+      "deleteTitle": "Delete this post?",
+      "deleteBody": "This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirmDelete": "Delete post",
+      "backToList": "Back to posts",
+      "editorBody": "Fill Arabic and English content, then save a draft or publish.",
+      "editorHintEn": "Use a short, keyword-focused slug and meta description for better SEO.",
+      "editorHintAr": "اكتب عنوانًا واضحًا ووصفًا ميتا مناسبًا لتحسين الظهور في البحث.",
+      "preview": "Preview",
+      "saveDraft": "Save draft",
+      "publish": "Publish",
+      "saved": "Post saved.",
+      "draftCreated": "New article draft created. You can keep editing or publish when ready.",
+      "draftUpdated": "Article draft updated with your latest changes.",
+      "publishedSuccess": "Article published. It is now visible on the public blog.",
+      "deletedSuccess": "Article deleted and removed from the blog.",
+      "validationFailed": "Fix {count} required fields before saving. We focused the first field that needs attention.",
+      "sections": {
+        "settings": "Post settings",
+        "content": "Content",
+        "seo": "SEO"
+      },
+      "fields": {
+        "slug": "URL slug",
+        "category": "Category",
+        "author": "Author name",
+        "tags": "Tags (comma separated)",
+        "title": "Title",
+        "excerpt": "Excerpt",
+        "coverImage": "Cover image",
+        "body": "Article body",
+        "metaTitle": "Meta title",
+        "metaDescription": "Meta description",
+        "ogTitle": "Open Graph title",
+        "ogDescription": "Open Graph description"
+      },
+      "placeholders": {
+        "slug": "my-blog-post",
+        "tags": "digital, kuwait, marketing"
+      },
+      "categories": {
+        "insights": "Insights",
+        "news": "News",
+        "guides": "Guides"
+      },
+      "status": {
+        "draft": "Draft",
+        "published": "Published",
+        "archived": "Archived"
+      }
+    }
+  },
+  "blog": {
+    "index": {
+      "eyebrow": "Al Hamdan Digital Blog",
+      "title": "Insights, news, and digital guides",
+      "description": "Practical articles about digital products, marketing, and technology from the Al Hamdan Digital team.",
+      "emptyTitle": "No articles published yet",
+      "emptyBody": "Check back soon for new insights and updates."
+    },
+    "backToBlog": "Back to blog",
+    "readingTime": "{minutes} min read",
+    "categories": {
+      "insights": "Insights",
+      "news": "News",
+      "guides": "Guides"
+    },
+    "samples": [
+      {
+        "id": "sample-1",
+        "slug": "why-bilingual-content-matters",
+        "category": "insights",
+        "tags": ["content", "arabic", "seo"],
+        "authorName": "Al Hamdan Digital",
+        "publishedAt": "2025-12-01T08:00:00.000Z",
+        "title": {
+          "ar": "لماذا المحتوى ثنائي اللغة مهم لعلامتك؟",
+          "en": "Why bilingual content matters for your brand"
+        },
+        "excerpt": {
+          "ar": "الجمع بين العربية والإنجليزية يوسّع الوصول ويعزز الثقة في السوق الكويتي والخليجي.",
+          "en": "Combining Arabic and English expands reach and builds trust in Kuwait and the Gulf."
+        },
+        "body": {
+          "ar": "<p>المحتوى ثنائي اللغة ليس ترجمة حرفية فقط، بل تجربة محلية كاملة تشمل العناوين، والصور، والدعوات للإجراء.</p><p>ابدأ بتحديد نبرة واحدة لكل لغة، ثم حافظ على نفس الرسالة الأساسية في الحقلين.</p>",
+          "en": "<p>Bilingual content is not just literal translation. It is a localized experience across headlines, visuals, and calls to action.</p><p>Start with one tone per language while keeping the same core message in both fields.</p>"
+        },
+        "seo": {
+          "metaTitle": {
+            "ar": "لماذا المحتوى ثنائي اللغة مهم | Al Hamdan Digital",
+            "en": "Why bilingual content matters | Al Hamdan Digital"
+          },
+          "metaDescription": {
+            "ar": "دليل سريع لبناء محتوى عربي وإنجليزي يخدم جمهورك في الكويت.",
+            "en": "A quick guide to building Arabic and English content for your Kuwait audience."
+          },
+          "ogTitle": {
+            "ar": "لماذا المحتوى ثنائي اللغة مهم",
+            "en": "Why bilingual content matters"
+          },
+          "ogDescription": {
+            "ar": "نصائح عملية لتحرير محتوى ثنائي اللغة.",
+            "en": "Practical tips for bilingual content editing."
+          }
+        }
+      }
+    ]
+  },
+  "projects": {
+    "backToProducts": "Back to our products",
+    "exploreProject": "Explore project",
+    "overviewTitle": "Project overview",
+    "highlightsTitle": "Key highlights",
+    "galleryTitle": "Gallery",
+    "externalCta": "Visit project"
   }
 }

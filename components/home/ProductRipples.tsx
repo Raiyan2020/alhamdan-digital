@@ -30,7 +30,7 @@ export function ProductRipples({
         <span
           key={ring}
           className={cn(
-            "absolute rounded-full border border-[#5aa8ff]/38",
+            "absolute rounded-full border border-[var(--accent-glow)]/38",
             variant === "center" ? "-translate-x-1/2 -translate-y-1/2" : "-translate-y-1/2",
             variant === "edge-right" && "translate-x-1/2",
             variant === "edge-left" && "-translate-x-1/2",
@@ -44,7 +44,7 @@ export function ProductRipples({
       ))}
       <span
         className={cn(
-          "absolute h-32 w-32 rounded-full bg-[#b8dcff]/40 blur-2xl",
+          "absolute h-32 w-32 rounded-full bg-[var(--accent-glow-soft)]/40 blur-2xl",
           variant === "center" ? "-translate-x-1/2 -translate-y-1/2" : "-translate-y-1/2",
           variant === "edge-right" && "translate-x-1/2",
           variant === "edge-left" && "-translate-x-1/2",

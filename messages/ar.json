@@ -126,6 +126,123 @@
       "5": "شراكة طويلة المدى وليست مؤقتة"
     }
   },
+  "shell": {
+    "mobileSubtitle": "الحمدان الرقمية",
+    "loadingLabel": "جاري التحميل",
+    "themeLight": "التبديل إلى الوضع الفاتح",
+    "themeDark": "التبديل إلى الوضع الداكن"
+  },
+  "adminAuth": {
+    "title": "مرحبًا بك في الحمدان الرقمية",
+    "subtitle": "سجّل الدخول لإدارة محتوى الموقع.",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "أدخل كلمة المرور",
+    "remember": "تذكرني",
+    "signIn": "تسجيل الدخول",
+    "signingIn": "جاري تسجيل الدخول...",
+    "signOut": "تسجيل الخروج",
+    "signingOut": "جاري تسجيل الخروج...",
+    "showPassword": "إظهار كلمة المرور",
+    "hidePassword": "إخفاء كلمة المرور",
+    "dashboardLabel": "لوحة إدارة المحتوى",
+    "validationFailed": "صحّح الحقول المظلّلة قبل تسجيل الدخول."
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب.",
+    "arabicRequired": "القيمة بالعربية مطلوبة.",
+    "englishRequired": "القيمة بالإنجليزية مطلوبة.",
+    "invalidEmail": "أدخل بريدًا إلكترونيًا صحيحًا.",
+    "passwordRequired": "كلمة المرور مطلوبة.",
+    "invalidSlug": "استخدم حروفًا إنجليزية صغيرة وأرقامًا وشرطات فقط.",
+    "invalidUrl": "أدخل رابطًا صحيحًا."
+  },
+  "dashboard": {
+    "brandTagline": "لوحة إدارة المحتوى",
+    "sectionOverview": "القائمة الرئيسية",
+    "sectionSettings": "إعدادات الحساب",
+    "navOverview": "لوحة التحكم",
+    "navHome": "الصفحة الرئيسية",
+    "navAbout": "صفحة من نحن",
+    "navBlog": "المدونة",
+    "navSettings": "الإعدادات",
+    "navLogout": "تسجيل الخروج",
+    "signingOut": "جاري تسجيل الخروج...",
+    "openMenu": "فتح القائمة",
+    "searchPlaceholder": "ابحث في أقسام لوحة التحكم...",
+    "notifications": "الإشعارات",
+    "welcomeEyebrow": "مساحة إدارة المحتوى",
+    "welcomeTitle": "أدر محتوى موقعك بثقة",
+    "welcomeBody": "حرّر الصفحات ثنائية اللغة، وارفع الوسائط، وحافظ على موقعك التسويقي من مكان واحد.",
+    "viewWebsite": "عرض الموقع",
+    "cardHome": "الصفحة الرئيسية",
+    "cardHomeValue": "{sections} أقسام · {products} منتجات",
+    "cardAbout": "صفحة من نحن",
+    "cardAboutValue": "{products} أقسام منتجات",
+    "cardMedia": "الوسائط",
+    "cardMediaValue": "{count} حقول وسائط مُدارة",
+    "continueEditing": "متابعة التحرير",
+    "continueEditingBody": "ارجع مباشرة إلى الصفحة التي كنت تعمل عليها.",
+    "openHomeCms": "فتح محرر الرئيسية",
+    "openAboutCms": "فتح محرر من نحن",
+    "statsTitle": "الإحصائيات",
+    "greeting": "صباح الخير، {name}",
+    "statsBody": "تغطية المحتوى بناءً على إعدادات الصفحة الرئيسية وصفحة من نحن.",
+    "quickLinksTitle": "روابط سريعة",
+    "linkHome": "معاينة الصفحة الرئيسية",
+    "linkAbout": "معاينة صفحة من نحن",
+    "seeAll": "عرض كل الصفحات",
+    "tipsTitle": "نصائح التحرير",
+    "tipOne": "احفظ المسودة بعد التعديلات الكبيرة لتجنب فقدان العمل.",
+    "tipTwo": "حرّر الحقول العربية والإنجليزية معًا للحفاظ على توافق اللغتين.",
+    "tipThree": "ارفع صورًا جاهزة للويب لتحميل أسرع على الموقع العام."
+  },
+  "aboutPage": {
+    "seo": {
+      "metaTitle": "منتجاتنا الرقمية | Al Hamdan Digital",
+      "metaDescription": "تعرف على المنتجات الرقمية التي نمتلكها ونطورها.",
+      "ogTitle": "منتجاتنا الرقمية",
+      "ogDescription": "منتجات رقمية تخدم قطاعات حيوية مختلفة."
+    },
+    "hero": {
+      "title": "منتجاتنا الرقمية",
+      "body": "في Al Hamdan Digital لا نكتفي بتقديم الخدمات التقنية، بل نمتلك ونطوّر مجموعة من المنتجات الرقمية التي تخدم قطاعات حيوية مختلفة، مما يمنحنا خبرة عملية حقيقية في بناء وإدارة المنتجات الرقمية.",
+      "cta": "استكشفنا"
+    },
+    "labels": {
+      "offers": "ماذا يقدم ؟",
+      "audience": "من هي الفئة المستهدفة ؟",
+      "downloadTitle": "حمّل التطبيق واطلب الآن",
+      "storePreLabel": "احصل عليه على"
+    },
+    "products": {
+      "bohamdan": {
+        "title": "مشروع \"بو حمدان\"",
+        "body": "منصة متخصصة في عرض وبيع السيارات بطريقة احترافية وسهلة الاستخدام، تساعد البائعين والمشترين على الوصول إلى خياراتهم بسرعة ووضوح.",
+        "offers": ["عرض السيارات", "بحث متقدم", "تفاصيل واضحة", "تجربة سلسة"],
+        "audience": ["معارض السيارات", "الأفراد", "المشترين"]
+      },
+      "nafas": {
+        "title": "مشروع \"Nafas\"",
+        "body": "منصة رياضية وصحية تهدف إلى تشجيع النشاط البدني وتعزيز أسلوب الحياة الصحي من خلال برامج تحفيزية وعروض متخصصة.",
+        "offers": ["الوصول للمدربين", "عروض الرياضية", "تشجيع", "متابعة النشاط"],
+        "audience": ["النوادي الرياضية", "المدربون", "الأفراد"]
+      },
+      "diddeed": {
+        "title": "مشروع \"Did Deed\"",
+        "body": "تطبيق مخصص لطلب خدمات النقل والتاكسي، يركز على سهولة الاستخدام وسرعة الوصول إلى الخدمة.",
+        "offers": ["طلب الرحلات", "تتبع الرحلة", "سهولة الحجز", "تجربة استخدام بسيطة"],
+        "audience": ["المستخدمون اليوميون", "السائقون", "شركات النقل"]
+      },
+      "road80": {
+        "title": "مشروع \"Road 80\"",
+        "body": "منصة عقارية حديثة تتيح عرض العقارات للبيع والإيجار بطريقة منظمة تساعد المستخدمين على استكشاف الخيارات واتخاذ القرار المناسب.",
+        "offers": ["البحث عن العقارات", "مقارنة الخيارات", "إدارة الإعلانات", "التفاصيل"],
+        "audience": ["مكاتب العقارية", "الشركات العقارية", "المستثمرين"]
+      }
+    }
+  },
   "footer": {
     "contactTitle": "تواصل معانا",
     "quickLinks": "روابط سريعة",
@@ -139,5 +256,435 @@
     "linkedin": "LinkedIn",
     "instagram": "Instagram",
     "facebook": "Facebook"
+  },
+  "cms": {
+    "editor": {
+      "placeholder": "اكتب المحتوى هنا...",
+      "linkPrompt": "حط رابط الرابط",
+      "bold": "عريض",
+      "italic": "مائل",
+      "underline": "تحته خط",
+      "strike": "شطب",
+      "heading2": "عنوان كبير",
+      "heading3": "عنوان صغير",
+      "bulletList": "قائمة نقطية",
+      "orderedList": "قائمة مرقّمة",
+      "blockquote": "اقتباس",
+      "divider": "خط فاصل",
+      "link": "رابط",
+      "alignStart": "محاذاة البداية",
+      "alignCenter": "توسيط",
+      "alignEnd": "محاذاة النهاية",
+      "undo": "تراجع",
+      "redo": "إعادة"
+    },
+    "common": {
+      "saveDraft": "حفظ المسودة",
+      "saveAboutDraft": "حفظ مسودة من نحن",
+      "saving": "قاعد يحفظ...",
+      "draftSaved": "تم حفظ المسودة.",
+      "validationFailed": "أكمل {count} حقول مطلوبة قبل الحفظ. انتقلنا لأول قسم يحتاج تعديل.",
+      "arabic": "عربي",
+      "english": "إنجليزي",
+      "ctaUrl": "رابط الزر",
+      "sectionTitle": "عنوان القسم",
+      "sectionDescription": "وصف القسم",
+      "ctaLabel": "نص الزر",
+      "heading": "العنوان",
+      "description": "الوصف",
+      "label": "النص",
+      "url": "الرابط",
+      "urlPlaceholder": "أدخل الرابط كاملاً",
+      "visible": "ظاهر",
+      "visibleOnSite": "ظاهر بالموقع",
+      "visibleOnAbout": "ظاهر بصفحة من نحن",
+      "add": "إضافة",
+      "addProduct": "إضافة منتج",
+      "addStore": "إضافة متجر",
+      "uploading": "قاعد يرفع...",
+      "replaceImage": "بدّل الصورة",
+      "uploadImage": "ارفع صورة",
+      "altText": "وصف الصورة",
+      "clearOgImage": "شيل صورة المشاركة",
+      "addOgImage": "أضف صورة المشاركة",
+      "left": "يسار",
+      "right": "يمين",
+      "number": "الرقم",
+      "imageSide": "جهة الصورة",
+      "chooseSection": "اختر القسم",
+      "item": "عنصر {index}",
+      "cardKey": "مفتاح البطاقة",
+      "icon": "الأيقونة",
+      "stepNumber": "رقم الخطوة",
+      "productKey": "مفتاح المنتج",
+      "layout": "التخطيط",
+      "productImage": "صورة المنتج",
+      "phoneImage": "صورة الهاتف",
+      "visualImage": "الصورة المرئية",
+      "reason": "السبب",
+      "outcome": "النتيجة",
+      "type": "النوع",
+      "value": "القيمة",
+      "displayValue": "القيمة المعروضة",
+      "linkUrl": "رابط الانتقال",
+      "network": "الشبكة",
+      "cardKeys": {
+        "ai": "الذكاء الاصطناعي",
+        "scale": "التوسع",
+        "expertise": "الخبرة",
+        "mindset": "طريقة التفكير"
+      },
+      "icons": {
+        "brain": "عقل",
+        "rocket": "انطلاق",
+        "users": "مستخدمون",
+        "lightbulb": "فكرة",
+        "eye": "عين",
+        "send": "إرسال",
+        "building2": "مبانٍ",
+        "carFront": "سيارات",
+        "truck": "نقل",
+        "dumbbell": "لياقة",
+        "store": "متجر",
+        "globe2": "عالم"
+      },
+      "productKeys": {
+        "diddeed": "ديد ديد",
+        "bohamdan": "بو حمدان",
+        "nafas": "نفس",
+        "road80": "رود 80"
+      },
+      "layouts": {
+        "text-start": "النص أولاً",
+        "text-end": "النص أخيراً"
+      },
+      "contactTypes": {
+        "phone": "الهاتف",
+        "email": "البريد الإلكتروني",
+        "address": "العنوان"
+      },
+      "socialNetworks": {
+        "youtube": "يوتيوب",
+        "linkedin": "لينكدإن",
+        "instagram": "إنستغرام",
+        "facebook": "فيسبوك"
+      }
+    },
+    "mediaUpload": {
+      "pickerHint": "ارفع صورة مشتركة للغتين. قصّها وغيّر حجمها قبل الحفظ. أضف نسخة عربية أو إنجليزية فقط إذا كانت الصورة تحتوي نصًا خاصًا بلغة معيّنة.",
+      "emptyPreview": "لم يتم اختيار صورة بعد.",
+      "clickToUpload": "اضغط هنا للرفع",
+      "uploadImage": "ارفع صورة",
+      "uploadSuccess": "تم رفع الصورة وربطها بهذا الحقل بنجاح.",
+      "replaceImage": "بدّل الصورة",
+      "removeImage": "احذف الصورة",
+      "uploading": "قاعد يرفع...",
+      "processing": "قاعد يعالج...",
+      "cropTitle": "قص وتغيير الحجم",
+      "cropDescription": "اسحب لتحريك الصورة، استخدم التكبير، ثم اختر عرض المخرجات.",
+      "uploadMode": "طريقة الرفع",
+      "modeCrop": "قص وتغيير الحجم",
+      "modeOriginal": "استخدم الأبعاد الأصلية",
+      "originalModeHint": "سيتم رفع الصورة كاملة بدون قص أو تغيير أبعادها.",
+      "zoom": "التكبير",
+      "cropBoxWidth": "عرض مربع القص",
+      "cropBoxHeight": "ارتفاع مربع القص",
+      "resetCropBox": "إعادة ضبط مربع القص",
+      "outputSize": "عرض الصورة النهائية",
+      "sizeOriginal": "بحجم القص",
+      "size1920": "كبير (1920 بكسل)",
+      "size1200": "متوسط (1200 بكسل)",
+      "size800": "صغير (800 بكسل)",
+      "size400": "مصغّر (400 بكسل)",
+      "cancel": "إلغاء",
+      "confirmCrop": "ارفع الصورة بعد القص",
+      "confirmOriginal": "ارفع الصورة الأصلية",
+      "fileTooLarge": "حجم الصورة يجب أن يكون 8 ميجابايت أو أقل.",
+      "cropFailed": "تعذّر قص الصورة. جرّب ملفًا آخر.",
+      "sharedUrl": "رابط الصورة المشتركة",
+      "arabicOverrideUrl": "رابط الصورة العربية (اختياري)",
+      "englishOverrideUrl": "رابط الصورة الإنجليزية (اختياري)"
+    },
+    "home": {
+      "title": "محرر الصفحة الرئيسية",
+      "subtitle": "عدّل المحتوى بالعربي والإنجليزي، وارفع الصور والوسائط، ورتّب أقسام الصفحة.",
+      "draftSaved": "تم حفظ مسودة الصفحة الرئيسية. محتواك بالعربي والإنجليزي محفوظ ويمكنك متابعة التعديل.",
+      "groups": {
+        "settings": "إعدادات عامة",
+        "hero": "الهيرو",
+        "content": "أقسام الصفحة",
+        "footer": "الفوتر"
+      },
+      "sections": {
+        "seo": "تحسين الظهور",
+        "shell": "الهيدر والتحميل",
+        "nav": "القائمة",
+        "hero": "الهيرو",
+        "about": "عنّا",
+        "vision": "الرؤية والرسالة",
+        "process": "خطوات الشغل",
+        "products": "المنتجات",
+        "services": "الخدمات",
+        "sectors": "القطاعات",
+        "why": "ليش نحن",
+        "market": "السوق",
+        "footer": "الفوتر"
+      },
+      "fields": {
+        "metaTitle": "عنوان الصفحة",
+        "metaDescription": "وصف الصفحة",
+        "ogTitle": "عنوان المشاركة",
+        "ogDescription": "وصف المشاركة",
+        "ogImage": "صورة المشاركة",
+        "brandName": "اسم البراند",
+        "mobileSubtitle": "نص فرعي للمنيو",
+        "switchToArabic": "نص التبديل للعربي",
+        "switchToEnglish": "نص التبديل للإنجليزي",
+        "headerLogo": "شعار الهيدر",
+        "loadingLabel": "نص التحميل",
+        "loadingAnimation": "أنيميشن التحميل",
+        "titleLine1": "أول سطر بالعنوان",
+        "titleLine2Prefix": "بداية السطر الثاني",
+        "heroDescription": "وصف الهيرو",
+        "heroBrushImage": "صورة الفرشاة",
+        "heroPersonImage": "صورة الشخص",
+        "carouselLabel": "نص السلايدر",
+        "activeService": "نص الخدمة الحالية",
+        "goToService": "نص روح للخدمة",
+        "phoneFrameImage": "صورة إطار الجوال",
+        "screenImage": "صورة الشاشة",
+        "descriptionPart1": "الوصف — الجزء الأول",
+        "descriptionPart2": "الوصف — الجزء الثاني",
+        "marketVisualImage": "صورة السوق",
+        "contactTitle": "عنوان التواصل",
+        "quickLinksTitle": "عنوان الروابط السريعة",
+        "footerDescription": "وصف الفوتر",
+        "copyright": "حقوق الملكية",
+        "backToTop": "نص طلّع فوق",
+        "kuwaitLabel": "نص الكويت",
+        "footerLogo": "شعار الفوتر"
+      },
+      "repeaters": {
+        "navLinks": "روابط القائمة",
+        "navItem": "رابط {index}",
+        "footerLinks": "روابط الفوتر",
+        "heroPhrases": "كلمات تدور بالعنوان",
+        "phrase": "الكلمة",
+        "aboutCards": "بطاقات عنّا",
+        "visionMission": "الرؤية والرسالة",
+        "processSteps": "خطوات الشغل",
+        "productItems": "بطاقات المنتجات",
+        "serviceItems": "بطاقات الخدمات",
+        "sectorItems": "بطاقات القطاعات",
+        "whyReasons": "ليش نحن",
+        "marketOutcomes": "نتائج السوق",
+        "contactMethods": "طرق التواصل",
+        "socialLinks": "روابط السوشيال"
+      }
+    },
+    "about": {
+      "title": "محرر صفحة من نحن",
+      "subtitle": "عدّل المحتوى بالعربي والإنجليزي وأقسام المنتجات.",
+      "draftSaved": "تم حفظ مسودة صفحة من نحن. أقسام المنتجات والمحتوى ثنائي اللغة محفوظان.",
+      "groups": {
+        "settings": "إعدادات الصفحة",
+        "content": "المحتوى"
+      },
+      "sections": {
+        "seo": "تحسين الظهور",
+        "hero": "الهيرو",
+        "products": "المنتجات"
+      },
+      "fields": {
+        "metaTitle": "عنوان الصفحة",
+        "metaDescription": "وصف الصفحة",
+        "ogTitle": "عنوان المشاركة",
+        "ogDescription": "وصف المشاركة",
+        "ogImage": "صورة المشاركة",
+        "title": "العنوان",
+        "productImage": "صورة المنتج",
+        "offersLabel": "نص العروض",
+        "audienceLabel": "نص الجمهور",
+        "downloadTitle": "عنوان التحميل",
+        "preLabel": "النص قبل الزر",
+        "storeLabel": "نص المتجر",
+        "storeUrl": "رابط المتجر"
+      },
+      "repeaters": {
+        "productSections": "أقسام المنتجات",
+        "product": "منتج {index}",
+        "offers": "العروض",
+        "audience": "الجمهور",
+        "offersItem": "عنصر عروض",
+        "audienceItem": "عنصر جمهور",
+        "storeButtons": "أزرار المتاجر"
+      },
+      "productsUi": {
+        "hint": "كل منتج يظهر كبطاقة. اضغط تعديل عشان تفتح التفاصيل.",
+        "empty": "ماكو منتجات للحين. اضغط «إضافة منتج» عشان تبدي.",
+        "hidden": "مخفي",
+        "visible": "ظاهر",
+        "edit": "تعديل",
+        "delete": "حذف",
+        "moveUp": "فوق",
+        "moveDown": "تحت",
+        "deleteTitle": "تأكيد الحذف",
+        "deleteBody": "متأكد تبي تحذف «{title}»؟ لازم تحفظ المسودة عشان ينطبق الحذف.",
+        "cancel": "إلغاء",
+        "confirmDelete": "أي، احذف",
+        "editTitle": "تعديل منتج {index}",
+        "createTitle": "منتج جديد",
+        "dialogHint": "عدّل تفاصيل المنتج هنا، ثم اضغط «تم» لإغلاق النافذة.",
+        "saveReminder": "لن تُحفظ التغييرات إلا بعد الضغط على «حفظ مسودة من نحن» أعلى الصفحة.",
+        "done": "تم",
+        "detailEnabled": "صفحة التفاصيل مفعّلة"
+      },
+      "detailPage": {
+        "title": "صفحة تفاصيل المشروع",
+        "body": "أنشئ صفحة مستقلة بمعلومات إضافية عن المشروع.",
+        "enable": "تفعيل صفحة تفاصيل المشروع",
+        "slug": "الرابط المختصر للمشروع",
+        "tagline": "العبارة التعريفية",
+        "overview": "نظرة عامة موسّعة",
+        "highlights": "أبرز النقاط",
+        "highlightItem": "نقطة",
+        "stats": "إحصائيات المشروع",
+        "statItem": "إحصائية",
+        "statValue": "قيمة الإحصائية",
+        "statLabel": "وصف الإحصائية",
+        "gallery": "معرض الصور",
+        "galleryItem": "صورة",
+        "galleryImage": "صورة المعرض",
+        "galleryCaption": "وصف الصورة",
+        "seoTitle": "تحسين ظهور صفحة التفاصيل",
+        "ctaLabel": "نص زر خارجي",
+        "ctaHref": "رابط خارجي",
+        "slugPlaceholder": "بو-حمدان"
+      }
+    },
+    "blog": {
+      "managerTitle": "مقالات المدونة",
+      "managerBody": "أنشئ مقالات ثنائية اللغة مع بيانات السيو، صورة الغلاف، التصنيف، والوسوم. احفظ مسودة أو انشر مباشرة.",
+      "newPost": "مقال جديد",
+      "editPost": "تعديل المقال",
+      "edit": "تعديل",
+      "loading": "جاري تحميل المقالات...",
+      "emptyTitle": "ما في مقالات للحين",
+      "emptyBody": "أنشئ أول مقال عشان تبدأ تنشر محتوى وأخبار ودلائل.",
+      "deleteTitle": "تبي تحذف المقال؟",
+      "deleteBody": "ما تقدر ترجع عن هذا الإجراء.",
+      "cancel": "إلغاء",
+      "confirmDelete": "أي، احذف",
+      "backToList": "رجوع للمقالات",
+      "editorBody": "عبّي المحتوى بالعربي والإنجليزي، وبعدين احفظ مسودة أو انشر.",
+      "editorHintEn": "استخدم رابطًا مختصرًا ووصفًا مناسبًا لتحسين الظهور في البحث.",
+      "editorHintAr": "اكتب عنوانًا واضحًا ووصفًا ميتا مناسبًا لتحسين الظهور في البحث.",
+      "preview": "معاينة",
+      "saveDraft": "حفظ مسودة",
+      "publish": "نشر",
+      "saved": "تم حفظ المقال.",
+      "draftCreated": "تم إنشاء مسودة مقال جديدة. يمكنك متابعة التعديل أو النشر عند الجاهزية.",
+      "draftUpdated": "تم تحديث مسودة المقال بآخر تعديلاتك.",
+      "publishedSuccess": "تم نشر المقال وهو الآن ظاهر في المدونة العامة.",
+      "deletedSuccess": "تم حذف المقال وإزالته من المدونة.",
+      "validationFailed": "أكمل {count} حقول مطلوبة قبل الحفظ. ركّزنا على أول حقل يحتاج تعديل.",
+      "sections": {
+        "settings": "إعدادات المقال",
+        "content": "المحتوى",
+        "seo": "تحسين الظهور"
+      },
+      "fields": {
+        "slug": "الرابط المختصر",
+        "category": "التصنيف",
+        "author": "اسم الكاتب",
+        "tags": "الوسوم (مفصولة بفاصلة)",
+        "title": "العنوان",
+        "excerpt": "المقتطف",
+        "coverImage": "صورة الغلاف",
+        "body": "نص المقال",
+        "metaTitle": "عنوان الميتا",
+        "metaDescription": "وصف الميتا",
+        "ogTitle": "عنوان المشاركة",
+        "ogDescription": "وصف المشاركة"
+      },
+      "placeholders": {
+        "slug": "مثال-مقال-جديد",
+        "tags": "تسويق، الكويت، تطبيقات"
+      },
+      "categories": {
+        "insights": "رؤى",
+        "news": "أخبار",
+        "guides": "دلائل"
+      },
+      "status": {
+        "draft": "مسودة",
+        "published": "منشور",
+        "archived": "مؤرشف"
+      }
+    }
+  },
+  "blog": {
+    "index": {
+      "eyebrow": "مدونة الحمدان الرقمية",
+      "title": "رؤى وأخبار ودلائل رقمية",
+      "description": "مقالات عملية عن المنتجات الرقمية والتسويق والتقنية من فريق الحمدان الرقمية.",
+      "emptyTitle": "ما في مقالات منشورة للحين",
+      "emptyBody": "ارجع قريبًا لمقالات وتحديثات جديدة."
+    },
+    "backToBlog": "رجوع للمدونة",
+    "readingTime": "{minutes} دقائق قراءة",
+    "categories": {
+      "insights": "رؤى",
+      "news": "أخبار",
+      "guides": "دلائل"
+    },
+    "samples": [
+      {
+        "id": "sample-1",
+        "slug": "why-bilingual-content-matters",
+        "category": "insights",
+        "tags": ["content", "arabic", "seo"],
+        "authorName": "Al Hamdan Digital",
+        "publishedAt": "2025-12-01T08:00:00.000Z",
+        "title": {
+          "ar": "لماذا المحتوى ثنائي اللغة مهم لعلامتك؟",
+          "en": "Why bilingual content matters for your brand"
+        },
+        "excerpt": {
+          "ar": "الجمع بين العربية والإنجليزية يوسّع الوصول ويعزز الثقة في السوق الكويتي والخليجي.",
+          "en": "Combining Arabic and English expands reach and builds trust in Kuwait and the Gulf."
+        },
+        "body": {
+          "ar": "<p>المحتوى ثنائي اللغة ليس ترجمة حرفية فقط، بل تجربة محلية كاملة تشمل العناوين، والصور، والدعوات للإجراء.</p><p>ابدأ بتحديد نبرة واحدة لكل لغة، ثم حافظ على نفس الرسالة الأساسية في الحقلين.</p>",
+          "en": "<p>Bilingual content is not just literal translation. It is a localized experience across headlines, visuals, and calls to action.</p><p>Start with one tone per language while keeping the same core message in both fields.</p>"
+        },
+        "seo": {
+          "metaTitle": {
+            "ar": "لماذا المحتوى ثنائي اللغة مهم | Al Hamdan Digital",
+            "en": "Why bilingual content matters | Al Hamdan Digital"
+          },
+          "metaDescription": {
+            "ar": "دليل سريع لبناء محتوى عربي وإنجليزي يخدم جمهورك في الكويت.",
+            "en": "A quick guide to building Arabic and English content for your Kuwait audience."
+          },
+          "ogTitle": {
+            "ar": "لماذا المحتوى ثنائي اللغة مهم",
+            "en": "Why bilingual content matters"
+          },
+          "ogDescription": {
+            "ar": "نصائح عملية لتحرير محتوى ثنائي اللغة.",
+            "en": "Practical tips for bilingual content editing."
+          }
+        }
+      }
+    ]
+  },
+  "projects": {
+    "backToProducts": "رجوع لمنتجاتنا",
+    "exploreProject": "تعرّف على المشروع",
+    "overviewTitle": "نظرة عامة عن المشروع",
+    "highlightsTitle": "أبرز النقاط",
+    "galleryTitle": "معرض الصور",
+    "externalCta": "زيارة المشروع"
   }
 }

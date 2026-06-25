@@ -23,27 +23,24 @@ export function MarketOutcomePills({
         "grid w-full gap-y-3",
         compact
           ? "mx-auto max-w-[507px] grid-cols-1"
-          : "mt-8 max-w-[507px] grid-cols-2 gap-x-6 gap-y-4",
+          : "mx-auto mt-8 max-w-[507px] grid-cols-2 gap-x-6 gap-y-4",
         className
       )}
       staggerMs={55}
       variant="fade-up"
     >
-      {outcomes.map((item, index) => (
+      {outcomes.map((item) => (
         <span
           key={item}
           className={cn(
-            "flex h-11 w-full items-center justify-start gap-2 rounded-full bg-[#f3f3f3] px-4 text-start font-bold text-[#0d0d0d]",
+            "flex h-11 w-full items-center justify-start gap-2 rounded-full bg-card-muted px-4 text-start font-bold text-ink",
             compact ? "text-xs sm:text-sm" : "text-[14px]",
-            !compact &&
-              index === outcomes.length - 1 &&
-              "col-span-2 w-full justify-self-start",
             pillClassName
           )}
         >
           <Check
             className={cn(
-              "shrink-0 rounded-full bg-[#012561] p-1 text-white",
+              "shrink-0 rounded-full bg-brand p-1 text-white",
               compact ? "h-4 w-4" : "h-5 w-5"
             )}
             aria-hidden

@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "@/components/motion";
+import { RichTextHtml } from "@/lib/cms/rich-text";
 import { cn } from "@/lib/utils";
 
 const WHEEL_COOLDOWN_MS = 900;
@@ -18,7 +19,9 @@ type ServiceItem = {
   title: string;
   body: string;
   phoneImage: string;
+  phoneImageAlt?: string;
   visualImage: string;
+  visualImageAlt?: string;
 };
 
 type ServicesContent = {
@@ -69,25 +72,25 @@ function ServicesMedia({
       >
         <Image
           src={item.visualImage}
-          alt=""
+          alt={item.visualImageAlt ?? ""}
           width={519}
           height={554}
           className={cn(
             "absolute object-contain",
             compact
-              ? "inset-x-0 bottom-0 mx-auto h-[280px] w-auto sm:h-[340px]"
+              ? "inset-x-0 bottom-0 mx-auto h-[250px] w-auto sm:h-[290px]"
               : "left-[38px] top-[47px] h-[554px] w-[519px]"
           )}
         />
         <Image
           src={item.phoneImage}
-          alt=""
+          alt={item.phoneImageAlt ?? ""}
           width={548}
           height={480}
           className={cn(
             "absolute object-contain",
             compact
-              ? "inset-x-0 bottom-6 mx-auto h-[240px] w-auto sm:h-[300px]"
+              ? "inset-x-0 bottom-4 mx-auto h-[210px] w-auto sm:h-[250px]"
               : "left-0 top-[78px] h-[480px] w-[548px]"
           )}
         />
@@ -116,59 +119,67 @@ function ServiceRow({
   rowRef: (node: HTMLElement | null) => void;
 }) {
   const reducedMotion = useReducedMotion();
+  const locale = useLocale();
+  const isRtl = locale === "ar";
 
   return (
     <article
       ref={rowRef}
       data-service-row
       data-index={index}
-      data-ar
       className={cn(
-        "grid grid-cols-[16px_1fr] items-stretch gap-6 border-b border-[#e8e8e8] py-8 last:border-b-0 lg:min-h-[200px] lg:gap-8 lg:py-12 lg:last:border-b-0",
-        !isLast && "lg:border-b lg:border-[#e8e8e8]"
+        "border-b border-border-soft py-8 last:border-b-0 lg:min-h-[200px] lg:py-12 lg:last:border-b-0",
+        !isLast && "lg:border-b lg:border-border-soft"
       )}
     >
-      <button
-        type="button"
-        onClick={onSelect}
-        aria-label={goToLabel}
-        aria-current={isActive ? "true" : undefined}
-        className="relative my-auto min-h-[72px] w-4 shrink-0 lg:min-h-[96px]"
-      >
-        {!isActive && (
-          <span className="absolute inset-y-0 left-1/2 w-1 -translate-x-1/2 rounded-full bg-[#d1d5db] transition-colors duration-300" />
-        )}
-        {isActive && (
-          <motion.span
-            layoutId="services-active-indicator"
-            className="absolute inset-y-0 left-1/2 w-1.5 -translate-x-1/2 rounded-full bg-[#012561]"
-            transition={reducedMotion ? { duration: 0 } : springTransition}
-          />
-        )}
-      </button>
+      <div className="grid grid-cols-[minmax(0,1fr)_16px] items-stretch gap-6 lg:gap-8">
+        <button
+          type="button"
+          onClick={onSelect}
+          dir={isRtl ? "rtl" : "ltr"}
+          className="min-w-0 w-full text-start"
+        >
+          <motion.h3
+            className="text-start text-2xl font-semibold leading-[1.4] [unicode-bidi:normal] lg:text-[28px] lg:leading-[42px]"
+            animate={{
+              color: isActive ? "var(--ink)" : "var(--ink-inactive)",
+            }}
+            transition={smoothTransition}
+          >
+            {title}
+          </motion.h3>
+          <motion.div
+            className="mt-2 text-start text-lg leading-8 [unicode-bidi:normal] lg:mt-2 lg:text-[24px] lg:leading-9"
+            animate={{
+              color: isActive ? "var(--ink-tertiary)" : "var(--ink-inactive-soft)",
+              opacity: isActive ? 1 : 0.65,
+              y: isActive ? 0 : 6,
+            }}
+            transition={smoothTransition}
+          >
+            <RichTextHtml html={body} className="text-start [unicode-bidi:normal]" />
+          </motion.div>
+        </button>
 
-      <button type="button" onClick={onSelect} className="text-right">
-        <motion.h3
-          className="text-2xl font-semibold leading-[1.4] lg:text-[28px] lg:leading-[42px]"
-          animate={{
-            color: isActive ? "#0d0d0d" : "#b8b8b8",
-          }}
-          transition={smoothTransition}
+        <button
+          type="button"
+          onClick={onSelect}
+          aria-label={goToLabel}
+          aria-current={isActive ? "true" : undefined}
+          className="relative my-auto min-h-[72px] w-4 shrink-0 lg:min-h-[96px]"
         >
-          {title}
-        </motion.h3>
-        <motion.p
-          className="mt-2 text-lg leading-8 lg:mt-2 lg:text-[24px] lg:leading-9"
-          animate={{
-            color: isActive ? "#525252" : "#c8c8c8",
-            opacity: isActive ? 1 : 0.65,
-            y: isActive ? 0 : 6,
-          }}
-          transition={smoothTransition}
-        >
-          {body}
-        </motion.p>
-      </button>
+          {!isActive && (
+            <span className="absolute inset-y-0 left-1/2 w-1 -translate-x-1/2 rounded-full bg-border-muted transition-colors duration-300" />
+          )}
+          {isActive && (
+            <motion.span
+              layoutId="services-active-indicator"
+              className="absolute inset-y-0 left-1/2 w-1.5 -translate-x-1/2 rounded-full bg-brand"
+              transition={reducedMotion ? { duration: 0 } : springTransition}
+            />
+          )}
+        </button>
+      </div>
     </article>
   );
 }
@@ -330,10 +341,10 @@ export function ServicesSection({ className, id, services }: ServicesSectionProp
       aria-label={carouselLabel}
       className={cn("outline-none", className)}
     >
-      <div className="grid h-full w-full grid-cols-1 gap-8 lg:grid-cols-[minmax(0,628px)_minmax(0,1fr)] lg:gap-10">
+      <div className="grid h-full w-full grid-cols-1 gap-6 lg:grid-cols-[minmax(0,628px)_minmax(0,1fr)] lg:gap-10">
         <motion.div
           ref={mediaRef}
-          className="relative order-2 min-h-[360px] lg:order-none lg:min-h-0"
+          className="relative order-2 min-h-0 lg:order-none"
           initial={reducedMotion ? false : { opacity: 0, y: 80 }}
           whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.28 }}
@@ -347,7 +358,7 @@ export function ServicesSection({ className, id, services }: ServicesSectionProp
               compact={false}
             />
           </div>
-          <div className="relative h-[320px] sm:h-[380px] lg:hidden">
+          <div className="relative h-[280px] sm:h-[320px] lg:hidden">
             <ServicesMedia
               item={activeItem}
               swapKey={activeIndex}

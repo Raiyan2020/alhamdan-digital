@@ -16,9 +16,6 @@ import { Reveal, Stagger } from "@/components/motion";
 import { useInViewOnce } from "@/components/motion/useInViewOnce";
 import { cn } from "@/lib/utils";
 
-const PHONE_FRAME_SRC = "/figma/why-phone.webp";
-const SCREEN_IMAGE_SRC = "/full-website.png";
-
 const reasonIcons: LucideIcon[] = [
   Handshake,
   Gauge,
@@ -34,9 +31,25 @@ type WhySectionProps = {
   reasons: string[];
   className?: string;
   desktop?: boolean;
+  phoneFrameImage?: string;
+  phoneFrameImageAlt?: string;
+  screenImage?: string;
+  screenImageAlt?: string;
 };
 
-function WhyPhone({ desktop = false }: { desktop?: boolean }) {
+function WhyPhone({
+  desktop = false,
+  phoneFrameImage = "/figma/why-phone.webp",
+  phoneFrameImageAlt = "",
+  screenImage = "/full-website.png",
+  screenImageAlt = "",
+}: {
+  desktop?: boolean;
+  phoneFrameImage?: string;
+  phoneFrameImageAlt?: string;
+  screenImage?: string;
+  screenImageAlt?: string;
+}) {
   const reducedMotion = useReducedMotion();
   const viewportRef = useRef<HTMLDivElement>(null);
   const { ref: inViewRef, visible } = useInViewOnce({ threshold: 0.35 });
@@ -77,8 +90,8 @@ function WhyPhone({ desktop = false }: { desktop?: boolean }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       <Image
-        src={PHONE_FRAME_SRC}
-        alt=""
+        src={phoneFrameImage}
+        alt={phoneFrameImageAlt}
         width={525}
         height={620}
         priority={desktop}
@@ -111,8 +124,8 @@ function WhyPhone({ desktop = false }: { desktop?: boolean }) {
           }
         >
           <Image
-            src={SCREEN_IMAGE_SRC}
-            alt=""
+            src={screenImage}
+            alt={screenImageAlt}
             width={390}
             height={3200}
             sizes="(min-width: 1440px) 408px, 70vw"
@@ -130,11 +143,11 @@ function ReasonItem({ reason, index }: { reason: string; index: number }) {
 
   return (
     <motion.li
-      className="group relative flex items-center gap-4 pb-2 text-left text-[22px] font-semibold text-white max-sm:text-lg"
+      className="group relative flex w-full max-w-full items-center justify-start gap-4 pb-2 text-start text-[22px] font-semibold text-white max-sm:text-lg"
       whileHover="hover"
     >
       <motion.span
-        className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-full bg-white text-[#012561]"
+        className="order-1 grid h-[34px] w-[34px] shrink-0 place-items-center rounded-full bg-white text-brand"
         variants={{
           hover: {
             rotate: [0, -8, 8, 0],
@@ -145,36 +158,63 @@ function ReasonItem({ reason, index }: { reason: string; index: number }) {
       >
         <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
       </motion.span>
-      <span dir="auto" className="block flex-1 text-start leading-[1.7]">
+      <span dir="auto" className="order-2 min-w-0 text-start leading-[1.7] [unicode-bidi:normal]">
         {reason}
       </span>
       <span
         aria-hidden
-        className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-white/80 transition-transform duration-300 group-hover:scale-x-100"
+        className="absolute bottom-0 start-0 h-px w-full origin-start scale-x-0 bg-white/80 transition-transform duration-300 group-hover:scale-x-100"
       />
     </motion.li>
   );
 }
 
-export function WhySection({ id, title, reasons, className, desktop = false }: WhySectionProps) {
+export function WhySection({
+  id,
+  title,
+  reasons,
+  className,
+  desktop = false,
+  phoneFrameImage,
+  phoneFrameImageAlt,
+  screenImage,
+  screenImageAlt,
+}: WhySectionProps) {
   return (
     <section id={id} className={cn("text-white", className)}>
       <Reveal variant="image" className={cn(!desktop && "order-2 md:order-none")}>
-        <WhyPhone desktop={desktop} />
+        <WhyPhone
+          desktop={desktop}
+          phoneFrameImage={phoneFrameImage}
+          phoneFrameImageAlt={phoneFrameImageAlt}
+          screenImage={screenImage}
+          screenImageAlt={screenImageAlt}
+        />
       </Reveal>
-      <div data-ar className={cn(desktop ? "pt-[75px]" : "order-1 md:order-none")}>
-        <Reveal variant="section-heading">
+      <div
+        data-ar
+        className={cn(
+          "flex w-full min-w-0 flex-col items-start text-start",
+          desktop ? "pt-[75px]" : "order-1 md:order-none",
+        )}
+      >
+        <Reveal variant="section-heading" className="w-full">
           <h2
             dir="auto"
             className={cn(
-              "font-medium text-white",
-              desktop ? "text-[48px] leading-[72px]" : "text-3xl sm:text-4xl"
+              "w-full text-start font-medium text-white [unicode-bidi:normal]",
+              desktop ? "text-[48px] leading-[72px]" : "text-3xl sm:text-4xl",
             )}
           >
             {title}
           </h2>
         </Reveal>
-        <Stagger as="ul" className="mt-8 grid gap-[14px]" staggerMs={70} variant="fade-up">
+        <Stagger
+          as="ul"
+          className="mt-8 grid w-full max-w-full justify-items-start gap-[14px]"
+          staggerMs={70}
+          variant="fade-up"
+        >
           {reasons.map((reason, index) => (
             <ReasonItem key={reason} reason={reason} index={index} />
           ))}

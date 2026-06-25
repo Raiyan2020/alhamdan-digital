@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
+import { resolveImageSrc, imageFallbacks } from "@/lib/media/image-url";
 import { Link } from "@/i18n/navigation";
 import { logoHoverTransition } from "@/lib/motion/variants";
 import { cn } from "@/lib/utils";
@@ -12,6 +13,8 @@ type HeaderLogoProps = {
   width?: number;
   height?: number;
   priority?: boolean;
+  src?: string;
+  alt?: string;
 };
 
 export function HeaderLogo({
@@ -20,8 +23,11 @@ export function HeaderLogo({
   width = 80,
   height = 72,
   priority = false,
+  src = imageFallbacks.headerLogo,
+  alt = "Al Hamdan Digital",
 }: HeaderLogoProps) {
   const reducedMotion = useReducedMotion();
+  const logoSrc = resolveImageSrc(src, imageFallbacks.headerLogo);
 
   return (
     <Link href="/" className={cn("inline-flex shrink-0", className)}>
@@ -41,8 +47,8 @@ export function HeaderLogo({
         transition={logoHoverTransition}
       >
         <Image
-          src="/figma/logo-header.webp"
-          alt="Al Hamdan Digital"
+          src={logoSrc}
+          alt={alt}
           width={width}
           height={height}
           className={cn(

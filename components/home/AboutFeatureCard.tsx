@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "motion/react";
+import { RichTextHtml } from "@/lib/cms/rich-text";
 import { cn } from "@/lib/utils";
 import {
   aboutCardIconClass,
@@ -54,7 +55,7 @@ export function AboutFeatureCard({
 }: AboutFeatureCardProps) {
   const reducedMotion = useReducedMotion();
   const Icon = aboutCardIconMap[icon];
-  const { bg } = aboutCardStyles[cardKey];
+  const { bgVar } = aboutCardStyles[cardKey];
   const offset = offsetByDirection[direction];
 
   return (
@@ -65,7 +66,7 @@ export function AboutFeatureCard({
         aboutCardSharedClass,
         className,
       )}
-      style={{ backgroundColor: bg }}
+      style={{ backgroundColor: bgVar }}
       initial={reducedMotion ? false : { opacity: 0, x: offset.x, y: offset.y, scale: 0.96 }}
       whileInView={reducedMotion ? undefined : { opacity: 1, x: 0, y: 0, scale: 1 }}
       whileHover={reducedMotion ? undefined : "hover"}
@@ -84,7 +85,7 @@ export function AboutFeatureCard({
         <Icon className="h-6 w-6" aria-hidden />
       </motion.span>
       <h3 className={titleClassName}>{title}</h3>
-      <p className={bodyClassName}>{body}</p>
+      <RichTextHtml html={body} className={bodyClassName} />
     </motion.article>
   );
 }
