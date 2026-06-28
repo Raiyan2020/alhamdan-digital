@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireAdminSession } from "@/lib/auth/require-admin";
 import type { BlogPostStatus, CmsBlogPostPayload } from "@/lib/cms/blog-types";
 import {
+  blogPostStatusSchema,
   cmsBlogPostPayloadSchema,
   sanitizeCmsBlogPostPayload,
 } from "@/lib/cms/blog-validation";
@@ -17,10 +18,19 @@ function revalidateBlogPaths(slug?: string) {
   revalidatePath("/blog");
   revalidatePath("/ar/blog");
   revalidatePath("/en/blog");
+  revalidatePath("/blogs");
+  revalidatePath("/ar/blogs");
+  revalidatePath("/en/blogs");
+  revalidatePath("/");
+  revalidatePath("/ar");
+  revalidatePath("/en");
   if (slug) {
     revalidatePath(`/blog/${slug}`);
     revalidatePath(`/ar/blog/${slug}`);
     revalidatePath(`/en/blog/${slug}`);
+    revalidatePath(`/blogs/${slug}`);
+    revalidatePath(`/ar/blogs/${slug}`);
+    revalidatePath(`/en/blogs/${slug}`);
   }
 }
 
@@ -64,11 +74,29 @@ export async function PATCH(request: NextRequest, context: Context) {
   if (auth.response) return auth.response;
 
   const { id } = await context.params;
-  const json = await request.json();
-  const status = json.status as BlogPostStatus | undefined;
-  const payloadParsed = json.payload
-    ? cmsBlogPostPayloadSchema.safeParse(json.payload)
+  let json: unknown;
+  try {
+    json = await request.json();
+  } catch {
+    return NextResponse.json(
+      { ok: false, message: "Invalid request body." },
+      { status: 400 },
+    );
+  }
+
+  const body = json && typeof json === "object" ? json as Record<string, unknown> : {};
+  const statusParsed = body.status ? blogPostStatusSchema.safeParse(body.status) : null;
+  const status = statusParsed?.success ? statusParsed.data : undefined;
+  const payloadParsed = body.payload
+    ? cmsBlogPostPayloadSchema.safeParse(body.payload)
     : null;
+
+  if (statusParsed && !statusParsed.success) {
+    return NextResponse.json(
+      { ok: false, message: "Invalid post status." },
+      { status: 400 },
+    );
+  }
 
   if (payloadParsed && !payloadParsed.success) {
     return NextResponse.json(

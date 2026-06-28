@@ -42,6 +42,7 @@ const navHrefs = [
   { key: "about", href: "/about" },
   { key: "products", href: `/#${sectionIds.products}` },
   { key: "services", href: `/#${sectionIds.services}` },
+  { key: "blog", href: "/blogs" },
   { key: "why", href: `/#${sectionIds.why}` },
 ] as const;
 
@@ -75,6 +76,9 @@ export function SiteHeader({ layout, navItems, header, className }: SiteHeaderPr
 
   const isNavActive = (href: string) => {
     if (href === "/about") return pathname === "/about";
+    if (href === "/blogs") {
+      return pathname === "/blogs" || pathname.startsWith("/blogs/");
+    }
     return pathname === "/" && href === `/#${sectionIds.hero}`;
   };
 

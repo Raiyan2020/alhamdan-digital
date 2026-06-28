@@ -1,7 +1,15 @@
 import { ABOUT_CMS_SECTIONS, HOME_CMS_SECTIONS } from "@/lib/cms/section-nav";
 import type { DashboardView } from "@/components/dashboard/types";
 
-const DASHBOARD_VIEWS = ["overview", "home", "about", "blog"] as const satisfies readonly DashboardView[];
+const DASHBOARD_VIEWS = ["overview", "home", "about", "blog", "profile"] as const satisfies readonly DashboardView[];
+
+export const DASHBOARD_VIEW_PATHS = {
+  overview: "/dashboard",
+  home: "/dashboard/home",
+  about: "/dashboard/about",
+  blog: "/dashboard/blog",
+  profile: "/dashboard/profile",
+} as const satisfies Record<DashboardView, string>;
 
 export function isDashboardView(value: string | null | undefined): value is DashboardView {
   return Boolean(value && DASHBOARD_VIEWS.includes(value as DashboardView));
@@ -33,14 +41,11 @@ export function buildDashboardContentPath(
 ) {
   const params = new URLSearchParams();
 
-  if (view !== "overview") {
-    params.set("view", view);
-  }
-
   if (view === "home" || view === "about") {
     params.set("section", parseDashboardSection(view, section ?? null));
   }
 
   const query = params.toString();
-  return query ? `/dashboard/content?${query}` : "/dashboard/content";
+  const path = DASHBOARD_VIEW_PATHS[view];
+  return query ? `${path}?${query}` : path;
 }

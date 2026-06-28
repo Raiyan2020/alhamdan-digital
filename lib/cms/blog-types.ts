@@ -60,6 +60,20 @@ export type BlogIndexContent = {
   emptyBody: string;
 };
 
+export type BlogPagination = {
+  currentPage: number;
+  pageSize: number;
+  totalItems: number;
+  totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+};
+
+export type PaginatedBlogSummaries = {
+  posts: LocalizedBlogPostSummary[];
+  pagination: BlogPagination;
+};
+
 export type CmsLocaleBlogContext = {
   locale: CmsLocale;
 };

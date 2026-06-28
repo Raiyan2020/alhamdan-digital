@@ -10,6 +10,7 @@
     "about": "About Us",
     "products": "Our Apps",
     "services": "Services",
+    "blog": "Blog",
     "why": "Why Us",
     "menu": "Open menu",
     "closeMenu": "Close menu",
@@ -196,7 +197,24 @@
     "tipsTitle": "Editor tips",
     "tipOne": "Save drafts after major section changes to avoid losing work.",
     "tipTwo": "Use Arabic and English fields together to keep locales aligned.",
-    "tipThree": "Upload WebP-ready images for faster public page loads."
+    "tipThree": "Upload WebP-ready images for faster public page loads.",
+    "profile": {
+      "eyebrow": "Admin account",
+      "title": "Profile and security",
+      "subtitle": "Update the admin identity used across the dashboard and rotate the password when needed.",
+      "profileCardTitle": "Profile details",
+      "passwordCardTitle": "Change password",
+      "name": "Display name",
+      "email": "Email address",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "saveProfile": "Save profile",
+      "savePassword": "Update password",
+      "saving": "Saving...",
+      "profileSaved": "Profile updated.",
+      "passwordSaved": "Password updated."
+    }
   },
   "aboutPage": {
     "seo": {
@@ -535,7 +553,7 @@
         "editTitle": "Edit product {index}",
         "createTitle": "New product",
         "dialogHint": "Edit the product details here, then click Done to close this window.",
-        "saveReminder": "Changes are not saved until you click Save About Draft at the top of the page.",
+        "saveReminder": "Click Done to save this product into the About draft.",
         "done": "Done",
         "detailEnabled": "Detail page enabled"
       },
@@ -624,6 +642,13 @@
     }
   },
   "blog": {
+    "home": {
+      "eyebrow": "Latest articles",
+      "title": "Fresh ideas from the blog",
+      "description": "Read the newest updates, product thinking, and practical digital guides from the Al Hamdan Digital team.",
+      "viewAll": "View all articles",
+      "empty": "Articles will appear here after they are published from the dashboard."
+    },
     "index": {
       "eyebrow": "Al Hamdan Digital Blog",
       "title": "Insights, news, and digital guides",
@@ -633,6 +658,12 @@
     },
     "backToBlog": "Back to blog",
     "readingTime": "{minutes} min read",
+    "pagination": {
+      "label": "Blog pagination",
+      "previous": "Previous",
+      "next": "Next",
+      "pageStatus": "Page {page} of {total}"
+    },
     "categories": {
       "insights": "Insights",
       "news": "News",

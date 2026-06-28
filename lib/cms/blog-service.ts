@@ -9,6 +9,7 @@ import type {
   CmsBlogPostRecord,
   LocalizedBlogPost,
   LocalizedBlogPostSummary,
+  PaginatedBlogSummaries,
 } from "./blog-types";
 import type { CmsLocale } from "./types";
 import { pickLocalizedMediaUrl } from "@/lib/media/image-url";
@@ -203,6 +204,35 @@ export async function getPublishedBlogSummaries(): Promise<LocalizedBlogPostSumm
   const records = await getPublishedBlogPosts();
 
   return records.map((record) => localizePostSummary(record, locale));
+}
+
+export async function getLatestBlogSummaries(limit = 3): Promise<LocalizedBlogPostSummary[]> {
+  const summaries = await getPublishedBlogSummaries();
+  return summaries.slice(0, Math.max(0, limit));
+}
+
+export async function getPublishedBlogSummariesPage(
+  page: number,
+  pageSize = 6,
+): Promise<PaginatedBlogSummaries> {
+  const summaries = await getPublishedBlogSummaries();
+  const safePageSize = Math.max(1, pageSize);
+  const totalItems = summaries.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / safePageSize));
+  const currentPage = Math.min(Math.max(1, page), totalPages);
+  const start = (currentPage - 1) * safePageSize;
+
+  return {
+    posts: summaries.slice(start, start + safePageSize),
+    pagination: {
+      currentPage,
+      pageSize: safePageSize,
+      totalItems,
+      totalPages,
+      hasPreviousPage: currentPage > 1,
+      hasNextPage: currentPage < totalPages,
+    },
+  };
 }
 
 export async function getPublishedBlogPostBySlug(slug: string): Promise<LocalizedBlogPost | null> {

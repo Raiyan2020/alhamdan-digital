@@ -33,6 +33,9 @@ type RichTextEditorProps = {
   onChange: (value: string) => void;
   dir?: "rtl" | "ltr";
   className?: string;
+  id?: string;
+  "aria-describedby"?: string;
+  "aria-invalid"?: boolean;
 };
 
 type ToolbarButtonProps = {
@@ -72,6 +75,9 @@ export function RichTextEditor({
   onChange,
   dir = "ltr",
   className,
+  id,
+  "aria-describedby": ariaDescribedBy,
+  "aria-invalid": ariaInvalid,
 }: RichTextEditorProps) {
   const t = useTranslations("cms.editor");
 
@@ -122,7 +128,17 @@ export function RichTextEditor({
   if (!editor) return null;
 
   return (
-    <div className={cn("overflow-hidden rounded-xl border border-input bg-background", className)}>
+    <div
+      id={id}
+      data-slot="editor-shell"
+      aria-describedby={ariaDescribedBy}
+      aria-invalid={ariaInvalid}
+      className={cn(
+        "overflow-hidden rounded-xl border border-input bg-background transition-colors",
+        ariaInvalid && "border-destructive ring-3 ring-destructive/20",
+        className,
+      )}
+    >
       <div className="flex flex-wrap items-center gap-1 border-b border-input bg-muted/30 p-2">
         <ToolbarButton
           label={t("bold")}

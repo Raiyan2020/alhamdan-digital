@@ -36,7 +36,15 @@ import { AboutProductDetailFields } from "./AboutProductDetailFields";
 import { CheckboxFormField } from "./CheckboxFormField";
 import { LocalizedMediaPicker } from "./LocalizedMediaPicker";
 
-export function AboutProductsSection() {
+type AboutProductsSectionProps = {
+  isAutoSaving?: boolean;
+  onAutoSave?: () => void;
+};
+
+export function AboutProductsSection({
+  isAutoSaving = false,
+  onAutoSave,
+}: AboutProductsSectionProps) {
   const t = useTranslations("cms");
   const locale = useLocale();
   const form = useFormContext<CmsAboutPayload>();
@@ -94,6 +102,7 @@ export function AboutProductsSection() {
     }
     setIsCreating(false);
     setEditIndex(null);
+    onAutoSave?.();
   }
 
   function confirmDelete() {
@@ -262,8 +271,8 @@ export function AboutProductsSection() {
               <Button type="button" variant="outline" onClick={closeEditor}>
                 {t("about.productsUi.cancel")}
               </Button>
-              <Button type="button" onClick={confirmEditor}>
-                {t("about.productsUi.done")}
+              <Button type="button" onClick={confirmEditor} disabled={isAutoSaving}>
+                {isAutoSaving ? t("common.saving") : t("about.productsUi.done")}
               </Button>
             </div>
           </DialogFooter>

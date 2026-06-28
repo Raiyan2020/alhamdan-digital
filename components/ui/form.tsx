@@ -99,21 +99,31 @@ function FormLabel({
   );
 }
 
-function FormControl({ className, ...props }: React.ComponentProps<"div">) {
+function FormControl({ className, children, ...props }: React.ComponentProps<"div">) {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
+  const controlProps = {
+    id: formItemId,
+    "aria-describedby": !error
+      ? `${formDescriptionId}`
+      : `${formDescriptionId} ${formMessageId}`,
+    "aria-invalid": !!error,
+  };
+  const control = React.isValidElement(children)
+    ? React.cloneElement(children, controlProps)
+    : children;
 
   return (
     <div
-      id={formItemId}
-      className={cn("w-full min-w-0", className)}
-      aria-describedby={
-        !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
-      }
+      className={cn(
+        "w-full min-w-0 data-[invalid=true]:[&_[data-slot=editor-shell]]:border-destructive data-[invalid=true]:[&_[data-slot=editor-shell]]:ring-3 data-[invalid=true]:[&_[data-slot=editor-shell]]:ring-destructive/20",
+        className,
+      )}
       aria-invalid={!!error}
+      data-invalid={!!error}
       {...props}
-    />
+    >
+      {control}
+    </div>
   );
 }
 

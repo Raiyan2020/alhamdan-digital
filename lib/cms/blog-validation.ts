@@ -8,6 +8,7 @@ import { sanitizeRichHtml } from "./rich-text";
 import { bilingualTextSchema, optionalMediaSchema, richTextSchema } from "./validation";
 
 export const blogCategorySchema = z.enum(["insights", "news", "guides"]);
+export const blogPostStatusSchema = z.enum(["draft", "published", "archived"]);
 
 export const cmsBlogPostPayloadSchema = z.object({
   slug: slugFieldSchema(),
@@ -28,7 +29,7 @@ export const cmsBlogPostPayloadSchema = z.object({
 });
 
 export const cmsBlogPostCreateSchema = cmsBlogPostPayloadSchema.extend({
-  status: z.enum(["draft", "published", "archived"]).default("draft"),
+  status: blogPostStatusSchema.default("draft"),
 });
 
 export const cmsBlogPostUpdateSchema = cmsBlogPostCreateSchema.partial().extend({

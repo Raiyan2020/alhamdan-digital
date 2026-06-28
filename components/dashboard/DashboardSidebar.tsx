@@ -6,7 +6,7 @@ import {
   Home,
   LayoutDashboard,
   LogOut,
-  Settings2,
+  UserRoundCog,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -28,11 +28,12 @@ type DashboardSidebarProps = {
 const overviewItems: Array<{
   view: DashboardView;
   icon: typeof LayoutDashboard;
-  labelKey: "navOverview" | "navHome" | "navAbout";
+  labelKey: "navOverview" | "navHome" | "navAbout" | "navBlog";
 }> = [
   { view: "overview", icon: LayoutDashboard, labelKey: "navOverview" },
   { view: "home", icon: Home, labelKey: "navHome" },
   { view: "about", icon: FileText, labelKey: "navAbout" },
+  { view: "blog", icon: FileText, labelKey: "navBlog" },
 ];
 
 export function DashboardSidebar({
@@ -116,10 +117,21 @@ export function DashboardSidebar({
           </div>
           <button
             type="button"
-            data-active={undefined}
-            className={cn(dashboardNavItemBase, "flex items-center gap-3")}
+            onClick={() => onNavigate("profile")}
+            data-active={activeView === "profile" ? "true" : undefined}
+            className={cn(
+              dashboardNavItemBase,
+              "flex items-center gap-3",
+              activeView === "profile" && "shadow-dashboard-lg",
+            )}
           >
-            <Settings2 className="h-4 w-4 shrink-0" />
+            {activeView === "profile" ? (
+              <span
+                className="absolute inset-y-2 start-1.5 w-1 rounded-full bg-brand-on/90"
+                aria-hidden
+              />
+            ) : null}
+            <UserRoundCog className={cn("h-4 w-4 shrink-0", activeView === "profile" && "ms-1.5")} />
             <span>{t("navSettings")}</span>
           </button>
           <button

@@ -1,26 +1,27 @@
 "use client";
 
-import Image from "next/image";
-import { format } from "date-fns";
-import { ar, enUS } from "date-fns/locale";
-import { Calendar, Clock3, User } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
-import type { BlogIndexContent, LocalizedBlogPostSummary } from "@/lib/cms/blog-types";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import type {
+  BlogIndexContent,
+  BlogPagination,
+  LocalizedBlogPostSummary,
+} from "@/lib/cms/blog-types";
+import { BlogCard } from "./BlogCard";
 
 type BlogIndexProps = {
   content: BlogIndexContent;
   posts: LocalizedBlogPostSummary[];
+  pagination?: BlogPagination;
 };
 
-export function BlogIndex({ content, posts }: BlogIndexProps) {
+export function BlogIndex({ content, posts, pagination }: BlogIndexProps) {
   const t = useTranslations("blog");
-  const locale = useLocale();
-  const dateLocale = locale === "ar" ? ar : enUS;
 
   return (
     <div className="min-h-screen bg-page text-ink">
-      <section className="border-b border-border-soft bg-gradient-to-br from-[#03396c] via-[#006ab4] to-[#00bcf5] px-5 py-16 text-white sm:px-8 lg:px-12">
+      <section className="border-b border-border-soft bg-gradient-to-br from-[#03396c] via-[#006ab4] to-[#00bcf5] px-5 pb-16 pt-[calc(88px+2rem)] text-white sm:px-8 min-[1440px]:pt-[calc(128px+2rem)] lg:px-12">
         <div className="mx-auto max-w-6xl">
           <p className="text-sm font-medium text-white/80">{t("index.eyebrow")}</p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">{content.title}</h1>
@@ -37,58 +38,52 @@ export function BlogIndex({ content, posts }: BlogIndexProps) {
         ) : (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {posts.map((post) => (
-              <article
-                key={post.id}
-                className="group overflow-hidden rounded-3xl border border-border-soft bg-card-surface shadow-sm transition-transform hover:-translate-y-0.5"
-              >
-                {post.coverImageUrl ? (
-                  <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-                    <Image
-                      src={post.coverImageUrl}
-                      alt={post.coverImageAlt || post.title}
-                      fill
-                      className="object-cover transition-transform group-hover:scale-[1.02]"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </div>
-                ) : (
-                  <div className="aspect-[16/10] bg-gradient-to-br from-[#e6edf5] to-[#d9ecfb]" />
-                )}
-                <div className="space-y-4 p-6">
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-ink-muted">
-                    <span className="rounded-full bg-[#e0f4fc] px-3 py-1 font-medium text-[#006ab4]">
-                      {t(`categories.${post.category}`)}
-                    </span>
-                    {post.publishedAt ? (
-                      <span className="inline-flex items-center gap-1">
-                        <Calendar className="h-3.5 w-3.5" />
-                        {format(new Date(post.publishedAt), "PP", { locale: dateLocale })}
-                      </span>
-                    ) : null}
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-semibold leading-8">
-                      <Link href={`/blog/${post.slug}`} className="hover:text-brand">
-                        {post.title}
-                      </Link>
-                    </h2>
-                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-ink-muted">{post.excerpt}</p>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-4 text-xs text-ink-muted">
-                    <span className="inline-flex items-center gap-1">
-                      <User className="h-3.5 w-3.5" />
-                      {post.authorName}
-                    </span>
-                    <span className="inline-flex items-center gap-1">
-                      <Clock3 className="h-3.5 w-3.5" />
-                      {t("readingTime", { minutes: post.readingTimeMinutes })}
-                    </span>
-                  </div>
-                </div>
-              </article>
+              <BlogCard key={post.id} post={post} />
             ))}
           </div>
         )}
+
+        {pagination && pagination.totalPages > 1 ? (
+          <nav
+            className="mt-10 flex flex-wrap items-center justify-center gap-3"
+            aria-label={t("pagination.label")}
+          >
+            <Link
+              href={
+                pagination.hasPreviousPage
+                  ? `/blogs?page=${pagination.currentPage - 1}`
+                  : "/blogs"
+              }
+              aria-disabled={!pagination.hasPreviousPage}
+              className={
+                pagination.hasPreviousPage
+                  ? "inline-flex h-11 items-center gap-2 rounded-full border border-border-soft px-5 text-sm font-medium text-ink transition-colors hover:border-brand hover:text-brand"
+                  : "pointer-events-none inline-flex h-11 items-center gap-2 rounded-full border border-border-soft px-5 text-sm font-medium text-ink-muted opacity-50"
+              }
+            >
+              <ChevronLeft className="h-4 w-4" />
+              {t("pagination.previous")}
+            </Link>
+            <span className="text-sm text-ink-muted">
+              {t("pagination.pageStatus", {
+                page: pagination.currentPage,
+                total: pagination.totalPages,
+              })}
+            </span>
+            <Link
+              href={`/blogs?page=${pagination.currentPage + 1}`}
+              aria-disabled={!pagination.hasNextPage}
+              className={
+                pagination.hasNextPage
+                  ? "inline-flex h-11 items-center gap-2 rounded-full border border-border-soft px-5 text-sm font-medium text-ink transition-colors hover:border-brand hover:text-brand"
+                  : "pointer-events-none inline-flex h-11 items-center gap-2 rounded-full border border-border-soft px-5 text-sm font-medium text-ink-muted opacity-50"
+              }
+            >
+              {t("pagination.next")}
+              <ChevronRight className="h-4 w-4" />
+            </Link>
+          </nav>
+        ) : null}
       </section>
     </div>
   );

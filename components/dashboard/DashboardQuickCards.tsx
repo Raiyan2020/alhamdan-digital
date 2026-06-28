@@ -2,13 +2,13 @@
 
 import { FileText, Home, ImageIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { DASHBOARD_VIEW_PATHS } from "@/lib/dashboard/navigation";
 import type { DashboardStats } from "@/lib/dashboard/stats";
-import type { DashboardView } from "./types";
 import { cn } from "@/lib/utils";
 
 type DashboardQuickCardsProps = {
   stats: DashboardStats;
-  onNavigate: (view: DashboardView) => void;
 };
 
 const cards = [
@@ -35,7 +35,7 @@ const cards = [
   },
 ] as const;
 
-export function DashboardQuickCards({ stats, onNavigate }: DashboardQuickCardsProps) {
+export function DashboardQuickCards({ stats }: DashboardQuickCardsProps) {
   const t = useTranslations("dashboard");
 
   const values = [
@@ -49,10 +49,9 @@ export function DashboardQuickCards({ stats, onNavigate }: DashboardQuickCardsPr
       {cards.map((card, index) => {
         const Icon = card.icon;
         return (
-          <button
+          <Link
             key={card.labelKey}
-            type="button"
-            onClick={() => onNavigate(card.view)}
+            href={DASHBOARD_VIEW_PATHS[card.view]}
             className="rounded-[22px] border border-border/70 bg-dashboard-surface p-4 text-start shadow-dashboard transition-transform hover:-translate-y-0.5 hover:shadow-dashboard-lg"
           >
             <div className="flex items-start justify-between gap-3">
@@ -64,7 +63,7 @@ export function DashboardQuickCards({ stats, onNavigate }: DashboardQuickCardsPr
                 <Icon className="h-4 w-4" />
               </div>
             </div>
-          </button>
+          </Link>
         );
       })}
     </div>

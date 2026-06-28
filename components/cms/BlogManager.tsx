@@ -96,7 +96,7 @@ export function BlogManager({ embedded = false }: BlogManagerProps) {
                       </Badge>
                     </div>
                     <p className="text-sm text-dashboard-ink-muted" dir="ltr">
-                      /blog/{post.slug}
+                      /blogs/{post.slug}
                     </p>
                     <p className="text-xs text-dashboard-ink-muted">
                       {post.updatedAt

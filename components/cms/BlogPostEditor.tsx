@@ -2,17 +2,18 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, Eye, Save, Send } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, useWatch, type FieldErrors } from "react-hook-form";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 import { handleFormValidationFailure } from "@/lib/cms/form-submit";
 import { getErrorMessage } from "@/lib/api/errors";
-import type { BlogPostStatus, CmsBlogPostPayload } from "@/lib/cms/blog-types";
+import type { BlogPostStatus, CmsBlogPostPayload, CmsBlogPostRecord } from "@/lib/cms/blog-types";
 import {
   createEmptyBlogPostPayload,
   cmsBlogPostPayloadSchema,
+  blogPostStatusSchema,
 } from "@/lib/cms/blog-validation";
 import { slugifyBlogText } from "@/lib/cms/blog-slug";
 import {
@@ -45,7 +46,7 @@ import { LocalizedMediaPicker } from "./LocalizedMediaPicker";
 import { cn } from "@/lib/utils";
 
 const blogPostFormSchema = cmsBlogPostPayloadSchema.extend({
-  status: z.enum(["draft", "published", "archived"]),
+  status: blogPostStatusSchema,
 });
 
 type BlogPostFormValues = z.infer<typeof blogPostFormSchema>;
@@ -108,28 +109,58 @@ function BlogEditorActions({
   );
 }
 
+/**
+ * Public entry point. Handles data loading and only renders the form
+ * once data is ready so that useForm can initialize with the correct values.
+ */
 export function BlogPostEditor({ postId, embedded = false, onBack }: BlogPostEditorProps) {
   const t = useTranslations("cms.blog");
+  const { data: existingPost, isLoading } = useBlogPostQuery(postId);
+
+  if (postId && isLoading) {
+    return <div className="p-8 text-sm text-dashboard-ink-muted">{t("loading")}</div>;
+  }
+
+  // By this point either:
+  // - postId is null  → creating a new post
+  // - existingPost is defined → editing an existing post (data is ready)
+  return (
+    <BlogPostEditorForm
+      postId={postId}
+      existingPost={existingPost ?? null}
+      embedded={embedded}
+      onBack={onBack}
+    />
+  );
+}
+
+type BlogPostEditorFormProps = {
+  postId: string | null;
+  existingPost: CmsBlogPostRecord | null;
+  embedded?: boolean;
+  onBack: () => void;
+};
+
+/**
+ * Inner form component. Only mounts after data is ready, so useForm
+ * can initialize with the correct defaultValues immediately — no
+ * useEffect + form.reset workaround needed.
+ */
+function BlogPostEditorForm({ postId, existingPost, embedded = false, onBack }: BlogPostEditorFormProps) {
+  const t = useTranslations("cms.blog");
+  const tCommon = useTranslations("cms.common");
   const locale = useLocale();
   const [message, setMessage] = useState<string | null>(null);
   const [messageVariant, setMessageVariant] = useState<"success" | "error">("success");
-  const { data: existingPost, isLoading } = useBlogPostQuery(postId);
+  const [validationItems, setValidationItems] = useState<string[]>([]);
   const createMutation = useCreateBlogPostMutation();
   const updateMutation = useUpdateBlogPostMutation();
 
-  const defaultValues = useMemo<BlogPostFormValues>(() => {
-    if (existingPost) {
-      return {
-        status: existingPost.status,
-        ...existingPost.payload,
-      };
-    }
-
-    return {
-      status: "draft",
-      ...createEmptyBlogPostPayload(),
-    };
-  }, [existingPost]);
+  // existingPost is guaranteed to be defined when postId is set (caller waits for load).
+  // Build defaultValues once — they won't change while this component is mounted.
+  const defaultValues: BlogPostFormValues = existingPost
+    ? { status: existingPost.status, ...existingPost.payload }
+    : { status: "draft", ...createEmptyBlogPostPayload() };
 
   const form = useForm<BlogPostFormValues>({
     resolver: zodResolver(blogPostFormSchema) as never,
@@ -137,16 +168,13 @@ export function BlogPostEditor({ postId, embedded = false, onBack }: BlogPostEdi
     mode: "onBlur",
   });
 
-  useEffect(() => {
-    form.reset(defaultValues);
-  }, [defaultValues, form]);
-
   const englishTitle = useWatch({ control: form.control, name: "title.en" });
   const slug = useWatch({ control: form.control, name: "slug" });
   const status = useWatch({ control: form.control, name: "status" });
   const isSaving = createMutation.isPending || updateMutation.isPending;
-  const previewHref = status === "published" && slug ? `/blog/${slug}` : null;
+  const previewHref = status === "published" && slug ? `/blogs/${slug}` : null;
 
+  // Auto-generate slug from English title when creating a new post.
   useEffect(() => {
     if (!postId && englishTitle && !form.formState.dirtyFields.slug) {
       const nextSlug = slugifyBlogText(englishTitle);
@@ -156,6 +184,7 @@ export function BlogPostEditor({ postId, embedded = false, onBack }: BlogPostEdi
 
   const savePost = (nextStatus: BlogPostStatus) => {
     setMessage(null);
+    setValidationItems([]);
     form.setValue("status", nextStatus);
 
     form.handleSubmit(
@@ -171,6 +200,7 @@ export function BlogPostEditor({ postId, embedded = false, onBack }: BlogPostEdi
                 : t("draftCreated");
           setMessageVariant("success");
           setMessage(text);
+          setValidationItems([]);
           toast.success(text);
         };
 
@@ -203,15 +233,15 @@ export function BlogPostEditor({ postId, embedded = false, onBack }: BlogPostEdi
         const result = handleFormValidationFailure(form, errors, {
           validationMessage: (count) => t("validationFailed", { count }),
         });
+        const details = result.paths
+          .map((path) => describeBlogErrorPath(path, { field: (key) => t(`fields.${key}`), common: tCommon }))
+          .filter(Boolean);
         setMessageVariant("error");
         setMessage(result.message);
+        setValidationItems(Array.from(new Set(details)).slice(0, 6));
       },
     )();
   };
-
-  if (postId && isLoading) {
-    return <div className="p-8 text-sm text-dashboard-ink-muted">{t("loading")}</div>;
-  }
 
   return (
     <div className="space-y-6">
@@ -249,6 +279,13 @@ export function BlogPostEditor({ postId, embedded = false, onBack }: BlogPostEdi
           )}
         >
           {message}
+          {messageVariant === "error" && validationItems.length > 0 ? (
+            <ul className="mt-2 list-disc space-y-1 ps-5 text-xs leading-5">
+              {validationItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       ) : null}
 
@@ -405,4 +442,39 @@ export function BlogPostEditor({ postId, embedded = false, onBack }: BlogPostEdi
       )}
     </div>
   );
+}
+
+function describeBlogErrorPath(
+  path: string,
+  labels: {
+    field: (key: string) => string;
+    common: (key: string) => string;
+  },
+) {
+  const parts = path.split(".");
+  const language = parts.includes("ar")
+    ? labels.common("arabic")
+    : parts.includes("en")
+      ? labels.common("english")
+      : null;
+
+  const exactLabels: Array<[string, string]> = [
+    ["slug", labels.field("slug")],
+    ["category", labels.field("category")],
+    ["authorName", labels.field("author")],
+    ["tags", labels.field("tags")],
+    ["title", labels.field("title")],
+    ["excerpt", labels.field("excerpt")],
+    ["coverImage.defaultUrl", labels.field("coverImage")],
+    ["coverImage.alt", labels.common("altText")],
+    ["body.html", labels.field("body")],
+    ["body.json", labels.field("body")],
+    ["seo.metaTitle", labels.field("metaTitle")],
+    ["seo.metaDescription", labels.field("metaDescription")],
+    ["seo.ogTitle", labels.field("ogTitle")],
+    ["seo.ogDescription", labels.field("ogDescription")],
+  ];
+
+  const fieldLabel = exactLabels.find(([key]) => path.startsWith(key))?.[1] ?? path;
+  return language ? `${fieldLabel} (${language})` : fieldLabel;
 }

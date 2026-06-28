@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -62,8 +62,8 @@ export function AboutCmsForm({ initialValue, embedded = false }: AboutCmsFormPro
     shouldUnregister: false,
   });
   const ogImage = useWatch({ control: form.control, name: "seo.ogImage" });
-  const sectionTitle = (key: string) => t(`about.sections.${key}`);
-  const field = (key: string) => t(`about.fields.${key}`);
+  const sectionTitle = useCallback((key: string) => t(`about.sections.${key}`), [t]);
+  const field = useCallback((key: string) => t(`about.fields.${key}`), [t]);
 
   useEffect(() => {
     if (!form.formState.isDirty && !saveMutation.isPending) {
@@ -71,16 +71,15 @@ export function AboutCmsForm({ initialValue, embedded = false }: AboutCmsFormPro
     }
   }, [initialValue, form, saveMutation.isPending, form.formState.isDirty]);
 
-  const describeErrorPath = (path: string) =>
+  const describeErrorPath = useCallback((path: string) =>
     describeAboutErrorPath(path, {
       sectionTitle,
       field,
       common: (key, values) => t(`common.${key}`, values),
       productItem: (index) => t("about.repeaters.product", { index }),
-    });
+    }), [field, sectionTitle, t]);
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const saveAboutDraft = useCallback(() => {
     setMessage(null);
 
     const payload = normalizeAboutPayloadForSubmit(
@@ -124,6 +123,11 @@ export function AboutCmsForm({ initialValue, embedded = false }: AboutCmsFormPro
         setMessage(text);
       },
     });
+  }, [describeErrorPath, form, initialValue, saveMutation, setSection, t, router]);
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    saveAboutDraft();
   };
 
   return (
@@ -237,7 +241,10 @@ export function AboutCmsForm({ initialValue, embedded = false }: AboutCmsFormPro
 
             <div className={cn(activeSection !== "products" && "hidden")} aria-hidden={activeSection !== "products"}>
               <SectionCard title={t("about.repeaters.productSections")}>
-                <AboutProductsSection />
+                <AboutProductsSection
+                  isAutoSaving={saveMutation.isPending}
+                  onAutoSave={saveAboutDraft}
+                />
               </SectionCard>
             </div>
           </div>

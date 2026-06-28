@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
       {
         ok: false,
         message:
-          "Admin authentication is not configured. Set AUTH_SECRET, ADMIN_EMAIL, and ADMIN_PASSWORD.",
+          "Admin authentication is not configured. Set AUTH_SECRET and either DATABASE_URL or admin environment credentials.",
       },
       { status: 503 },
     );

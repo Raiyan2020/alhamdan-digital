@@ -11,8 +11,8 @@ export async function SiteShell({ children }: { children: ReactNode }) {
     <div className="relative">
       <SiteLoadingOverlay label={loading.label} animation={loading.animation} />
       <SiteHeader layout="mobile" navItems={nav} header={header} />
-      <div className="pointer-events-none absolute inset-x-0 top-10 z-50 hidden min-[1440px]:block">
-        <div className="pointer-events-auto mx-auto w-full max-w-[1440px] px-20">
+      <div className="pointer-events-none sticky top-0 z-50 hidden min-[1440px]:block">
+        <div className="pointer-events-auto mx-auto w-full max-w-[1440px] px-20 pt-10">
           <SiteHeader layout="desktop" navItems={nav} header={header} />
         </div>
       </div>

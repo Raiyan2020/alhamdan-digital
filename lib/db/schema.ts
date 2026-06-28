@@ -156,3 +156,18 @@ export const blogPosts = mysqlTable(
     publishedAtIdx: index("blog_posts_published_at_idx").on(table.publishedAt),
   }),
 );
+
+export const adminUsers = mysqlTable(
+  "admin_users",
+  {
+    id: varchar("id", { length: 36 }).primaryKey(),
+    email: varchar("email", { length: 191 }).notNull(),
+    name: varchar("name", { length: 191 }).notNull().default("Admin"),
+    passwordHash: varchar("password_hash", { length: 191 }).notNull(),
+    createdAt: datetime("created_at", { mode: "date", fsp: 3 }).notNull(),
+    updatedAt: datetime("updated_at", { mode: "date", fsp: 3 }).notNull(),
+  },
+  (table) => ({
+    emailIdx: uniqueIndex("admin_users_email_idx").on(table.email),
+  }),
+);

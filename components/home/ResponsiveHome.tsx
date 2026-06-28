@@ -1,8 +1,10 @@
 import { Eye, Send } from "lucide-react";
 import type { HomeContent } from "@/lib/i18n/home-content";
+import type { LocalizedBlogPostSummary } from "@/lib/cms/blog-types";
 import { Reveal, MotionCard, MotionLinkButton } from "@/components/motion";
 import { RichTextHtml } from "@/lib/cms/rich-text";
 import { AboutFeatureCard } from "./AboutFeatureCard";
+import { BlogsSection } from "./BlogsSection";
 import { sectionIds } from "./data";
 import { HeroAnimatedHeading } from "./HeroAnimatedHeading";
 import { HeroCinematicVisual } from "./HeroCinematicVisual";
@@ -25,6 +27,7 @@ import { WhySection } from "./WhySection";
 
 type ResponsiveHomeProps = {
   content: HomeContent;
+  latestBlogs: LocalizedBlogPostSummary[];
 };
 
 const aboutCardMotion = [
@@ -36,7 +39,7 @@ const aboutCardMotion = [
 
 const visionMissionIcons = [Eye, Send] as const;
 
-export function ResponsiveHome({ content }: ResponsiveHomeProps) {
+export function ResponsiveHome({ content, latestBlogs }: ResponsiveHomeProps) {
   const {
     about,
     aboutCards,
@@ -54,7 +57,7 @@ export function ResponsiveHome({ content }: ResponsiveHomeProps) {
     <div dir="ltr" className="overflow-x-clip bg-page text-ink min-[1440px]:hidden">
       <section
         id={sectionIds.hero}
-        className="mx-auto grid max-w-7xl gap-8 px-5 py-12 md:grid-cols-2 md:items-center md:py-16"
+        className="mx-auto grid max-w-7xl gap-8 px-5 pb-12 pt-[calc(88px+2rem)] md:grid-cols-2 md:items-center md:pb-16"
       >
         <HeroCinematicVisual
           className="order-2 mx-auto w-full max-w-[604px] md:order-1"
@@ -230,6 +233,12 @@ export function ResponsiveHome({ content }: ResponsiveHomeProps) {
           </div>
         </div>
       </section>
+
+      <BlogsSection
+        id={sectionIds.blogs}
+        posts={latestBlogs}
+        className="py-12"
+      />
     </div>
   );
 }

@@ -14,10 +14,18 @@ export const mediaAltSchema = z.object({
   en: z.string(),
 });
 
-export const richTextSchema = z.object({
+export const richTextSchema = z.preprocess((value) => {
+  if (!value || typeof value !== "object" || !("html" in value)) return value;
+  const richText = value as { html?: unknown; json?: unknown };
+
+  return {
+    ...richText,
+    json: richText.html,
+  };
+}, z.object({
   json: bilingualTextSchema.optional(),
   html: bilingualTextSchema,
-});
+}));
 
 const visibleSchema = z.object({
   isVisible: z.boolean(),

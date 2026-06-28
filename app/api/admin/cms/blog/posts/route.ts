@@ -14,10 +14,19 @@ function revalidateBlogPaths(slug?: string) {
   revalidatePath("/blog");
   revalidatePath("/ar/blog");
   revalidatePath("/en/blog");
+  revalidatePath("/blogs");
+  revalidatePath("/ar/blogs");
+  revalidatePath("/en/blogs");
+  revalidatePath("/");
+  revalidatePath("/ar");
+  revalidatePath("/en");
   if (slug) {
     revalidatePath(`/blog/${slug}`);
     revalidatePath(`/ar/blog/${slug}`);
     revalidatePath(`/en/blog/${slug}`);
+    revalidatePath(`/blogs/${slug}`);
+    revalidatePath(`/ar/blogs/${slug}`);
+    revalidatePath(`/en/blogs/${slug}`);
   }
 }
 

@@ -46,7 +46,7 @@ export function AdminLoginForm({ className }: AdminLoginFormProps) {
     (values) => {
       loginMutation.mutate(values, {
         onSuccess: () => {
-          const next = searchParams.get("next") || "/dashboard/content";
+          const next = searchParams.get("next") || "/dashboard";
           router.replace(next);
           router.refresh();
         },

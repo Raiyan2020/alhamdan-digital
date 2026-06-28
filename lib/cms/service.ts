@@ -173,6 +173,7 @@ export async function getFallbackHomePayload(): Promise<CmsHomePayload> {
       { label: b((m) => m.nav.about), href: "/about", isVisible: true },
       { label: b((m) => m.nav.products), href: `/#${sectionIds.products}`, isVisible: true },
       { label: b((m) => m.nav.services), href: `/#${sectionIds.services}`, isVisible: true },
+      { label: b((m) => m.nav.blog), href: "/blogs", isVisible: true },
       { label: b((m) => m.nav.why), href: `/#${sectionIds.why}`, isVisible: true },
     ],
     footerLinks: [
@@ -180,6 +181,7 @@ export async function getFallbackHomePayload(): Promise<CmsHomePayload> {
       { label: b((m) => m.nav.about), href: `/#${sectionIds.about}`, isVisible: true },
       { label: b((m) => m.footer.products), href: `/#${sectionIds.products}`, isVisible: true },
       { label: b((m) => m.nav.services), href: `/#${sectionIds.services}`, isVisible: true },
+      { label: b((m) => m.nav.blog), href: "/blogs", isVisible: true },
       { label: b((m) => m.footer.contact), href: `/#${sectionIds.contact}`, isVisible: true },
     ],
     hero: {
@@ -529,6 +531,25 @@ export function localizeHomePayload(payload: CmsHomePayload, locale: CmsLocale):
   const mediaUrl = (field: LocalizedMediaField, fallback = "") =>
     pickLocalizedMediaUrl(field, locale, fallback) ?? fallback;
   const mediaAlt = (field: LocalizedMediaField) => text(field.alt);
+  const blogLabel = locale === "ar" ? "المدونة" : "Blog";
+  const normalizeHref = (href: string) => href === "/blog" ? "/blogs" : href;
+  const nav = payload.nav.filter((item) => item.isVisible).map((item) => ({
+    key: normalizeHref(item.href),
+    label: text(item.label),
+    href: normalizeHref(item.href),
+  }));
+  const footerLinks = payload.footerLinks.filter((item) => item.isVisible).map((item) => ({
+    label: text(item.label),
+    href: normalizeHref(item.href),
+  }));
+
+  if (!nav.some((item) => item.href === "/blogs")) {
+    nav.push({ key: "/blogs", label: blogLabel, href: "/blogs" });
+  }
+
+  if (!footerLinks.some((item) => item.href === "/blogs")) {
+    footerLinks.push({ label: blogLabel, href: "/blogs" });
+  }
 
   return {
     header: {
@@ -543,15 +564,8 @@ export function localizeHomePayload(payload: CmsHomePayload, locale: CmsLocale):
       label: text(payload.loading.label),
       animation: mediaUrl(payload.loading.animation, "/loading-kuwait.lottie"),
     },
-    nav: payload.nav.filter((item) => item.isVisible).map((item) => ({
-      key: item.href,
-      label: text(item.label),
-      href: item.href,
-    })),
-    footerLinks: payload.footerLinks.filter((item) => item.isVisible).map((item) => ({
-      label: text(item.label),
-      href: item.href,
-    })),
+    nav,
+    footerLinks,
     hero: {
       titleLine1: text(payload.hero.titleLine1),
       line2Prefix: text(payload.hero.line2Prefix),
@@ -739,6 +753,7 @@ async function readMessages(locale: CmsLocale) {
       about: t("nav.about"),
       products: t("nav.products"),
       services: t("nav.services"),
+      blog: t("nav.blog"),
       why: t("nav.why"),
       switchToArabic: t("nav.switchToArabic"),
       switchToEnglish: t("nav.switchToEnglish"),

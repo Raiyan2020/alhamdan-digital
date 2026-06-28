@@ -1,1 +1,1 @@
-export type DashboardView = "overview" | "home" | "about" | "blog";
+export type DashboardView = "overview" | "home" | "about" | "blog" | "profile";

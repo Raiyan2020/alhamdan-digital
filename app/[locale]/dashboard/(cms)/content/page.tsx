@@ -1,37 +1,21 @@
-import type { Locale } from "@/i18n/routing";
-import { Suspense } from "react";
-import { getCmsAboutPayload, getCmsHomePayload } from "@/lib/cms/service";
-import { getHomeContent } from "@/lib/i18n/home-content";
-import { getAdminSession } from "@/lib/auth/session";
-import { DashboardWorkspace } from "@/components/dashboard/DashboardWorkspace";
-import { setRequestLocale } from "next-intl/server";
+import { redirect } from "next/navigation";
+import {
+  buildDashboardContentPath,
+  parseDashboardView,
+} from "@/lib/dashboard/navigation";
 
 type Props = {
-  params: Promise<{ locale: Locale }>;
+  searchParams: Promise<{ view?: string | string[]; section?: string | string[] }>;
 };
 
-export default async function ContentDashboardPage({ params }: Props) {
-  const { locale } = await params;
-  setRequestLocale(locale);
+function firstParam(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
+}
 
-  const [homePayload, aboutPayload, { header }, session] = await Promise.all([
-    getCmsHomePayload(),
-    getCmsAboutPayload(),
-    getHomeContent(),
-    getAdminSession(),
-  ]);
+export default async function LegacyDashboardContentPage({ searchParams }: Props) {
+  const params = await searchParams;
+  const view = parseDashboardView(firstParam(params.view));
+  const section = firstParam(params.section);
 
-  return (
-    <Suspense fallback={<div className="min-h-screen bg-dashboard-canvas" />}>
-      <DashboardWorkspace
-        brandName={header.brandName}
-        logoSrc={header.logo}
-        logoAlt={header.logoAlt}
-        adminName={session?.name ?? "Admin"}
-        adminEmail={session?.email ?? ""}
-        homePayload={homePayload}
-        aboutPayload={aboutPayload}
-      />
-    </Suspense>
-  );
+  redirect(buildDashboardContentPath(view, section));
 }

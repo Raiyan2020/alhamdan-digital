@@ -3,6 +3,7 @@ export const sectionIds = {
   about: "about",
   products: "products",
   services: "services",
+  blogs: "blogs",
   why: "why",
   market: "market",
   contact: "contact",

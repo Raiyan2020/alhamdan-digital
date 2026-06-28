@@ -1,5 +1,6 @@
 import { Eye, Send } from "lucide-react";
 import type { HomeContent } from "@/lib/i18n/home-content";
+import type { LocalizedBlogPostSummary } from "@/lib/cms/blog-types";
 import {
   Reveal,
   MotionCard,
@@ -9,6 +10,7 @@ import { RichTextHtml } from "@/lib/cms/rich-text";
 import { cn } from "@/lib/utils";
 import { sectionIds } from "./data";
 import { AboutFeatureCard } from "./AboutFeatureCard";
+import { BlogsSection } from "./BlogsSection";
 import { HeroAnimatedHeading } from "./HeroAnimatedHeading";
 import { HeroCinematicVisual } from "./HeroCinematicVisual";
 import { Heading } from "./Heading";
@@ -31,6 +33,7 @@ import { WhySection } from "./WhySection";
 
 type DesktopHomeProps = {
   content: HomeContent;
+  latestBlogs: LocalizedBlogPostSummary[];
 };
 
 const aboutCardMotion = [
@@ -42,7 +45,7 @@ const aboutCardMotion = [
 
 const visionMissionIcons = [Eye, Send] as const;
 
-export function DesktopHome({ content }: DesktopHomeProps) {
+export function DesktopHome({ content, latestBlogs }: DesktopHomeProps) {
   const {
     about,
     aboutCards,
@@ -60,7 +63,7 @@ export function DesktopHome({ content }: DesktopHomeProps) {
     <div
       dir="ltr"
       data-figma-canvas
-      className="relative mx-auto hidden h-[6217px] w-[1440px] bg-page text-ink min-[1440px]:block"
+      className="relative mx-auto hidden h-[7030px] w-[1440px] bg-page text-ink min-[1440px]:block"
     >
       <section id={sectionIds.hero}>
         <div className="absolute left-20 top-52 h-[500px] w-[604px]">
@@ -238,6 +241,12 @@ export function DesktopHome({ content }: DesktopHomeProps) {
           />
         </Reveal>
       </section>
+
+      <BlogsSection
+        id={sectionIds.blogs}
+        posts={latestBlogs}
+        className="absolute left-0 top-[6240px] w-[1440px] py-16"
+      />
     </div>
   );
 }

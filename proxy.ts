@@ -22,14 +22,16 @@ export default async function proxy(request: NextRequest) {
 
   if (isDashboard && !isLogin && !session) {
     const loginUrl = request.nextUrl.clone();
+    const nextPath = `${pathname}${request.nextUrl.search}`;
     loginUrl.pathname = withLocalePrefix("/dashboard/login", localePrefix);
-    loginUrl.searchParams.set("next", pathname);
+    loginUrl.search = "";
+    loginUrl.searchParams.set("next", nextPath);
     return NextResponse.redirect(loginUrl);
   }
 
   if (isLogin && session) {
     const dashboardUrl = request.nextUrl.clone();
-    dashboardUrl.pathname = withLocalePrefix("/dashboard/content", localePrefix);
+    dashboardUrl.pathname = withLocalePrefix("/dashboard", localePrefix);
     dashboardUrl.search = "";
     return NextResponse.redirect(dashboardUrl);
   }

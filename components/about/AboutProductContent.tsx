@@ -134,5 +134,5 @@ export function AboutHero({ title, body, cta, ctaHref, desktop = false }: AboutH
     return <section className="absolute left-20 top-[274px] h-[338px] w-[1280px]">{content}</section>;
   }
 
-  return <section className="px-5 py-14">{content}</section>;
+  return <section className="px-5 pb-14 pt-[calc(88px+2rem)]">{content}</section>;
 }

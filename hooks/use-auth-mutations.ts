@@ -1,6 +1,15 @@
 import { useMutation } from "@tanstack/react-query";
-import { loginAdmin, logoutAdmin } from "@/lib/api/auth";
-import type { AdminLoginInput } from "@/lib/auth/validation";
+import {
+  loginAdmin,
+  logoutAdmin,
+  updateAdminPassword,
+  updateAdminProfile,
+} from "@/lib/api/auth";
+import type {
+  AdminLoginInput,
+  AdminPasswordChangeInput,
+  AdminProfileInput,
+} from "@/lib/auth/validation";
 
 export function useLoginAdminMutation() {
   return useMutation({
@@ -11,5 +20,17 @@ export function useLoginAdminMutation() {
 export function useLogoutAdminMutation() {
   return useMutation({
     mutationFn: logoutAdmin,
+  });
+}
+
+export function useUpdateAdminProfileMutation() {
+  return useMutation({
+    mutationFn: (input: AdminProfileInput) => updateAdminProfile(input),
+  });
+}
+
+export function useUpdateAdminPasswordMutation() {
+  return useMutation({
+    mutationFn: (input: AdminPasswordChangeInput) => updateAdminPassword(input),
   });
 }
