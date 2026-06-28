@@ -72,6 +72,7 @@ export function DesktopHome({ content, latestBlogs }: DesktopHomeProps) {
             entranceDelayMs={HERO_ENTRANCE_DELAY_MS}
             personImage={hero.personImage}
             personImageAlt={hero.personImageAlt}
+            brushImage={hero.brushImage}
             priority
           />
         </div>

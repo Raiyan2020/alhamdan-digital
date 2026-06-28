@@ -95,7 +95,7 @@ export function SiteHeader({ layout, navItems, header, className }: SiteHeaderPr
           : inSheet
             ? "font-normal text-ink/85"
             : "font-normal text-ink/80",
-        inSheet && (isRtl ? "justify-end text-right" : "justify-start text-left")
+        inSheet && (isRtl ? "justify-start text-right" : "justify-start text-left")
       )
     );
 

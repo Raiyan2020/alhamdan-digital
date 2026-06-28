@@ -64,6 +64,7 @@ export function ResponsiveHome({ content, latestBlogs }: ResponsiveHomeProps) {
           entranceDelayMs={HERO_ENTRANCE_DELAY_MS}
           personImage={hero.personImage}
           personImageAlt={hero.personImageAlt}
+          brushImage={hero.brushImage}
           priority
         />
         <div data-ar className="order-1 md:order-2">

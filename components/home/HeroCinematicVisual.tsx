@@ -12,6 +12,7 @@ type HeroCinematicVisualProps = {
   priority?: boolean;
   personImage?: string;
   personImageAlt?: string;
+  brushImage?: string;
 };
 
 const PERSON_REVEAL_OFFSET_S = 0.12;
@@ -34,6 +35,7 @@ export function HeroCinematicVisual({
   priority = false,
   personImage = "/figma/hero-person-layer.webp",
   personImageAlt = "",
+  brushImage = "/bg-hero.png",
 }: HeroCinematicVisualProps) {
   const reducedMotion = useReducedMotion();
   const shouldAnimate = !reducedMotion;
@@ -51,6 +53,27 @@ export function HeroCinematicVisual({
         if (shouldAnimate) setReplayKey((key) => key + 1);
       }}
     >
+      {/* Brush stroke background — sits behind the person, revealed first */}
+      <motion.div
+        className="pointer-events-none absolute bottom-[-4%] left-1/2 z-0 w-[120%] -translate-x-1/2"
+        initial={shouldAnimate ? { opacity: 0, scale: 0.85, filter: "blur(6px)" } : false}
+        animate={shouldAnimate ? { opacity: 1, scale: 1, filter: "blur(0px)" } : undefined}
+        transition={{
+          delay: replayDelay,
+          duration: 0.8,
+          ease: CINEMATIC_EASE,
+        }}
+        aria-hidden
+      >
+        <Image
+          src={brushImage}
+          alt=""
+          width={725}
+          height={530}
+          className="h-auto w-full object-contain"
+        />
+      </motion.div>
+
       {/* Entrance + breathing wrapper */}
       <motion.div
         key={`person-${replayKey}`}
