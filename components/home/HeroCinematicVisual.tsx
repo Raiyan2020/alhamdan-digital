@@ -35,17 +35,17 @@ export function HeroCinematicVisual({
   priority = false,
   personImage = "/figma/hero-person-layer.webp",
   personImageAlt = "",
-  brushImage = "/bg-hero.png",
 }: HeroCinematicVisualProps) {
   const reducedMotion = useReducedMotion();
   const shouldAnimate = !reducedMotion;
   const [replayKey, setReplayKey] = useState(0);
   const replayDelay = replayKey === 0 ? entranceDelayMs / 1000 : 0;
+  const brushImage = "/bg-hero.png";
 
   return (
     <motion.div
       className={cn(
-        "relative isolate mx-auto aspect-604/500 w-full max-w-[604px] overflow-visible",
+        "relative isolate mx-auto aspect-[2436/1800] w-full max-w-[604px] overflow-visible",
         className,
       )}
       aria-hidden={personImageAlt ? undefined : true}
@@ -53,26 +53,18 @@ export function HeroCinematicVisual({
         if (shouldAnimate) setReplayKey((key) => key + 1);
       }}
     >
-      {/* Brush stroke background — sits behind the person, revealed first */}
-      <motion.div
-        className="pointer-events-none absolute bottom-[-4%] left-1/2 z-0 w-[120%] -translate-x-1/2"
-        initial={shouldAnimate ? { opacity: 0, scale: 0.85, filter: "blur(6px)" } : false}
-        animate={shouldAnimate ? { opacity: 1, scale: 1, filter: "blur(0px)" } : undefined}
-        transition={{
-          delay: replayDelay,
-          duration: 0.8,
-          ease: CINEMATIC_EASE,
-        }}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
         aria-hidden
       >
         <Image
           src={brushImage}
           alt=""
-          width={725}
-          height={530}
-          className="h-auto w-full object-contain"
+          width={2436}
+          height={1800}
+          className="h-full w-full object-contain"
         />
-      </motion.div>
+      </div>
 
       {/* Entrance + breathing wrapper */}
       <motion.div

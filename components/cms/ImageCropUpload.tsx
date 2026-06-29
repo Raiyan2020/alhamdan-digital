@@ -165,7 +165,7 @@ export function ImageCropUpload({
       const croppedFile = await getCroppedImageFile(imageSrc, croppedAreaPixels, {
         maxWidth: selected?.maxWidth,
         fileName: sourceFile.name,
-        mimeType: "image/jpeg",
+        mimeType: "image/webp",
         quality: 0.92,
       });
       onUpload(croppedFile);

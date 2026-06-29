@@ -66,9 +66,9 @@ export function DesktopHome({ content, latestBlogs }: DesktopHomeProps) {
       className="relative mx-auto hidden h-[7030px] w-[1440px] bg-page text-ink min-[1440px]:block"
     >
       <section id={sectionIds.hero}>
-        <div className="absolute left-20 top-52 h-[500px] w-[604px]">
+        <div className="absolute left-20 top-52 w-[604px]">
           <HeroCinematicVisual
-            className="h-[500px] w-[604px]"
+            className="w-[604px]"
             entranceDelayMs={HERO_ENTRANCE_DELAY_MS}
             personImage={hero.personImage}
             personImageAlt={hero.personImageAlt}

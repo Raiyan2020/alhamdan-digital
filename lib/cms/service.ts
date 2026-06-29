@@ -194,7 +194,7 @@ export async function getFallbackHomePayload(): Promise<CmsHomePayload> {
       body: rich((m) => m.hero.body),
       cta: b((m) => m.hero.cta),
       ctaHref: `/#${sectionIds.products}`,
-      brushImage: media("/figma/hero-brush-layer.webp"),
+      brushImage: media("/bg-hero.png"),
       personImage: media("/figma/hero-person-layer.webp"),
     },
     aboutCards: [
@@ -573,7 +573,7 @@ export function localizeHomePayload(payload: CmsHomePayload, locale: CmsLocale):
       body: localizeRichText(payload.hero.body, locale),
       cta: text(payload.hero.cta),
       ctaHref: payload.hero.ctaHref,
-      brushImage: mediaUrl(payload.hero.brushImage, "/figma/hero-brush-layer.webp"),
+      brushImage: mediaUrl(payload.hero.brushImage, "/bg-hero.png"),
       personImage: mediaUrl(payload.hero.personImage, "/figma/hero-person-layer.webp"),
       personImageAlt: mediaAlt(payload.hero.personImage),
     },
