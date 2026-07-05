@@ -63,6 +63,10 @@ export function SiteHeader({ layout, navItems, header, className }: SiteHeaderPr
 
   const onHashNavClick = (href: string) => (event: MouseEvent) => {
     if (!href.includes("#")) return;
+    if (pathname !== "/") {
+      setOpen(false);
+      return;
+    }
     event.preventDefault();
     scrollToHash(href);
     setOpen(false);

@@ -11,6 +11,7 @@ type DashboardHeaderProps = {
   adminEmail: string;
   searchQuery: string;
   onSearchChange: (value: string) => void;
+  onOpenNotifications: () => void;
   onOpenMobileNav?: () => void;
   className?: string;
 };
@@ -29,6 +30,7 @@ export function DashboardHeader({
   adminEmail,
   searchQuery,
   onSearchChange,
+  onOpenNotifications,
   onOpenMobileNav,
   className,
 }: DashboardHeaderProps) {
@@ -63,6 +65,7 @@ export function DashboardHeader({
       <div className="ms-auto flex items-center gap-2 sm:gap-3">
         <button
           type="button"
+          onClick={onOpenNotifications}
           className="grid h-10 w-10 place-items-center rounded-full border border-border bg-dashboard-surface text-dashboard-ink-muted transition-colors hover:text-dashboard-ink"
           aria-label={t("notifications")}
         >

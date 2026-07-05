@@ -244,7 +244,7 @@ export function AboutProductsSection({
           if (!open) closeEditor();
         }}
       >
-        <DialogContent className="flex max-h-[min(90vh,900px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-3xl">
+        <DialogContent className="flex max-h-[min(92vh,920px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-3xl">
           <DialogHeader className="shrink-0 border-b border-border/60 px-6 py-5 pe-14 text-start">
             <DialogTitle>
               {isCreating
@@ -265,7 +265,7 @@ export function AboutProductsSection({
             </div>
           ) : null}
 
-          <DialogFooter className="mx-0 mb-0 shrink-0 flex-col items-stretch gap-3 border-t border-border/60 bg-muted/20 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <DialogFooter className="sticky bottom-0 z-10 mx-0 mb-0 shrink-0 flex-col items-stretch gap-3 border-t border-border/60 bg-dashboard-surface px-6 py-4 shadow-[0_-12px_30px_rgba(0,0,0,0.08)] sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-muted-foreground">{t("about.productsUi.saveReminder")}</p>
             <div className="flex flex-wrap justify-end gap-2">
               <Button type="button" variant="outline" onClick={closeEditor}>

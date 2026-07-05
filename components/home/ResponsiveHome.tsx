@@ -54,7 +54,7 @@ export function ResponsiveHome({ content, latestBlogs }: ResponsiveHomeProps) {
   } = content;
 
   return (
-    <div dir="ltr" className="overflow-x-clip bg-page text-ink min-[1440px]:hidden">
+    <div className="overflow-x-clip bg-page text-ink min-[1440px]:hidden">
       <section
         id={sectionIds.hero}
         className="mx-auto grid max-w-7xl gap-8 px-5 pb-12 pt-[calc(88px+2rem)] md:grid-cols-2 md:items-center md:pb-16"
@@ -218,16 +218,16 @@ export function ResponsiveHome({ content, latestBlogs }: ResponsiveHomeProps) {
               variant="fade-down"
               className="relative z-10 order-1 w-full max-w-[628px] lg:order-none"
             >
-              <div className="text-center">
+              <div className="text-start">
                 <h2 className="text-4xl font-medium leading-tight">{market.title}</h2>
                 <RichTextHtml
                   html={`${market.body1}${market.body2}`}
-                  className="mt-6 text-center text-lg leading-9 text-ink-secondary"
+                  className="mt-6 text-start text-lg leading-9 text-ink-secondary"
                 />
                 <MarketOutcomePills
                   outcomes={market.outcomes}
                   compact
-                  className="mt-6 justify-items-center"
+                  className="mt-6 justify-items-start"
                 />
               </div>
             </Reveal>

@@ -5,6 +5,7 @@ import { ArrowUp, Mail, MapPin, Phone } from "lucide-react";
 import { motion } from "motion/react";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { usePathname } from "@/i18n/navigation";
 import type { HomeContent } from "@/lib/i18n/home-content";
 import { Stagger, useSmoothScroll } from "@/components/motion";
 import { RichTextHtml } from "@/lib/cms/rich-text";
@@ -159,6 +160,7 @@ function QuickLinks({
   links: HomeContent["footerLinks"];
 }) {
   const { scrollToHash } = useSmoothScroll();
+  const pathname = usePathname();
 
   return (
     <Stagger as="ul" {...wave} staggerMs={55} className={className}>
@@ -168,6 +170,7 @@ function QuickLinks({
             href={item.href}
             onClick={(event) => {
               if (!item.href.includes("#")) return;
+              if (pathname !== "/") return;
               event.preventDefault();
               scrollToHash(item.href);
             }}

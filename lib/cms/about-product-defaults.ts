@@ -4,37 +4,30 @@ import { createDefaultProjectDetailPage } from "@/lib/cms/project-detail";
 export type AboutProduct = CmsAboutPayload["products"][number];
 
 export function createDefaultAboutProduct(index: number): AboutProduct {
+  const id = `product-${Date.now()}`;
+
   return {
-    id: `product-${Date.now()}`,
+    id,
     number: `${String(index + 1).padStart(2, "0")}/`,
-    title: { ar: "منتج جديد", en: "New product" },
+    title: { ar: "", en: "" },
     body: {
       json: { ar: "", en: "" },
-      html: {
-        ar: "<p>اكتب الوصف هنا.</p>",
-        en: "<p>Write the description here.</p>",
-      },
+      html: { ar: "", en: "" },
     },
-    offersLabel: { ar: "ماذا يقدم؟", en: "What does it offer?" },
+    offersLabel: { ar: "", en: "" },
     offers: [],
-    audienceLabel: { ar: "من هي الفئة المستهدفة؟", en: "Who is it for?" },
+    audienceLabel: { ar: "", en: "" },
     audience: [],
-    downloadTitle: {
-      ar: "حمّل التطبيق واطلب الآن",
-      en: "Download the app and order now",
-    },
+    downloadTitle: { ar: "", en: "" },
     image: {
       defaultAssetId: null,
-      defaultUrl: "/figma/hero-visual.webp",
-      alt: { ar: "منتج جديد", en: "New product" },
+      defaultUrl: "",
+      alt: { ar: "", en: "" },
       isDecorative: false,
     },
     imageSide: "left",
     storeButtons: [],
     isVisible: true,
-    detailPage: createDefaultProjectDetailPage(`product-${Date.now()}`, {
-      ar: "منتج جديد",
-      en: "New product",
-    }),
+    detailPage: createDefaultProjectDetailPage(id, { ar: "", en: "" }),
   };
 }

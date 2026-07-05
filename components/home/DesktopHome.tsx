@@ -61,7 +61,6 @@ export function DesktopHome({ content, latestBlogs }: DesktopHomeProps) {
 
   return (
     <div
-      dir="ltr"
       data-figma-canvas
       className="relative mx-auto hidden h-[7030px] w-[1440px] bg-page text-ink min-[1440px]:block"
     >
@@ -76,7 +75,7 @@ export function DesktopHome({ content, latestBlogs }: DesktopHomeProps) {
             priority
           />
         </div>
-        <div data-ar className="absolute left-[732px] top-[219px] w-[628px]">
+        <div data-ar className="absolute left-[732px] top-[219px] w-[628px] text-start">
           <HeroAnimatedHeading
             line1={hero.titleLine1}
             line2Prefix={hero.line2Prefix}
@@ -214,15 +213,15 @@ export function DesktopHome({ content, latestBlogs }: DesktopHomeProps) {
           variant="fade-down"
           className="absolute left-20 top-1/2 z-10 w-[628px] -translate-y-1/2"
         >
-          <div className="text-center">
+          <div className="text-start">
             <h2 className="text-[56px] font-medium leading-[72px]">
               {market.title}
             </h2>
             <RichTextHtml
               html={`${market.body1}${market.body2}`}
-              className="mt-10 text-center text-[28px] font-medium leading-[42px] text-ink-secondary"
+              className="mt-10 text-start text-[28px] font-medium leading-[42px] text-ink-secondary"
             />
-            <MarketOutcomePills outcomes={market.outcomes} className="justify-items-center" />
+            <MarketOutcomePills outcomes={market.outcomes} className="justify-items-start" />
           </div>
         </Reveal>
 

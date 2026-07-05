@@ -2,10 +2,11 @@
 
 import { format } from "date-fns";
 import { ar, enUS } from "date-fns/locale";
-import { FilePlus2, Pencil, Trash2 } from "lucide-react";
+import { ExternalLink, FilePlus2, Pencil, Trash2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Link } from "@/i18n/navigation";
 import type { CmsBlogPostRecord } from "@/lib/cms/blog-types";
 import { useBlogPostsQuery, useDeleteBlogPostMutation } from "@/hooks/use-blog-mutations";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,7 @@ export function BlogManager({ embedded = false }: BlogManagerProps) {
       <BlogPostEditor
         postId={editingId === "new" ? null : editingId}
         embedded={embedded}
+        onCreated={(post) => setEditingId(post.id)}
         onBack={() => {
           setEditingId(null);
           refetch();
@@ -95,9 +97,17 @@ export function BlogManager({ embedded = false }: BlogManagerProps) {
                         {t(`categories.${post.payload.category}`)}
                       </Badge>
                     </div>
-                    <p className="text-sm text-dashboard-ink-muted" dir="ltr">
-                      /blogs/{post.slug}
-                    </p>
+                    <Button
+                      type="button"
+                      variant="link"
+                      className="h-auto justify-start p-0 text-sm font-normal text-dashboard-gulf"
+                      asChild
+                    >
+                      <Link href={`/blogs/${post.slug}`} target="_blank" rel="noreferrer" dir="ltr">
+                        /blogs/{post.slug}
+                        <ExternalLink className="ms-1 h-3.5 w-3.5" />
+                      </Link>
+                    </Button>
                     <p className="text-xs text-dashboard-ink-muted">
                       {post.updatedAt
                         ? format(new Date(post.updatedAt), "PPp", { locale: dateLocale })

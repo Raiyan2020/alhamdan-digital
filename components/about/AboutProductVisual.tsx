@@ -30,7 +30,7 @@ export function AboutProductVisual({
   const frame = (
     <div
       className={cn(
-        "flex items-center justify-center overflow-hidden rounded-[40px] bg-brand px-6 py-8",
+        "relative flex items-center justify-center overflow-hidden rounded-[40px] bg-brand",
         frameClassName,
       )}
     >
@@ -38,10 +38,10 @@ export function AboutProductVisual({
         <Image
           src={imageSrc}
           alt={alt}
-          width={603}
-          height={600}
+          fill
           priority={priority}
-          className="h-auto max-h-[560px] w-full max-w-[420px] object-contain"
+          className="object-cover"
+          sizes="(min-width: 1440px) 520px, 100vw"
         />
       ) : null}
     </div>

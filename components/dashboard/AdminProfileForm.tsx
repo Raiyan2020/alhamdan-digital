@@ -47,7 +47,6 @@ export function AdminProfileForm({ admin }: AdminProfileFormProps) {
     defaultValues: {
       name: admin.name,
       email: admin.email,
-      currentPassword: "",
     },
   });
 
@@ -66,7 +65,6 @@ export function AdminProfileForm({ admin }: AdminProfileFormProps) {
         profileForm.reset({
           name: response.admin.name,
           email: response.admin.email,
-          currentPassword: "",
         });
         toast.success(t("profileSaved"));
         router.refresh();
@@ -143,20 +141,6 @@ export function AdminProfileForm({ admin }: AdminProfileFormProps) {
                       <FormLabel>{t("email")}</FormLabel>
                       <FormControl>
                         <Input {...field} type="email" className="h-11 rounded-xl" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={profileForm.control}
-                  name="currentPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("currentPassword")}</FormLabel>
-                      <FormControl>
-                        <Input {...field} type="password" className="h-11 rounded-xl" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

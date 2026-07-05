@@ -5,6 +5,8 @@ export const validationMessages = {
   englishRequired: "validation.englishRequired",
   invalidEmail: "validation.invalidEmail",
   passwordRequired: "validation.passwordRequired",
+  passwordMinLength: "validation.passwordMinLength",
+  passwordsDoNotMatch: "validation.passwordsDoNotMatch",
   invalidSlug: "validation.invalidSlug",
   invalidUrl: "validation.invalidUrl",
 } as const;
@@ -17,6 +19,9 @@ const legacyEnglishMessages: Record<string, ValidationMessageKey> = {
   "English value is required": validationMessages.englishRequired,
   "Enter a valid email address.": validationMessages.invalidEmail,
   "Password is required.": validationMessages.passwordRequired,
+  "Password must be at least 8 characters.":
+    validationMessages.passwordMinLength,
+  "Passwords do not match.": validationMessages.passwordsDoNotMatch,
   "Slug must be lowercase letters, numbers, and hyphens.":
     validationMessages.invalidSlug,
 };

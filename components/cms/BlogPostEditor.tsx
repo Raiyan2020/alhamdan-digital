@@ -54,6 +54,7 @@ type BlogPostFormValues = z.infer<typeof blogPostFormSchema>;
 type BlogPostEditorProps = {
   postId: string | null;
   embedded?: boolean;
+  onCreated?: (post: CmsBlogPostRecord) => void;
   onBack: () => void;
 };
 
@@ -113,7 +114,12 @@ function BlogEditorActions({
  * Public entry point. Handles data loading and only renders the form
  * once data is ready so that useForm can initialize with the correct values.
  */
-export function BlogPostEditor({ postId, embedded = false, onBack }: BlogPostEditorProps) {
+export function BlogPostEditor({
+  postId,
+  embedded = false,
+  onCreated,
+  onBack,
+}: BlogPostEditorProps) {
   const t = useTranslations("cms.blog");
   const { data: existingPost, isLoading } = useBlogPostQuery(postId);
 
@@ -129,6 +135,7 @@ export function BlogPostEditor({ postId, embedded = false, onBack }: BlogPostEdi
       postId={postId}
       existingPost={existingPost ?? null}
       embedded={embedded}
+      onCreated={onCreated}
       onBack={onBack}
     />
   );
@@ -138,6 +145,7 @@ type BlogPostEditorFormProps = {
   postId: string | null;
   existingPost: CmsBlogPostRecord | null;
   embedded?: boolean;
+  onCreated?: (post: CmsBlogPostRecord) => void;
   onBack: () => void;
 };
 
@@ -146,7 +154,13 @@ type BlogPostEditorFormProps = {
  * can initialize with the correct defaultValues immediately — no
  * useEffect + form.reset workaround needed.
  */
-function BlogPostEditorForm({ postId, existingPost, embedded = false, onBack }: BlogPostEditorFormProps) {
+function BlogPostEditorForm({
+  postId,
+  existingPost,
+  embedded = false,
+  onCreated,
+  onBack,
+}: BlogPostEditorFormProps) {
   const t = useTranslations("cms.blog");
   const tCommon = useTranslations("cms.common");
   const locale = useLocale();
@@ -221,9 +235,9 @@ function BlogPostEditorForm({ postId, existingPost, embedded = false, onBack }: 
         createMutation.mutate(
           { status: formStatus, payload: payload as CmsBlogPostPayload },
           {
-            onSuccess: () => {
+            onSuccess: (response) => {
               onSuccess();
-              onBack();
+              onCreated?.(response.post);
             },
             onError,
           },

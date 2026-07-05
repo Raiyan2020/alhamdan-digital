@@ -13,7 +13,6 @@ import { useReducedMotion } from "@/components/motion";
 import { cn } from "@/lib/utils";
 import { SectorCard } from "./SectorCard";
 
-const LOOP_COPIES = 3;
 const CARD_WIDTH_PX = 218;
 const CARD_GAP_PX = 38;
 
@@ -33,12 +32,10 @@ type SectorsCarouselProps = {
 };
 
 function buildSlides(sectors: SectorItem[]): SlideItem[] {
-  return Array.from({ length: LOOP_COPIES }, (_, copy) =>
-    sectors.map((sector, index) => ({
-      ...sector,
-      slideKey: `${copy}-${index}-${sector.icon}`,
-    }))
-  ).flat();
+  return sectors.map((sector, index) => ({
+    ...sector,
+    slideKey: `${index}-${sector.icon}`,
+  }));
 }
 
 export function SectorsCarousel({ className, label, sectors }: SectorsCarouselProps) {
@@ -69,7 +66,7 @@ export function SectorsCarousel({ className, label, sectors }: SectorsCarouselPr
     >
       <Carousel
         opts={{
-          loop: true,
+          loop: false,
           align: "start",
           dragFree: true,
         }}

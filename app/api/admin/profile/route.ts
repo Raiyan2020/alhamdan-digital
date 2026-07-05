@@ -85,17 +85,6 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    const passwordValid = await verifyAdminUserPassword(
-      admin,
-      parsed.data.currentPassword,
-    );
-    if (!passwordValid) {
-      return NextResponse.json(
-        { ok: false, message: "Current password is incorrect." },
-        { status: 401 },
-      );
-    }
-
     const emailTaken = await isAdminEmailTaken(parsed.data.email, admin.id);
     if (emailTaken) {
       return NextResponse.json(

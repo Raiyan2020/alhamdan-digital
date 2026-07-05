@@ -88,8 +88,8 @@ export function ProductCard({
 
       <motion.div
         className={cn(
-          "absolute bottom-[-28px] z-10 h-[300px] w-[280px]",
-          imageOnRight ? "-right-10" : "-left-10"
+          "absolute inset-y-5 z-10 w-[46%]",
+          imageOnRight ? "right-5" : "left-5"
         )}
         variants={productImageVariants}
         initial="rest"

@@ -14,7 +14,6 @@ function DesktopAboutPage({ content }: AboutPageProps) {
 
   return (
     <div
-      dir="ltr"
       data-figma-canvas
       className="relative mx-auto hidden w-[1440px] bg-page pb-32 text-ink min-[1440px]:block"
       style={{ minHeight: canvasMinHeight }}
@@ -59,7 +58,7 @@ function ResponsiveAboutPage({ content }: AboutPageProps) {
 
 export function AboutPage({ content }: AboutPageProps) {
   return (
-    <main dir="rtl" className="overflow-x-clip bg-page font-sans">
+    <main className="overflow-x-clip bg-page font-sans">
       <ResponsiveAboutPage content={content} />
       <DesktopAboutPage content={content} />
     </main>
