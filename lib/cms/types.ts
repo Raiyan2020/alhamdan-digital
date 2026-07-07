@@ -289,7 +289,7 @@ export type LocalizedHomeContent = {
     title: string;
     body: string;
     carouselLabel: string;
-    items: Array<{ title: string; icon: SectorIconKey }>;
+    items: Array<{ id: string; title: string; icon: SectorIconKey }>;
   };
   why: {
     title: string;

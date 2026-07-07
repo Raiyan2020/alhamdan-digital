@@ -42,8 +42,8 @@ const navHrefs = [
   { key: "about", href: "/about" },
   { key: "products", href: `/#${sectionIds.products}` },
   { key: "services", href: `/#${sectionIds.services}` },
-  { key: "blog", href: "/blogs" },
   { key: "why", href: `/#${sectionIds.why}` },
+  { key: "blog", href: "/blogs" },
 ] as const;
 
 const LOGO_ORDER = 0;
@@ -64,7 +64,9 @@ export function SiteHeader({ layout, navItems, header, className }: SiteHeaderPr
   const onHashNavClick = (href: string) => (event: MouseEvent) => {
     if (!href.includes("#")) return;
     if (pathname !== "/") {
+      // Navigate to home page with hash — let browser handle scroll
       setOpen(false);
+      router.push(href as Parameters<typeof router.push>[0]);
       return;
     }
     event.preventDefault();

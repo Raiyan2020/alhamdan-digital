@@ -129,7 +129,9 @@ function SocialIcons({
     ),
   } as const;
 
-  if (!links.length) return null;
+  const validLinks = links.filter((item) => item.href && item.href !== "#" && item.href.trim() !== "");
+
+  if (!validLinks.length) return null;
 
   return (
     <Stagger
@@ -138,7 +140,7 @@ function SocialIcons({
       staggerDirection={-1}
       className={cn("flex flex-wrap items-center gap-6", className)}
     >
-      {links.map((item) => (
+      {validLinks.map((item) => (
         <motion.a
           key={item.id}
           href={item.href}

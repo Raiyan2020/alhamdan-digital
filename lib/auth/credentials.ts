@@ -17,7 +17,7 @@ export async function authenticateAdmin(
       return valid ? toAdminSession(adminUser) : null;
     }
   } catch (error) {
-    console.warn("Falling back to env admin credentials:", error);
+    // Silent fail
   }
 
   const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();

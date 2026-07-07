@@ -52,33 +52,24 @@ function ProcessStepCell({
   return (
     <div
       className={cn(
-        "relative flex min-h-0 flex-col items-center justify-start px-3 py-5 text-center sm:px-4 md:min-h-[276px] md:flex-1 md:px-2 md:py-10",
+        "relative flex min-h-0 flex-col items-center text-center justify-start px-3 py-5 sm:px-4 bg-[#E5EFFF] w-full",
+        "md:flex-1 md:h-full md:py-6 md:px-3.5 md:justify-center md:min-h-0",
         className
       )}
     >
-      {showDivider ? (
-        <span
-          aria-hidden
-          className="absolute inset-y-6 start-0 hidden w-px bg-brand/12 md:block"
-        />
-      ) : null}
-
       <motion.p
-        dir="rtl"
-        className="inline-flex items-center gap-1.5 text-[14px] font-semibold tracking-wide text-brand"
+        dir="ltr"
+        className="flex flex-row flex-nowrap items-center gap-2 text-[30px] font-normal leading-[36px] text-[#012561] font-sans [direction:ltr] whitespace-nowrap"
         variants={contentVariants}
         transition={transitionFor(0)}
         {...motionProps}
       >
-        <span className="text-[var(--process-accent)]" aria-hidden>
-          •
-        </span>
-        <span data-bidi="ltr">{number}</span>
+        <span className="h-2 w-2 rounded-full bg-[#012561]" aria-hidden />
+        <span>{number.padStart(2, "0")}</span>
       </motion.p>
 
       <motion.h3
-        dir="rtl"
-        className="mt-3 text-sm font-bold leading-snug text-ink md:mt-4 md:whitespace-nowrap md:text-[14px]"
+        className="mt-3 text-lg font-medium leading-[28px] text-[#0D0D0D] tracking-[-0.02em] md:mt-4 md:w-full"
         variants={contentVariants}
         transition={transitionFor(0.14)}
         {...motionProps}
@@ -87,8 +78,7 @@ function ProcessStepCell({
       </motion.h3>
 
       <motion.div
-        dir="rtl"
-        className="mt-2 max-w-[16rem] text-xs leading-5 text-[var(--process-muted)] sm:max-w-[18rem] sm:text-[13px] md:max-w-[12.5rem] md:leading-5"
+        className="mt-2 text-xs leading-[23px] text-[#525252] font-normal md:text-[14px] md:w-full"
         variants={contentVariants}
         transition={transitionFor(0.28)}
         {...motionProps}
@@ -134,7 +124,7 @@ function ProcessStepsMobileCarousel({ steps }: { steps: ProcessStep[] }) {
       <CarouselContent>
         {steps.map((step, index) => (
           <CarouselItem key={step.number} className="basis-[84%] sm:basis-[70%]">
-            <div className="rounded-[24px] bg-[var(--process-bar)]">
+            <div className="overflow-hidden rounded-[24px] bg-[#DCDCDC] p-[1px]">
               <ProcessStepCell {...step} index={index} />
             </div>
           </CarouselItem>
@@ -151,11 +141,14 @@ function ProcessStepsBar({
   steps: ProcessStep[];
   className?: string;
 }) {
+  const locale = useLocale();
+  const isRtl = locale === "ar";
+
   return (
     <div
-      dir="rtl"
+      dir={isRtl ? "rtl" : "ltr"}
       className={cn(
-        "flex overflow-hidden rounded-[24px] bg-[var(--process-bar)] md:rounded-[28px]",
+        "flex w-full md:w-[1280px] md:h-[248px] overflow-hidden rounded-[24px] md:rounded-2xl bg-[#DCDCDC] border-2 border-[#E5EFFF] gap-[1px]",
         className
       )}
     >
@@ -173,16 +166,33 @@ function ProcessStepsBar({
 
 export function ProcessSectionDesktop({
   process,
+  topOffset,
 }: {
   process: HomeContent["process"];
+  topOffset?: number;
 }) {
+  const isAbsolute = topOffset !== undefined;
+  if (isAbsolute) {
+    return (
+      <>
+        <Heading y={1637 + topOffset} title={process.title} body={process.body} />
+        <div
+          className="absolute left-20 w-[1280px]"
+          style={{ top: 1747 + topOffset }}
+        >
+          <ProcessStepsBar steps={process.steps} />
+        </div>
+      </>
+    );
+  }
+
   return (
-    <>
-      <Heading y={1637} title={process.title} body={process.body} />
-      <div className="absolute left-20 top-[1747px] w-[1280px]">
+    <section className="relative mx-auto w-[1280px] py-16">
+      <Heading title={process.title} body={process.body} />
+      <div className="mt-14 w-full">
         <ProcessStepsBar steps={process.steps} />
       </div>
-    </>
+    </section>
   );
 }
 

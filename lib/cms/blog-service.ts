@@ -149,7 +149,6 @@ export async function listAdminBlogPosts(): Promise<CmsBlogPostRecord[]> {
 
     return rows.map(rowToRecord);
   } catch (error) {
-    console.warn("Failed to list blog posts:", error);
     return [];
   }
 }
@@ -167,7 +166,6 @@ export async function getAdminBlogPostById(id: string): Promise<CmsBlogPostRecor
 
     return row ? rowToRecord(row) : null;
   } catch (error) {
-    console.warn("Failed to read blog post:", error);
     return null;
   }
 }
@@ -194,7 +192,6 @@ export async function getPublishedBlogPosts(): Promise<CmsBlogPostRecord[]> {
     const records = rows.map(rowToRecord);
     return records;
   } catch (error) {
-    console.warn("Falling back to bundled blog posts:", error);
     return getFallbackBlogRecords();
   }
 }

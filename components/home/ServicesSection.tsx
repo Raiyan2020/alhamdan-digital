@@ -35,6 +35,45 @@ type ServicesSectionProps = {
   services: ServicesContent;
 };
 
+function ServicesRipples({
+  compact,
+}: {
+  compact: boolean;
+}) {
+  const RING_COUNT = 6;
+  const MIN_SIZE = compact ? 120 : 160;
+  const RING_STEP = compact ? 80 : 110;
+
+  return (
+    <div
+      className={cn(
+        "pointer-events-none absolute overflow-visible z-0",
+        compact
+          ? "inset-x-0 bottom-[130px] mx-auto h-0 w-0"
+          : "left-[274px] top-[300px] h-0 w-0"
+      )}
+      aria-hidden
+    >
+      <div className="relative h-0 w-0">
+        {Array.from({ length: RING_COUNT }, (_, ring) => {
+          const size = MIN_SIZE + ring * RING_STEP;
+          return (
+            <span
+              key={ring}
+              className="absolute rounded-full border border-brand/8 dark:border-brand-soft/12"
+              style={{
+                width: size,
+                height: size,
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function ServicesMedia({
   item,
   swapKey,
@@ -70,13 +109,15 @@ function ServicesMedia({
         }
         transition={smoothTransition}
       >
+        <ServicesRipples compact={compact} />
+
         <Image
           src={item.visualImage}
           alt={item.visualImageAlt ?? ""}
           width={519}
           height={554}
           className={cn(
-            "absolute object-contain",
+            "absolute object-contain z-10",
             compact
               ? "inset-x-0 bottom-0 mx-auto h-[250px] w-auto sm:h-[290px]"
               : "left-[38px] top-[47px] h-[554px] w-[519px]"
@@ -88,7 +129,7 @@ function ServicesMedia({
           width={548}
           height={480}
           className={cn(
-            "absolute object-contain",
+            "absolute object-contain z-20",
             compact
               ? "inset-x-0 bottom-4 mx-auto h-[210px] w-auto sm:h-[250px]"
               : "left-0 top-[78px] h-[480px] w-[548px]"
@@ -341,7 +382,25 @@ export function ServicesSection({ className, id, services }: ServicesSectionProp
       aria-label={carouselLabel}
       className={cn("outline-none", className)}
     >
-      <div className="grid h-full w-full grid-cols-1 gap-6 lg:grid-cols-[minmax(0,628px)_minmax(0,1fr)] lg:gap-10">
+      <div className="grid h-full w-full grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,628px)] lg:gap-10">
+        <div className="order-1 flex min-h-0 flex-col gap-2 lg:order-none lg:h-full lg:gap-4">
+          {items.map(({ title, body }, index) => (
+            <ServiceRow
+              key={title}
+              title={title}
+              body={body}
+              index={index}
+              isActive={index === activeIndex}
+              isLast={index === items.length - 1}
+              onSelect={() => goTo(index)}
+              goToLabel={t("goToService", { service: title, index: index + 1 })}
+              rowRef={(node) => {
+                rowRefs.current[index] = node;
+              }}
+            />
+          ))}
+        </div>
+
         <motion.div
           ref={mediaRef}
           className="relative order-2 min-h-0 lg:order-none"
@@ -367,24 +426,6 @@ export function ServicesSection({ className, id, services }: ServicesSectionProp
             />
           </div>
         </motion.div>
-
-        <div className="order-1 flex min-h-0 flex-col gap-2 lg:order-none lg:h-full lg:gap-4">
-          {items.map(({ title, body }, index) => (
-            <ServiceRow
-              key={title}
-              title={title}
-              body={body}
-              index={index}
-              isActive={index === activeIndex}
-              isLast={index === items.length - 1}
-              onSelect={() => goTo(index)}
-              goToLabel={t("goToService", { service: title, index: index + 1 })}
-              rowRef={(node) => {
-                rowRefs.current[index] = node;
-              }}
-            />
-          ))}
-        </div>
       </div>
 
       <p className="sr-only" aria-live="polite">

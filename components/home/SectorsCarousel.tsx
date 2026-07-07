@@ -1,7 +1,7 @@
 "use client";
 
 import type { SectorIconKey } from "./sector-icons";
-import { sectorIconMap } from "./sector-icons";
+import { getSectorIcon } from "./sector-icons";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { useMemo } from "react";
 import {
@@ -17,6 +17,7 @@ const CARD_WIDTH_PX = 218;
 const CARD_GAP_PX = 38;
 
 type SectorItem = {
+  id: string;
   title: string;
   icon: SectorIconKey;
 };
@@ -34,7 +35,7 @@ type SectorsCarouselProps = {
 function buildSlides(sectors: SectorItem[]): SlideItem[] {
   return sectors.map((sector, index) => ({
     ...sector,
-    slideKey: `${index}-${sector.icon}`,
+    slideKey: `${index}-${sector.id}-${sector.icon}`,
   }));
 }
 
@@ -77,7 +78,7 @@ export function SectorsCarousel({ className, label, sectors }: SectorsCarouselPr
           className="-ml-0"
           style={{ columnGap: `${CARD_GAP_PX}px` }}
         >
-          {slides.map(({ title, icon, slideKey }) => (
+          {slides.map(({ id, title, icon, slideKey }) => (
             <CarouselItem
               key={slideKey}
               className="basis-auto pl-0"
@@ -87,7 +88,7 @@ export function SectorsCarousel({ className, label, sectors }: SectorsCarouselPr
             >
               <SectorCard
                 title={title}
-                Icon={sectorIconMap[icon]}
+                Icon={getSectorIcon(id, icon)}
                 className="h-[164px] w-[218px]"
               />
             </CarouselItem>

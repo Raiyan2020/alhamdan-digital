@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import {
-  BadgeCheck,
-  BrainCircuit,
-  Gauge,
-  Handshake,
-  Layers3,
+  Lightbulb,
+  Code2,
+  Megaphone,
   Sparkles,
+  User,
+  Smartphone,
   type LucideIcon,
 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
@@ -17,12 +17,12 @@ import { useInViewOnce } from "@/components/motion/useInViewOnce";
 import { cn } from "@/lib/utils";
 
 const reasonIcons: LucideIcon[] = [
-  Handshake,
-  Gauge,
-  Layers3,
-  BrainCircuit,
-  BadgeCheck,
+  Lightbulb,
+  Code2,
+  Megaphone,
   Sparkles,
+  User,
+  Smartphone,
 ];
 
 type WhySectionProps = {
@@ -147,24 +147,20 @@ function ReasonItem({ reason, index }: { reason: string; index: number }) {
       whileHover="hover"
     >
       <motion.span
-        className="order-1 grid h-[34px] w-[34px] shrink-0 place-items-center rounded-full bg-white text-brand"
+        className="order-1 grid h-[34px] w-[34px] shrink-0 place-items-center text-white"
         variants={{
           hover: {
             rotate: [0, -8, 8, 0],
-            scale: 1.1,
+            scale: 1.15,
           },
         }}
         transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
       >
-        <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+        <Icon className="h-[26px] w-[26px] stroke-[1.5]" aria-hidden="true" />
       </motion.span>
       <span dir="auto" className="order-2 min-w-0 text-start leading-[1.7] [unicode-bidi:normal]">
         {reason}
       </span>
-      <span
-        aria-hidden
-        className="absolute bottom-0 start-0 h-px w-full origin-start scale-x-0 bg-white/80 transition-transform duration-300 group-hover:scale-x-100"
-      />
     </motion.li>
   );
 }
@@ -181,18 +177,8 @@ export function WhySection({
   screenImageAlt,
 }: WhySectionProps) {
   return (
-    <section id={id} className={cn("text-white", className)}>
-      <Reveal variant="image" className={cn(!desktop && "order-2 md:order-none")}>
-        <WhyPhone
-          desktop={desktop}
-          phoneFrameImage={phoneFrameImage}
-          phoneFrameImageAlt={phoneFrameImageAlt}
-          screenImage={screenImage}
-          screenImageAlt={screenImageAlt}
-        />
-      </Reveal>
+    <section id={id} className={cn("text-white grid grid-cols-1 gap-12 md:grid-cols-2 md:items-center", className)}>
       <div
-        data-ar
         className={cn(
           "flex w-full min-w-0 flex-col items-start text-start",
           desktop ? "pt-[75px]" : "order-1 md:order-none",
@@ -220,6 +206,15 @@ export function WhySection({
           ))}
         </Stagger>
       </div>
+      <Reveal variant="image" className={cn("md:self-end", !desktop && "order-2 md:order-none")}>
+        <WhyPhone
+          desktop={desktop}
+          phoneFrameImage={phoneFrameImage}
+          phoneFrameImageAlt={phoneFrameImageAlt}
+          screenImage={screenImage}
+          screenImageAlt={screenImageAlt}
+        />
+      </Reveal>
     </section>
   );
 }

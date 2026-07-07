@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useLocale } from "next-intl";
 import { cn } from "@/lib/utils";
 
 type MarketCinematicVisualProps = {
@@ -18,11 +21,15 @@ export function MarketCinematicVisual({
   bleedStart = false,
   bleedEnd = false,
 }: MarketCinematicVisualProps) {
+  const locale = useLocale();
+  const isRtl = locale === "ar";
+
   return (
     <div
       className={cn(
         "relative overflow-visible",
         bleedEnd && "flex justify-end",
+        bleedStart && "flex justify-start",
         className
       )}
       aria-hidden
@@ -35,9 +42,10 @@ export function MarketCinematicVisual({
         sizes="(min-width: 1440px) 603px, 100vw"
         className={cn(
           "block max-w-none select-none object-contain",
-          bleedEnd ? "h-full w-auto object-right" : "h-auto w-[603px]",
-          !bleedEnd && !bleedStart && "mx-auto",
-          bleedStart && !bleedEnd && "me-auto"
+          !isRtl && "-scale-x-100",
+          bleedEnd && (isRtl ? "h-full w-auto object-left" : "h-full w-auto object-right"),
+          bleedStart && (isRtl ? "h-full w-auto object-right" : "h-full w-auto object-left"),
+          !bleedEnd && !bleedStart && "mx-auto h-auto w-[603px]"
         )}
         draggable={false}
       />

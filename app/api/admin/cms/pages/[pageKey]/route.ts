@@ -142,7 +142,6 @@ export async function PATCH(request: NextRequest, context: Context) {
         },
       });
   } catch (error) {
-    console.error(`Failed to save CMS ${pageKey} draft:`, error);
     return NextResponse.json(
       {
         ok: false,

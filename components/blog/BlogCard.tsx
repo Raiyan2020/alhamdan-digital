@@ -23,11 +23,11 @@ export function BlogCard({ post, className, imagePriority = false }: BlogCardPro
   return (
     <article
       className={cn(
-        "group overflow-hidden rounded-3xl border border-border-soft bg-card-surface shadow-sm transition-transform hover:-translate-y-0.5",
+        "group flex h-full flex-col overflow-hidden rounded-3xl border border-border-soft bg-card-surface shadow-sm transition-transform hover:-translate-y-0.5",
         className,
       )}
     >
-      <Link href={`/blogs/${post.slug}`} className="block" aria-label={post.title}>
+      <Link href={`/blogs/${post.slug}`} className="block shrink-0" aria-label={post.title}>
         {post.coverImageUrl ? (
           <div className="relative aspect-[16/10] overflow-hidden bg-muted">
             <Image
@@ -43,29 +43,31 @@ export function BlogCard({ post, className, imagePriority = false }: BlogCardPro
           <div className="aspect-[16/10] bg-gradient-to-br from-[#e6edf5] to-[#d9ecfb]" />
         )}
       </Link>
-      <div className="space-y-4 p-6">
-        <div className="flex flex-wrap items-center gap-2 text-xs text-ink-muted">
-          <span className="rounded-full bg-[#e0f4fc] px-3 py-1 font-medium text-[#006ab4]">
-            {t(`categories.${post.category}`)}
-          </span>
-          {post.publishedAt ? (
-            <span className="inline-flex items-center gap-1">
-              <Calendar className="h-3.5 w-3.5" />
-              {format(new Date(post.publishedAt), "PP", { locale: dateLocale })}
+      <div className="flex flex-1 flex-col justify-between p-6">
+        <div className="space-y-4">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-ink-muted">
+            <span className="rounded-full bg-[#e0f4fc] px-3 py-1 font-medium text-[#006ab4]">
+              {t(`categories.${post.category}`)}
             </span>
-          ) : null}
+            {post.publishedAt ? (
+              <span className="inline-flex items-center gap-1">
+                <Calendar className="h-3.5 w-3.5" />
+                {format(new Date(post.publishedAt), "PP", { locale: dateLocale })}
+              </span>
+            ) : null}
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold leading-8">
+              <Link href={`/blogs/${post.slug}`} className="hover:text-brand">
+                {post.title}
+              </Link>
+            </h2>
+            <p className="mt-3 line-clamp-3 text-sm leading-6 text-ink-muted">
+              {post.excerpt}
+            </p>
+          </div>
         </div>
-        <div>
-          <h2 className="text-xl font-semibold leading-8">
-            <Link href={`/blogs/${post.slug}`} className="hover:text-brand">
-              {post.title}
-            </Link>
-          </h2>
-          <p className="mt-3 line-clamp-3 text-sm leading-6 text-ink-muted">
-            {post.excerpt}
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-4 text-xs text-ink-muted">
+        <div className="flex flex-wrap items-center gap-4 text-xs text-ink-muted pt-4">
           <span className="inline-flex items-center gap-1">
             <User className="h-3.5 w-3.5" />
             {post.authorName}

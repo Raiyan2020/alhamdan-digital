@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import type { LocalizedAboutContent } from "@/lib/cms/types";
 import { cn } from "@/lib/utils";
+import { useLocale } from "next-intl";
 import {
   ABOUT_DESKTOP_LAYOUT,
   getAboutProductContentLeft,
@@ -22,7 +23,9 @@ type AboutProductSectionProps = {
 const IMAGE_FRAME_CLASS = "h-[640px] w-[520px]";
 
 export function AboutProductSection({ product, index, layout }: AboutProductSectionProps) {
-  const imageOnLeft = product.imageSide === "left";
+  const locale = useLocale();
+  const isRtl = locale === "ar";
+  const imageOnLeft = isRtl ? (product.imageSide === "right") : (product.imageSide === "left");
 
   if (layout === "desktop") {
     const top = getAboutProductTop(index);
@@ -31,8 +34,8 @@ export function AboutProductSection({ product, index, layout }: AboutProductSect
 
     return (
       <motion.section
-        className="absolute left-0 w-[1440px]"
-        style={{ top, minHeight: ABOUT_DESKTOP_LAYOUT.productSectionHeight }}
+        className="relative mx-auto w-[1440px]"
+        style={{ height: ABOUT_DESKTOP_LAYOUT.productSectionHeight }}
         initial={{ opacity: 0, y: 32 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
@@ -52,7 +55,6 @@ export function AboutProductSection({ product, index, layout }: AboutProductSect
           }
         />
         <div
-          data-ar
           className="absolute text-center"
           style={{
             top: contentTop,
@@ -82,7 +84,6 @@ export function AboutProductSection({ product, index, layout }: AboutProductSect
         frameClassName="mx-auto min-h-[320px] w-full max-w-[520px]"
       />
       <div
-        data-ar
         className={cn(
           "mx-auto w-full max-w-xl justify-self-center text-center",
           product.imageSide === "right" ? "md:order-1" : undefined,

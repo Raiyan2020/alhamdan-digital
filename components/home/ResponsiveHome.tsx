@@ -1,4 +1,5 @@
 import { Eye, Send } from "lucide-react";
+import { useLocale } from "next-intl";
 import type { HomeContent } from "@/lib/i18n/home-content";
 import type { LocalizedBlogPostSummary } from "@/lib/cms/blog-types";
 import { Reveal, MotionCard, MotionLinkButton } from "@/components/motion";
@@ -40,6 +41,9 @@ const aboutCardMotion = [
 const visionMissionIcons = [Eye, Send] as const;
 
 export function ResponsiveHome({ content, latestBlogs }: ResponsiveHomeProps) {
+  const locale = useLocale();
+  const isRtl = locale === "ar";
+
   const {
     about,
     aboutCards,
@@ -54,20 +58,15 @@ export function ResponsiveHome({ content, latestBlogs }: ResponsiveHomeProps) {
   } = content;
 
   return (
-    <div className="overflow-x-clip bg-page text-ink min-[1440px]:hidden">
+    <div
+      dir={isRtl ? "rtl" : "ltr"}
+      className="overflow-x-clip bg-page text-ink min-[1440px]:hidden"
+    >
       <section
         id={sectionIds.hero}
         className="mx-auto grid max-w-7xl gap-8 px-5 pb-12 pt-[calc(88px+2rem)] md:grid-cols-2 md:items-center md:pb-16"
       >
-        <HeroCinematicVisual
-          className="order-2 mx-auto w-full max-w-[604px] md:order-1"
-          entranceDelayMs={HERO_ENTRANCE_DELAY_MS}
-          personImage={hero.personImage}
-          personImageAlt={hero.personImageAlt}
-          brushImage={hero.brushImage}
-          priority
-        />
-        <div data-ar className="order-1 md:order-2">
+        <div className="">
           <HeroAnimatedHeading
             line1={hero.titleLine1}
             line2Prefix={hero.line2Prefix}
@@ -90,12 +89,29 @@ export function ResponsiveHome({ content, latestBlogs }: ResponsiveHomeProps) {
             </MotionLinkButton>
           </Reveal>
         </div>
+        <HeroCinematicVisual
+          className="mx-auto w-full max-w-[604px]"
+          entranceDelayMs={HERO_ENTRANCE_DELAY_MS}
+          personImage={hero.personImage}
+          personImageAlt={hero.personImageAlt}
+          brushImage={hero.brushImage}
+          priority
+        />
       </section>
 
       <section
         id={sectionIds.about}
         className="mx-auto grid max-w-7xl gap-8 px-5 py-12 lg:grid-cols-2"
       >
+        <Reveal variant="section-heading">
+          <div>
+            <h2 className="text-3xl font-bold sm:text-4xl">{about.heading}</h2>
+            <RichTextHtml
+              html={about.body}
+              className="mt-5 text-lg leading-9 text-ink-secondary"
+            />
+          </div>
+        </Reveal>
         <div className="grid gap-5 sm:grid-cols-2">
           {aboutCards.map(({ key, title, body, icon }, index) => (
             <AboutFeatureCard
@@ -112,19 +128,9 @@ export function ResponsiveHome({ content, latestBlogs }: ResponsiveHomeProps) {
             />
           ))}
         </div>
-        <Reveal variant="section-heading">
-          <div data-ar>
-            <h2 className="text-3xl font-bold sm:text-4xl">{about.heading}</h2>
-            <RichTextHtml
-              html={about.body}
-              className="mt-5 text-lg leading-9 text-ink-secondary"
-            />
-          </div>
-        </Reveal>
       </section>
 
       <section
-        data-ar
         className="mx-auto grid max-w-7xl grid-cols-1 gap-5 px-5 py-8 sm:grid-cols-2"
       >
         {visionMission.map(({ title, body }, index) => {
@@ -192,12 +198,11 @@ export function ResponsiveHome({ content, latestBlogs }: ResponsiveHomeProps) {
         phoneFrameImageAlt={why.phoneFrameImageAlt}
         screenImage={why.screenImage}
         screenImageAlt={why.screenImageAlt}
-        className="grid w-full grid-cols-1 gap-8 bg-brand px-5 py-12 text-white md:grid-cols-2 md:items-center lg:px-20"
+        className="grid w-full grid-cols-1 gap-8 bg-brand px-5 pt-12 pb-12 text-white md:grid-cols-2 md:items-center md:pb-0 lg:px-20"
       />
 
       <section
         id={sectionIds.market}
-        data-ar
         className="relative overflow-x-clip py-12"
       >
         <div className="mx-auto w-full max-w-7xl px-5 lg:px-20">

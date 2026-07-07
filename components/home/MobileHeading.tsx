@@ -14,11 +14,11 @@ export function MobileHeading({ title, body, className }: MobileHeadingProps) {
       variant="section-heading"
       className={cn("mx-auto max-w-2xl px-5 text-center", className)}
     >
-      <div data-ar>
-        <h2 className="text-3xl font-semibold leading-tight text-ink sm:text-4xl">
+      <div className="flex flex-col items-center">
+        <h2 className="text-center text-3xl font-semibold leading-tight text-ink sm:text-4xl">
           {title}
         </h2>
-        <RichTextHtml html={body} className="mt-4 text-base leading-8 text-ink-neutral" />
+        <RichTextHtml html={body} className="mt-4 text-center text-base leading-8 text-ink-neutral" />
       </div>
     </Reveal>
   );

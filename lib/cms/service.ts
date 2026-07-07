@@ -128,7 +128,7 @@ async function readStoredPagePayload(routeKey: "home" | "about") {
     if (!stored) return null;
     return stored;
   } catch (error) {
-    console.warn("Falling back to bundled CMS content:", error);
+    // Silent fail and fallback
   }
 
   return null;
@@ -182,7 +182,6 @@ export async function getFallbackHomePayload(): Promise<CmsHomePayload> {
       { label: b((m) => m.footer.products), href: `/#${sectionIds.products}`, isVisible: true },
       { label: b((m) => m.nav.services), href: `/#${sectionIds.services}`, isVisible: true },
       { label: b((m) => m.nav.blog), href: "/blogs", isVisible: true },
-      { label: b((m) => m.footer.contact), href: `/#${sectionIds.contact}`, isVisible: true },
     ],
     hero: {
       titleLine1: b((m) => m.hero.titleLine1),
@@ -538,10 +537,12 @@ export function localizeHomePayload(payload: CmsHomePayload, locale: CmsLocale):
     label: text(item.label),
     href: normalizeHref(item.href),
   }));
-  const footerLinks = payload.footerLinks.filter((item) => item.isVisible).map((item) => ({
-    label: text(item.label),
-    href: normalizeHref(item.href),
-  }));
+  const footerLinks = payload.footerLinks
+    .filter((item) => item.isVisible && item.href !== `/#${sectionIds.contact}`)
+    .map((item) => ({
+      label: text(item.label),
+      href: normalizeHref(item.href),
+    }));
 
   if (!nav.some((item) => item.href === "/blogs")) {
     nav.push({ key: "/blogs", label: blogLabel, href: "/blogs" });
@@ -635,6 +636,7 @@ export function localizeHomePayload(payload: CmsHomePayload, locale: CmsLocale):
       body: localizeRichText(payload.sectors.body, locale),
       carouselLabel: text(payload.sectors.carouselLabel),
       items: payload.sectors.items.filter((item) => item.isVisible).map((item) => ({
+        id: item.id,
         title: text(item.title),
         icon: item.icon,
       })),

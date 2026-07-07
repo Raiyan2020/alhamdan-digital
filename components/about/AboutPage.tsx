@@ -1,22 +1,19 @@
 "use client";
 
 import type { LocalizedAboutContent } from "@/lib/cms/types";
-import { ABOUT_DESKTOP_LAYOUT, getAboutCanvasMinHeight } from "./aboutLayout";
+import { ABOUT_DESKTOP_LAYOUT } from "./aboutLayout";
 import { AboutHero } from "./AboutProductContent";
 import { AboutProductSection } from "./AboutProductSection";
+import { useLocale } from "next-intl";
 
 type AboutPageProps = {
   content: LocalizedAboutContent;
 };
 
 function DesktopAboutPage({ content }: AboutPageProps) {
-  const canvasMinHeight = getAboutCanvasMinHeight(content.products.length);
-
   return (
     <div
-      data-figma-canvas
       className="relative mx-auto hidden w-[1440px] bg-page pb-32 text-ink min-[1440px]:block"
-      style={{ minHeight: canvasMinHeight }}
     >
       <AboutHero
         desktop
@@ -25,15 +22,11 @@ function DesktopAboutPage({ content }: AboutPageProps) {
         cta={content.hero.cta}
         ctaHref={content.hero.ctaHref}
       />
-      <div
-        id="about-products"
-        className="absolute"
-        style={{ top: ABOUT_DESKTOP_LAYOUT.productsAnchorTop }}
-        aria-hidden
-      />
-      {content.products.map((product, index) => (
-        <AboutProductSection key={product.id} product={product} index={index} layout="desktop" />
-      ))}
+      <div className="relative">
+        {content.products.map((product, index) => (
+          <AboutProductSection key={product.id} product={product} index={index} layout="desktop" />
+        ))}
+      </div>
     </div>
   );
 }
@@ -57,8 +50,14 @@ function ResponsiveAboutPage({ content }: AboutPageProps) {
 }
 
 export function AboutPage({ content }: AboutPageProps) {
+  const locale = useLocale();
+  const isRtl = locale === "ar";
+
   return (
-    <main className="overflow-x-clip bg-page font-sans">
+    <main
+      dir={isRtl ? "rtl" : "ltr"}
+      className="overflow-x-clip bg-page font-sans"
+    >
       <ResponsiveAboutPage content={content} />
       <DesktopAboutPage content={content} />
     </main>

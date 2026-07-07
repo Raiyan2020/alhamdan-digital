@@ -55,7 +55,10 @@ export default async function LocaleLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${ibmPlexArabic.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full max-w-full flex-col overflow-x-clip bg-page font-sans text-ink">
+      <body
+        dir={direction}
+        className="flex min-h-full max-w-full flex-col overflow-x-clip bg-page font-sans text-ink"
+      >
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var e=document.documentElement,t=localStorage.getItem("theme")||"light",n=t==="system"?window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light":t;e.classList.remove("light","dark"),e.classList.add(n),e.style.colorScheme=n}catch(e){}})();`,

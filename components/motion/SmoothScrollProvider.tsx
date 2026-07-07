@@ -127,16 +127,43 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   );
 
   useEffect(() => {
+    const handleAnchorClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement).closest("a");
+      if (!anchor) return;
+
+      const href = anchor.getAttribute("href");
+      if (!href) return;
+
+      const hasHash = href.includes("#");
+      if (!hasHash) return;
+
+      const hash = href.split("#").pop();
+      if (!hash) return;
+
+      const isHashOnly = href.startsWith("#");
+      const isHomeHash = href.startsWith("/#") || href.includes("/#");
+
+      const onHome = isHomePath(pathname);
+      if (onHome && (isHashOnly || isHomeHash)) {
+        e.preventDefault();
+        scrollToHash(href);
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick, { capture: true });
+    return () => {
+      document.removeEventListener("click", handleAnchorClick, { capture: true });
+    };
+  }, [pathname, scrollToHash]);
+
+  useEffect(() => {
     if (reducedMotion || isDashboard) return;
 
     const lenis = new Lenis({
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      anchors: {
-        offset: -SCROLL_HEADER_OFFSET,
-        duration: 1.15,
-      },
+      anchors: false,
     });
 
     lenisRef.current = lenis;

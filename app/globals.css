@@ -415,22 +415,6 @@
   :where(button, a):not(:disabled):not([aria-disabled="true"]) {
     cursor: pointer;
   }
-  [data-ar] {
-    direction: rtl;
-    text-align: right;
-    unicode-bidi: plaintext;
-  }
-  [data-figma-canvas] {
-    direction: ltr;
-  }
-  [data-figma-canvas] :where(h1, h2, h3, p, li, button, a) {
-    direction: rtl;
-    unicode-bidi: plaintext;
-  }
-  [data-figma-canvas] :where([data-bidi="ltr"]) {
-    direction: ltr;
-    unicode-bidi: normal;
-  }
 }
 
 /*

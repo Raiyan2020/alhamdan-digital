@@ -42,10 +42,10 @@ export function AboutProductContent({ product, desktop = false }: AboutProductCo
       variant="fade-up"
       delayChildrenMs={40}
     >
-      <motion.p className={numberClass}>{product.number}</motion.p>
-      <motion.h2 className={cn(titleClass, desktop ? "mt-4" : "mt-3")}>{product.title}</motion.h2>
+      <motion.p className={cn(numberClass, "text-center")}>{product.number}</motion.p>
+      <motion.h2 className={cn(titleClass, "text-center", desktop ? "mt-4" : "mt-3")}>{product.title}</motion.h2>
       <motion.div className={desktop ? "mt-8" : "mt-5"}>
-        <RichTextHtml html={product.body} className={bodyClass} />
+        <RichTextHtml html={product.body} className={cn(bodyClass, "text-center")} />
       </motion.div>
       {product.projectHref ? (
         <motion.div className={desktop ? "mt-8" : "mt-6"}>
@@ -58,15 +58,15 @@ export function AboutProductContent({ product, desktop = false }: AboutProductCo
           </Link>
         </motion.div>
       ) : null}
-      <motion.h3 className={cn(labelClass, desktop ? "mt-9" : "mt-7")}>{product.offersLabel}</motion.h3>
+      <motion.h3 className={cn(labelClass, "text-center", desktop ? "mt-9" : "mt-7")}>{product.offersLabel}</motion.h3>
       <motion.div className={desktop ? "mt-6" : "mt-4"}>
         <AboutFeaturePills items={product.offers} columns={4} itemKeyPrefix={`${product.id}-offer`} />
       </motion.div>
-      <motion.h3 className={cn(labelClass, desktop ? "mt-8" : "mt-7")}>{product.audienceLabel}</motion.h3>
+      <motion.h3 className={cn(labelClass, "text-center", desktop ? "mt-8" : "mt-7")}>{product.audienceLabel}</motion.h3>
       <motion.div className={desktop ? "mt-6" : "mt-4"}>
         <AboutFeaturePills items={product.audience} columns={3} itemKeyPrefix={`${product.id}-audience`} />
       </motion.div>
-      <motion.h3 className={cn(downloadClass, desktop ? "mt-8" : "mt-7")}>{product.downloadTitle}</motion.h3>
+      <motion.h3 className={cn(downloadClass, "text-center", desktop ? "mt-8" : "mt-7")}>{product.downloadTitle}</motion.h3>
       <motion.div className={desktop ? "mt-5" : "mt-4"}>
         <AboutStoreButtons
           buttons={product.storeButtons}
@@ -131,7 +131,7 @@ export function AboutHero({ title, body, cta, ctaHref, desktop = false }: AboutH
   );
 
   if (desktop) {
-    return <section className="absolute left-20 top-[274px] h-[338px] w-[1280px]">{content}</section>;
+    return <section className="relative mx-auto pt-36 pb-20 w-[1280px] h-auto">{content}</section>;
   }
 
   return <section className="px-5 pb-14 pt-[calc(88px+2rem)]">{content}</section>;

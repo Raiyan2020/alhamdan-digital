@@ -18,7 +18,7 @@ export function BlogsSection({ posts, className, id }: BlogsSectionProps) {
   const t = useTranslations("blog.home");
 
   return (
-    <section id={id} data-ar className={cn("bg-page text-ink", className)}>
+    <section id={id} className={cn("bg-page text-ink", className)}>
       <div className="mx-auto w-full max-w-7xl px-5 lg:px-20">
         <Reveal
           variant="section-heading"
@@ -47,8 +47,8 @@ export function BlogsSection({ posts, className, id }: BlogsSectionProps) {
         {posts.length > 0 ? (
           <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {posts.map((post, index) => (
-              <Reveal key={post.id} variant="fade-up" delay={index * 80}>
-                <BlogCard post={post} imagePriority={index === 0} />
+              <Reveal key={post.id} variant="fade-up" delay={index * 80} className="h-full">
+                <BlogCard post={post} imagePriority={index === 0} className="h-full" />
               </Reveal>
             ))}
           </div>
