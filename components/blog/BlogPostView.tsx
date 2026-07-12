@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { format } from "date-fns";
 import { ar, enUS } from "date-fns/locale";
 import { ArrowLeft, Calendar, Clock3, User } from "lucide-react";
@@ -8,6 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import type { LocalizedBlogPost } from "@/lib/cms/blog-types";
 import { RichTextHtml } from "@/lib/cms/rich-text";
 import { Link } from "@/i18n/navigation";
+import { ImageWithFallback } from "@/components/ui/image-with-fallback";
 
 type BlogPostViewProps = {
   post: LocalizedBlogPost;
@@ -70,20 +70,11 @@ export function BlogPostView({ post }: BlogPostViewProps) {
         ) : null}
       </header>
 
-      {post.coverImageUrl ? (
-        <div className="mx-auto max-w-5xl px-5 sm:px-8">
-          <div className="relative aspect-[16/9] overflow-hidden rounded-3xl bg-muted shadow-lg">
-            <Image
-              src={post.coverImageUrl}
-              alt={post.coverImageAlt || post.title}
-              fill
-              className="object-cover"
-              priority
-              sizes="(max-width: 1024px) 100vw, 1024px"
-            />
-          </div>
+      <div className="mx-auto max-w-5xl px-5 sm:px-8">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-3xl bg-muted shadow-lg">
+          <ImageWithFallback src={post.coverImageUrl} alt={post.coverImageAlt || post.title} fill className="object-contain p-8" priority sizes="(max-width: 1024px) 100vw, 1024px" />
         </div>
-      ) : null}
+      </div>
 
       <div className="mx-auto max-w-3xl px-5 py-10 sm:px-8 sm:py-12">
         <RichTextHtml

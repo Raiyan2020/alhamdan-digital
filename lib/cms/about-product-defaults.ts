@@ -5,9 +5,16 @@ export type AboutProduct = CmsAboutPayload["products"][number];
 
 export function createDefaultAboutProduct(index: number): AboutProduct {
   const id = `product-${Date.now()}`;
+  const detailPage = createDefaultProjectDetailPage(id, { ar: "", en: "" });
+  detailPage.detailCtaLabel = { ar: "", en: "" };
 
   return {
     id,
+    category: "other",
+    sortOrder: index,
+    featuredInProjects: false,
+    projectCardDescription: { ar: "", en: "" },
+    projectCardImage: { defaultAssetId: null, defaultUrl: "", alt: { ar: "", en: "" }, isDecorative: true },
     number: `${String(index + 1).padStart(2, "0")}/`,
     title: { ar: "", en: "" },
     body: {
@@ -28,6 +35,6 @@ export function createDefaultAboutProduct(index: number): AboutProduct {
     imageSide: "left",
     storeButtons: [],
     isVisible: true,
-    detailPage: createDefaultProjectDetailPage(id, { ar: "", en: "" }),
+    detailPage,
   };
 }

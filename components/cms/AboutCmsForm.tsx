@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { toast } from "sonner";
+import { toast } from "@/lib/toast";
 import type { CmsAboutPayload } from "@/lib/cms/types";
 import { normalizeAboutPayloadForSubmit, coalesceAboutPayloadForSubmit } from "@/lib/cms/about-storage";
 import { cmsAboutPayloadSchema } from "@/lib/cms/validation";
@@ -27,6 +27,7 @@ import { LocalizedMediaPicker } from "./LocalizedMediaPicker";
 type AboutCmsFormProps = {
   initialValue: CmsAboutPayload;
   embedded?: boolean;
+  productsOnly?: boolean;
 };
 
 function SectionCard({
@@ -48,12 +49,14 @@ function SectionCard({
   );
 }
 
-export function AboutCmsForm({ initialValue, embedded = false }: AboutCmsFormProps) {
+export function AboutCmsForm({ initialValue, embedded = false, productsOnly = false }: AboutCmsFormProps) {
   const t = useTranslations("cms");
   const router = useRouter();
-  const { section: activeSection, setSection } = useDashboardUrl();
+  const { section: dashboardSection, setSection } = useDashboardUrl();
+  const activeSection = productsOnly ? "products" : dashboardSection;
   const [message, setMessage] = useState<string | null>(null);
   const [messageVariant, setMessageVariant] = useState<"success" | "error">("success");
+  const [pendingDeletedProducts, setPendingDeletedProducts] = useState<string[]>([]);
   const saveMutation = useSaveAboutPageMutation();
   const form = useForm<CmsAboutPayload>({
     resolver: zodResolver(cmsAboutPayloadSchema) as never,
@@ -110,10 +113,13 @@ export function AboutCmsForm({ initialValue, embedded = false }: AboutCmsFormPro
     saveMutation.mutate(parsed.data as CmsAboutPayload, {
       onSuccess: (response) => {
         const saved = (response.content as CmsAboutPayload | undefined) ?? parsed.data;
-        const text = t("about.draftSaved");
+        const text = pendingDeletedProducts.length
+          ? t("about.productsUi.deletedAfterSave", { title: pendingDeletedProducts.join("، ") })
+          : t("about.draftSaved");
         setMessageVariant("success");
         setMessage(text);
         toast.success(text);
+        setPendingDeletedProducts([]);
         form.reset(saved);
         router.refresh();
       },
@@ -123,7 +129,7 @@ export function AboutCmsForm({ initialValue, embedded = false }: AboutCmsFormPro
         setMessage(text);
       },
     });
-  }, [describeErrorPath, form, initialValue, saveMutation, setSection, t, router]);
+  }, [describeErrorPath, form, initialValue, pendingDeletedProducts, saveMutation, setSection, t, router]);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -143,12 +149,12 @@ export function AboutCmsForm({ initialValue, embedded = false }: AboutCmsFormPro
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="space-y-2">
             {!embedded ? (
-              <h1 className="text-3xl font-semibold">{t("about.title")}</h1>
+              <h1 className="text-3xl font-semibold">{productsOnly ? t("productsManager.title") : t("about.title")}</h1>
             ) : (
-              <h2 className="text-2xl font-semibold">{t("about.title")}</h2>
+              <h2 className="text-2xl font-semibold">{productsOnly ? t("productsManager.title") : t("about.title")}</h2>
             )}
             <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              {t("about.subtitle")}
+              {productsOnly ? t("productsManager.subtitle") : t("about.subtitle")}
             </p>
           </div>
           <Button type="submit" size="lg" className="shrink-0" disabled={saveMutation.isPending}>
@@ -170,12 +176,12 @@ export function AboutCmsForm({ initialValue, embedded = false }: AboutCmsFormPro
         ) : null}
 
         <div className="flex flex-col gap-8 lg:flex-row lg:gap-10 xl:gap-12">
-          <CmsSectionNav
+          {!productsOnly ? <CmsSectionNav
             namespace="about"
             groups={ABOUT_CMS_SECTIONS}
             activeSection={activeSection}
             onSectionChange={setSection}
-          />
+          /> : null}
 
           <div className="min-w-0 flex-1">
             <div className={cn(activeSection !== "seo" && "hidden")} aria-hidden={activeSection !== "seo"}>
@@ -242,8 +248,9 @@ export function AboutCmsForm({ initialValue, embedded = false }: AboutCmsFormPro
             <div className={cn(activeSection !== "products" && "hidden")} aria-hidden={activeSection !== "products"}>
               <SectionCard title={t("about.repeaters.productSections")}>
                 <AboutProductsSection
-                  isAutoSaving={saveMutation.isPending}
-                  onAutoSave={saveAboutDraft}
+                  onProductDeleted={(title) =>
+                    setPendingDeletedProducts((current) => [...current, title])
+                  }
                 />
               </SectionCard>
             </div>

@@ -9,6 +9,7 @@
     "home": "الرئيسية",
     "about": "من نحن",
     "products": "تطبيقاتنا",
+    "projects": "مشاريعنا",
     "services": "خدماتنا",
     "blog": "المدونة",
     "why": "لماذا نحن",
@@ -167,6 +168,7 @@
     "sectionSettings": "إعدادات الحساب",
     "navOverview": "لوحة التحكم",
     "navHome": "الصفحة الرئيسية",
+    "navProducts": "المنتجات",
     "navAbout": "صفحة من نحن",
     "navBlog": "المدونة",
     "navSettings": "الإعدادات",
@@ -190,6 +192,7 @@
     "continueEditing": "متابعة التحرير",
     "continueEditingBody": "ارجع مباشرة إلى الصفحة التي كنت تعمل عليها.",
     "openHomeCms": "فتح محرر الرئيسية",
+    "openProductsCms": "فتح إدارة المنتجات",
     "openAboutCms": "فتح محرر من نحن",
     "statsTitle": "الإحصائيات",
     "greeting": "صباح الخير، {name}",
@@ -217,7 +220,8 @@
       "savePassword": "تحديث كلمة المرور",
       "saving": "جاري الحفظ...",
       "profileSaved": "تم تحديث الملف الشخصي.",
-      "passwordSaved": "تم تحديث كلمة المرور."
+      "passwordSaved": "تم تحديث كلمة المرور.",
+      "currentPasswordIncorrect": "كلمة المرور الحالية غير صحيحة."
     }
   },
   "aboutPage": {
@@ -280,6 +284,7 @@
     "facebook": "Facebook"
   },
   "cms": {
+    "productsManager": {"title":"إدارة المنتجات","subtitle":"المصدر الموحد لمنتجات الصفحة الرئيسية وصفحة من نحن وصفحات المشاريع.","homeNotice":"بطاقات المنتجات تُدار من صفحة المنتجات الموحدة في القائمة الرئيسية."},
     "editor": {
       "placeholder": "اكتب المحتوى هنا...",
       "linkPrompt": "حط رابط الرابط",
@@ -484,7 +489,10 @@
         "copyright": "حقوق الملكية",
         "backToTop": "نص طلّع فوق",
         "kuwaitLabel": "نص الكويت",
-        "footerLogo": "شعار الفوتر"
+        "footerLogo": "شعار الفوتر",
+        "whatsappVisible": "إظهار زر واتساب العائم",
+        "whatsappNumber": "رقم واتساب مع رمز الدولة",
+        "whatsappMessage": "رسالة واتساب الافتراضية"
       },
       "repeaters": {
         "navLinks": "روابط القائمة",
@@ -530,8 +538,13 @@
         "downloadTitle": "عنوان التحميل",
         "preLabel": "النص قبل الزر",
         "storeLabel": "نص المتجر",
-        "storeUrl": "رابط المتجر"
+        "storeUrl": "رابط المتجر",
+        "platform": "المنصة",
+        "otherPlatform": "منصة أخرى",
+        "qrImage": "صورة QR للتحميل"
+        ,"category":"تصنيف المشروع","sortOrder":"ترتيب الظهور","featuredInProjects":"مشروع مميز","projectCardDescription":"وصف بطاقة المشروع","projectCardImage":"صورة بطاقة المشروع"
       },
+      "categories":{"marketplace":"سوق وإعلانات","property":"عقار","fitness":"رياضة","other":"أخرى"},
       "repeaters": {
         "productSections": "أقسام المنتجات",
         "product": "منتج {index}",
@@ -554,16 +567,27 @@
         "deleteBody": "متأكد تبي تحذف «{title}»؟ لازم تحفظ المسودة عشان ينطبق الحذف.",
         "cancel": "إلغاء",
         "confirmDelete": "أي، احذف",
+        "deletedAfterSave": "تم حفظ حذف التطبيق «{title}» من المسودة.",
         "editTitle": "تعديل منتج {index}",
         "createTitle": "إضافة منتج",
-        "dialogHint": "عدّل تفاصيل المنتج هنا، ثم اضغط «تم» لإغلاق النافذة.",
-        "saveReminder": "اضغط تم لحفظ هذا المنتج داخل مسودة من نحن.",
+        "createDialogHint": "أضف تفاصيل المنتج الجديد هنا، ثم اضغط «تم» لإضافته للمسودة.",
+        "editDialogHint": "حدّث تفاصيل هذا المنتج هنا، ثم اضغط «تم» لتطبيق التعديل.",
+        "createSaveReminder": "اضغط تم لإضافة المنتج الجديد داخل مسودة من نحن.",
+        "editSaveReminder": "اضغط تم لتحديث هذا المنتج داخل مسودة من نحن.",
         "done": "تم",
         "detailEnabled": "صفحة التفاصيل مفعّلة"
       },
       "detailPage": {
         "title": "صفحة تفاصيل المشروع",
         "body": "أنشئ صفحة مستقلة بمعلومات إضافية عن المشروع.",
+        "tabs": {
+          "basic": "البيانات الأساسية",
+          "stores": "روابط التحميل",
+          "detail": "صفحة التفاصيل",
+          "features": "الإحصائيات والميزات",
+          "interactive": "الآراء والأسئلة",
+          "seo": "تحسين الظهور والبطاقة"
+        },
         "enable": "تفعيل صفحة تفاصيل المشروع",
         "slug": "الرابط المختصر للمشروع",
         "tagline": "العبارة التعريفية",
@@ -574,6 +598,7 @@
         "statItem": "إحصائية",
         "statValue": "قيمة الإحصائية",
         "statLabel": "وصف الإحصائية",
+        "statDescription": "تفاصيل إضافية للإحصائية (تظهر في الصفحة الفردية فقط)",
         "gallery": "معرض الصور",
         "galleryItem": "صورة",
         "galleryImage": "صورة المعرض",
@@ -581,7 +606,27 @@
         "seoTitle": "تحسين ظهور صفحة التفاصيل",
         "ctaLabel": "نص زر خارجي",
         "ctaHref": "رابط خارجي",
-        "slugPlaceholder": "بو-حمدان"
+        "slugPlaceholder": "بو-حمدان",
+        "useCaseStory": "قصة الاستخدام",
+        "launchOffer": "عرض الإطلاق",
+        "launchOfferHint": "اكتب حافزاً واضحاً ومحدوداً، مثلاً: أول 500 مستخدم يحصلون على إعلان مميز مجاني.",
+        "whatsapp": "رابط واتساب",
+        "mockupMedia": "فيديو أو موكاب التطبيق",
+        "comparison": "المقارنة",
+        "comparisonItem": "مقارنة",
+        "comparisonHint": "أضف سطراً لكل فرق مهم، مثلاً: أسبوع للبيع بالطريقة التقليدية مقابل ساعات للبيع مع التطبيق.",
+        "traditional": "بالطريقة التقليدية",
+        "withApp": "مع التطبيق",
+        "testimonials": "شهادات المستخدمين",
+        "testimonialItem": "شهادة",
+        "quote": "الاقتباس",
+        "personName": "اسم المستخدم",
+        "faqs": "الأسئلة الشائعة",
+        "faqHint": "أجب عن الأسئلة التي قد تؤخر التحميل، مثل: هل التطبيق مجاني؟ وهل يعمل خارج الكويت؟",
+        "faqItem": "سؤال",
+        "question": "السؤال",
+        "answer": "الإجابة"
+        ,"showUseCase": "إظهار قصة الاستخدام","showLaunchOffer": "إظهار عرض الإطلاق","launchOfferTerms":"شروط العرض","launchOfferStartsAt":"بداية العرض","launchOfferEndsAt":"نهاية العرض","launchOfferCtaLabel":"نص زر العرض","launchOfferCtaHref":"رابط زر العرض","mockupVideoUrl": "رابط فيديو الموكاب (MP4 أو WebM)","showMockup": "إظهار الموكاب","showComparison": "إظهار المقارنة","showTestimonials": "إظهار الشهادات","showFaqs": "إظهار الأسئلة الشائعة","personRole":"صفة المستخدم","personAvatar":"صورة المستخدم"
       }
     },
     "blog": {
@@ -715,11 +760,25 @@
     ]
   },
   "projects": {
+    "indexTitle": "مشاريعنا وتطبيقاتنا",
+    "indexBody": "اكتشف المنتجات الرقمية التي نبنيها لتجعل الحياة اليومية أسهل وأسرع.",
+    "empty": "لا توجد مشاريع منشورة حالياً.",
+    "allProjects": "كل المشاريع",
+    "featured": "مميز",
+    "categories": {"marketplace":"سوق وإعلانات","property":"عقار","fitness":"رياضة","other":"أخرى"},
     "backToProducts": "رجوع لمنتجاتنا",
     "exploreProject": "تعرّف على المشروع",
     "overviewTitle": "نظرة عامة عن المشروع",
     "highlightsTitle": "أبرز النقاط",
     "galleryTitle": "معرض الصور",
-    "externalCta": "زيارة المشروع"
+    "externalCta": "زيارة المشروع",
+    "launchOfferLabel": "عرض الإطلاق",
+    "launchIncentive": "حافز للمستخدمين الأوائل",
+    "comparisonTitle": "قارن قبل ما تحمّل",
+    "comparisonTraditional": "بالطريقة التقليدية",
+    "comparisonWithApp": "مع {app}",
+    "faqTitle": "الأسئلة الشائعة",
+    "whatsappLabel": "تواصل معنا عبر واتساب"
+    ,"quizTitle": "أي تطبيق يناسبك؟","quizBody": "جاوب سؤالين وسنوجهك للمشروع المناسب.","quizQuestionOne": "شنو الشي اللي تدور عليه؟","quizQuestionTwo": "ماذا تريد أن تفعل؟","quizGoals":{"discover":"استكشاف المزايا","download":"تحميل التطبيق","support":"التواصل مع الدعم"},"quizCta": "افتح المشروع","qrAlt": "رمز QR لتحميل التطبيق","qrBody": "امسح الرمز من هاتفك للتحميل","scanToDownload":"امسح لتحميل التطبيق","testimonialsTitle": "تجارب حقيقية","offerEnds":"ينتهي العرض"
   }
 }

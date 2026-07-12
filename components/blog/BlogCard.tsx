@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { format } from "date-fns";
 import { ar, enUS } from "date-fns/locale";
 import { Calendar, Clock3, User } from "lucide-react";
@@ -8,6 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { LocalizedBlogPostSummary } from "@/lib/cms/blog-types";
 import { cn } from "@/lib/utils";
+import { ImageWithFallback } from "@/components/ui/image-with-fallback";
 
 type BlogCardProps = {
   post: LocalizedBlogPostSummary;
@@ -28,20 +28,16 @@ export function BlogCard({ post, className, imagePriority = false }: BlogCardPro
       )}
     >
       <Link href={`/blogs/${post.slug}`} className="block shrink-0" aria-label={post.title}>
-        {post.coverImageUrl ? (
-          <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-            <Image
-              src={post.coverImageUrl}
-              alt={post.coverImageAlt || post.title}
-              fill
-              className="object-cover transition-transform group-hover:scale-[1.02]"
-              sizes="(max-width: 768px) 100vw, 33vw"
-              priority={imagePriority}
-            />
-          </div>
-        ) : (
-          <div className="aspect-[16/10] bg-gradient-to-br from-[#e6edf5] to-[#d9ecfb]" />
-        )}
+        <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+          <ImageWithFallback
+            src={post.coverImageUrl}
+            alt={post.coverImageAlt || post.title}
+            fill
+            className="object-contain p-5 transition-transform group-hover:scale-[1.02]"
+            sizes="(max-width: 768px) 100vw, 33vw"
+            priority={imagePriority}
+          />
+        </div>
       </Link>
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="space-y-4">

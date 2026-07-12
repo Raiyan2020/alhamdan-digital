@@ -118,7 +118,11 @@ export async function PATCH(request: NextRequest) {
     );
     if (!passwordValid) {
       return NextResponse.json(
-        { ok: false, message: "Current password is incorrect." },
+        {
+          ok: false,
+          code: "CURRENT_PASSWORD_INCORRECT",
+          message: "Current password is incorrect.",
+        },
         { status: 401 },
       );
     }

@@ -189,6 +189,7 @@ const projectDetailStatSchema = z.object({
   id: z.string().min(1),
   value: looseBilingualTextSchema,
   label: looseBilingualTextSchema,
+  description: looseBilingualTextSchema.optional().default(() => ({ ar: "", en: "" })),
   isVisible: z.boolean(),
 });
 
@@ -197,6 +198,16 @@ const projectDetailGallerySchema = z.object({
   image: optionalMediaSchema,
   caption: looseBilingualTextSchema,
   isVisible: z.boolean(),
+});
+
+const projectDetailComparisonSchema = z.object({
+  id: z.string().min(1), traditional: looseBilingualTextSchema, withApp: looseBilingualTextSchema, isVisible: z.boolean(),
+});
+const projectDetailTestimonialSchema = z.object({
+  id: z.string().min(1), quote: looseBilingualTextSchema, name: looseBilingualTextSchema, role: looseBilingualTextSchema, avatar: optionalMediaSchema.nullable(), isVisible: z.boolean(),
+});
+const projectDetailFaqSchema = z.object({
+  id: z.string().min(1), question: looseBilingualTextSchema, answer: looseBilingualTextSchema, isVisible: z.boolean(),
 });
 
 const projectDetailPageSchema = z.object({
@@ -216,38 +227,64 @@ const projectDetailPageSchema = z.object({
   gallery: z.array(projectDetailGallerySchema),
   detailCtaLabel: looseBilingualTextSchema,
   detailCtaHref: z.string(),
+  useCaseStory: looseBilingualTextSchema,
+  useCaseVisible: z.boolean(),
+  launchOffer: looseBilingualTextSchema,
+  launchOfferVisible: z.boolean(),
+  launchOfferTerms: looseBilingualTextSchema,
+  launchOfferStartsAt: z.string(),
+  launchOfferEndsAt: z.string(),
+  launchOfferCtaLabel: looseBilingualTextSchema,
+  launchOfferCtaHref: z.string(),
+  whatsappHref: z.string(),
+  mockupMedia: optionalMediaSchema.nullable(),
+  mockupVideoUrl: z.string(),
+  mockupVisible: z.boolean(),
+  comparisonVisible: z.boolean(),
+  testimonialsVisible: z.boolean(),
+  faqsVisible: z.boolean(),
+  comparisonRows: z.array(projectDetailComparisonSchema),
+  testimonials: z.array(projectDetailTestimonialSchema),
+  faqs: z.array(projectDetailFaqSchema),
 });
 
-const aboutProductSchema = z.object({
+export const aboutProductSchema = z.object({
   id: z.string().min(1),
+  category: z.enum(["marketplace", "property", "fitness", "other"]).optional(),
+  sortOrder: z.number().optional(),
+  featuredInProjects: z.boolean().optional(),
+  projectCardDescription: looseBilingualTextSchema.optional(),
+  projectCardImage: optionalMediaSchema.nullable().optional(),
   number: z.string().min(1),
-  title: bilingualTextSchema,
-  body: richTextSchema,
-  offersLabel: bilingualTextSchema,
+  title: looseBilingualTextSchema,
+  body: looseRichTextSchema,
+  offersLabel: looseBilingualTextSchema,
   offers: z.array(
     z.object({
       id: z.string().min(1),
-      label: bilingualTextSchema,
+      label: looseBilingualTextSchema,
       isVisible: z.boolean(),
     }),
   ),
-  audienceLabel: bilingualTextSchema,
+  audienceLabel: looseBilingualTextSchema,
   audience: z.array(
     z.object({
       id: z.string().min(1),
-      label: bilingualTextSchema,
+      label: looseBilingualTextSchema,
       isVisible: z.boolean(),
     }),
   ),
-  downloadTitle: bilingualTextSchema,
+  downloadTitle: looseBilingualTextSchema,
   image: optionalMediaSchema,
   imageSide: z.enum(["left", "right"]),
   storeButtons: z.array(
     z.object({
       id: z.string().min(1),
-      preLabel: bilingualTextSchema,
-      label: bilingualTextSchema,
-      href: z.string().min(1),
+      platform: z.enum(["app-store", "google-play", "other"]).optional(),
+      preLabel: looseBilingualTextSchema,
+      label: looseBilingualTextSchema,
+      href: z.string(),
+      qrImage: optionalMediaSchema.nullable().optional(),
       isVisible: z.boolean(),
     }),
   ),
@@ -332,6 +369,9 @@ export const cmsHomePayloadSchema = z.object({
     visualImage: mediaSchema,
   }),
   footer: z.object({
+    whatsappVisible: z.boolean(),
+    whatsappNumber: z.string(),
+    whatsappMessage: bilingualTextSchema,
     contactTitle: bilingualTextSchema,
     quickLinks: bilingualTextSchema,
     description: richTextSchema,

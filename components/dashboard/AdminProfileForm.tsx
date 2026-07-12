@@ -5,7 +5,7 @@ import { LockKeyhole, Save, UserRoundCog } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { toast } from "sonner";
+import { toast } from "@/lib/toast";
 import {
   useUpdateAdminPasswordMutation,
   useUpdateAdminProfileMutation,
@@ -16,7 +16,6 @@ import {
   type AdminPasswordChangeInput,
   type AdminProfileInput,
 } from "@/lib/auth/validation";
-import { getErrorMessage } from "@/lib/api/errors";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -69,9 +68,6 @@ export function AdminProfileForm({ admin }: AdminProfileFormProps) {
         toast.success(t("profileSaved"));
         router.refresh();
       },
-      onError: (error) => {
-        toast.error(getErrorMessage(error));
-      },
     });
   });
 
@@ -84,9 +80,6 @@ export function AdminProfileForm({ admin }: AdminProfileFormProps) {
           confirmPassword: "",
         });
         toast.success(t("passwordSaved"));
-      },
-      onError: (error) => {
-        toast.error(getErrorMessage(error));
       },
     });
   });

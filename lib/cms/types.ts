@@ -100,7 +100,7 @@ export type CmsHomePayload = {
     ctaHref: string;
     items: Array<{
       id: string;
-      key: "diddeed" | "bohamdan" | "nafas" | "road80";
+      key: string;
       title: BilingualText;
       body: CmsRichText;
       image: LocalizedMediaField;
@@ -160,6 +160,9 @@ export type CmsHomePayload = {
 };
 
 export type CmsFooterPayload = {
+  whatsappVisible: boolean;
+  whatsappNumber: string;
+  whatsappMessage: BilingualText;
   contactTitle: BilingualText;
   quickLinks: BilingualText;
   description: CmsRichText;
@@ -195,6 +198,11 @@ export type CmsAboutPayload = {
   };
   products: Array<{
     id: string;
+    category?: "marketplace" | "property" | "fitness" | "other";
+    sortOrder?: number;
+    featuredInProjects?: boolean;
+    projectCardDescription?: BilingualText;
+    projectCardImage?: LocalizedMediaField | null;
     number: string;
     title: BilingualText;
     body: CmsRichText;
@@ -207,9 +215,11 @@ export type CmsAboutPayload = {
     imageSide: "left" | "right";
     storeButtons: Array<{
       id: string;
+      platform?: "app-store" | "google-play" | "other";
       preLabel: BilingualText;
       label: BilingualText;
       href: string;
+      qrImage?: LocalizedMediaField | null;
       isVisible: boolean;
     }>;
     isVisible: boolean;
@@ -262,14 +272,34 @@ export type LocalizedHomeContent = {
     cta: string;
     ctaHref: string;
     items: Array<{
-      key: "diddeed" | "bohamdan" | "nafas" | "road80";
+      key: string;
       title: string;
       body: string;
       image: string;
       imageAlt: string;
       layout: "text-start" | "text-end";
+      storeButtons: Array<{
+        id: string;
+        platform: "app-store" | "google-play" | "other";
+        label: string;
+        href: string;
+        qrImage: string;
+      }>;
+      projectSlug: string | null;
+      projectHref: string | null;
+      stats: Array<{
+        id: string;
+        value: string;
+        label: string;
+      }>;
     }>;
   };
+  appDownloadLinks: Array<{
+    id: string;
+    platform: "app-store" | "google-play" | "other";
+    label: string;
+    href: string;
+  }>;
   services: {
     title: string;
     body: string;
@@ -308,6 +338,15 @@ export type LocalizedHomeContent = {
     visualImageAlt: string;
   };
   footer: LocalizedFooterContent;
+  testimonials?: Array<{
+    id: string;
+    quote: string;
+    name: string;
+    role: string;
+    avatar: string | null;
+    productName: string;
+    productSlug: string;
+  }>;
 };
 
 export type LocalizedAboutContent = {
@@ -332,6 +371,7 @@ export type LocalizedAboutContent = {
     imageSide: "left" | "right";
     storeButtons: Array<{
       id: string;
+      platform: "app-store" | "google-play" | "other";
       preLabel: string;
       label: string;
       href: string;
@@ -342,6 +382,9 @@ export type LocalizedAboutContent = {
 };
 
 export type LocalizedFooterContent = {
+  whatsappVisible: boolean;
+  whatsappNumber: string;
+  whatsappMessage: string;
   contactTitle: string;
   quickLinks: string;
   description: string;

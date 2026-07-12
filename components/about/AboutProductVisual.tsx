@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "motion/react";
 import type { CSSProperties } from "react";
 import { imageFallbacks, isValidImageSrc, resolveImageSrc } from "@/lib/media/image-url";
 import { cn } from "@/lib/utils";
+import { ImageWithFallback } from "@/components/ui/image-with-fallback";
 
 type AboutProductVisualProps = {
   src: string;
@@ -35,7 +35,7 @@ export function AboutProductVisual({
       )}
     >
       {isValidImageSrc(imageSrc) ? (
-        <Image
+        <ImageWithFallback
           src={imageSrc}
           alt={alt}
           fill

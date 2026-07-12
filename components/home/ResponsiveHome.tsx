@@ -20,6 +20,7 @@ import {
 import { MarketOutcomePills } from "./MarketOutcomePills";
 import { MobileHeading } from "./MobileHeading";
 import { ProductsSectionMobile } from "./ProductsSection";
+import { TestimonialsSection } from "./TestimonialsSection";
 import { ProcessSectionMobile } from "./ProcessSection";
 import { SectorsBlueBand } from "./SectorsBlueBand";
 import { SectorsCarousel } from "./SectorsCarousel";
@@ -160,6 +161,8 @@ export function ResponsiveHome({ content, latestBlogs }: ResponsiveHomeProps) {
       <ProcessSectionMobile process={process} />
 
       <ProductsSectionMobile products={products} />
+
+      <TestimonialsSection testimonials={content.testimonials} />
 
       <section className="pb-6 pt-2 md:py-12">
         <MobileHeading title={services.title} body={services.body} />

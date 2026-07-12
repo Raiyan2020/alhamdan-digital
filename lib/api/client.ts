@@ -4,6 +4,7 @@ type ApiEnvelope<T> = {
   ok?: boolean;
   message?: string;
   issues?: unknown;
+  code?: string;
 } & T;
 
 export async function apiFetch<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
@@ -23,7 +24,7 @@ export async function apiFetch<T>(input: RequestInfo, init?: RequestInit): Promi
   }
 
   if (!response.ok || data.ok === false) {
-    throw new ApiError(data.message ?? "Request failed.", response.status, data.issues);
+    throw new ApiError(data.message ?? "Request failed.", response.status, data.issues, data.code);
   }
 
   return data as T;

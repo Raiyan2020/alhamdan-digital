@@ -15,7 +15,7 @@ export function getDashboardStats(
 ): DashboardStats {
   return {
     homeSections: 12,
-    homeProducts: home.products.items.length,
+    homeProducts: about.products.length,
     homeServices: home.services.items.length,
     aboutProducts: about.products.length,
     navLinks: home.nav.length,

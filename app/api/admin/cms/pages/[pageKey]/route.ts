@@ -151,7 +151,7 @@ export async function PATCH(request: NextRequest, context: Context) {
     );
   }
 
-  revalidateCmsPage(pageKey);
+  await revalidateCmsPage(pageKey, sanitized);
 
   return NextResponse.json({
     ok: true,
@@ -180,7 +180,7 @@ export async function PATCH(request: NextRequest, context: Context) {
   }
 }
 
-function revalidateCmsPage(pageKey: "home" | "about") {
+async function revalidateCmsPage(pageKey: "home" | "about", payload: CmsHomePayload | CmsAboutPayload) {
   if (pageKey === "home") {
     revalidatePath("/ar");
     revalidatePath("/en");
@@ -191,6 +191,19 @@ function revalidateCmsPage(pageKey: "home" | "about") {
 
   revalidatePath("/ar/about");
   revalidatePath("/en/about");
+  revalidatePath("/ar/projects");
+  revalidatePath("/en/projects");
+
+  const aboutPayload = payload as CmsAboutPayload;
+  if (aboutPayload.products) {
+    for (const product of aboutPayload.products) {
+      if (product.detailPage?.slug) {
+        revalidatePath(`/ar/projects/${product.detailPage.slug}`);
+        revalidatePath(`/en/projects/${product.detailPage.slug}`);
+      }
+    }
+  }
+
   revalidatePath("/ar", "layout");
   revalidatePath("/en", "layout");
 }

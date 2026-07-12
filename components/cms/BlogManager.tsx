@@ -5,7 +5,7 @@ import { ar, enUS } from "date-fns/locale";
 import { ExternalLink, FilePlus2, Pencil, Trash2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
-import { toast } from "sonner";
+import { toast } from "@/lib/toast";
 import { Link } from "@/i18n/navigation";
 import type { CmsBlogPostRecord } from "@/lib/cms/blog-types";
 import { useBlogPostsQuery, useDeleteBlogPostMutation } from "@/hooks/use-blog-mutations";
@@ -40,7 +40,6 @@ export function BlogManager({ embedded = false }: BlogManagerProps) {
       <BlogPostEditor
         postId={editingId === "new" ? null : editingId}
         embedded={embedded}
-        onCreated={(post) => setEditingId(post.id)}
         onBack={() => {
           setEditingId(null);
           refetch();

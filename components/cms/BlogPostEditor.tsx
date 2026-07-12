@@ -5,7 +5,7 @@ import { ArrowLeft, Eye, Save, Send } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm, useWatch, type FieldErrors } from "react-hook-form";
 import { useLocale, useTranslations } from "next-intl";
-import { toast } from "sonner";
+import { toast } from "@/lib/toast";
 import { z } from "zod";
 import { handleFormValidationFailure } from "@/lib/cms/form-submit";
 import { getErrorMessage } from "@/lib/api/errors";
@@ -54,7 +54,6 @@ type BlogPostFormValues = z.infer<typeof blogPostFormSchema>;
 type BlogPostEditorProps = {
   postId: string | null;
   embedded?: boolean;
-  onCreated?: (post: CmsBlogPostRecord) => void;
   onBack: () => void;
 };
 
@@ -117,7 +116,6 @@ function BlogEditorActions({
 export function BlogPostEditor({
   postId,
   embedded = false,
-  onCreated,
   onBack,
 }: BlogPostEditorProps) {
   const t = useTranslations("cms.blog");
@@ -135,7 +133,6 @@ export function BlogPostEditor({
       postId={postId}
       existingPost={existingPost ?? null}
       embedded={embedded}
-      onCreated={onCreated}
       onBack={onBack}
     />
   );
@@ -145,7 +142,6 @@ type BlogPostEditorFormProps = {
   postId: string | null;
   existingPost: CmsBlogPostRecord | null;
   embedded?: boolean;
-  onCreated?: (post: CmsBlogPostRecord) => void;
   onBack: () => void;
 };
 
@@ -158,7 +154,6 @@ function BlogPostEditorForm({
   postId,
   existingPost,
   embedded = false,
-  onCreated,
   onBack,
 }: BlogPostEditorFormProps) {
   const t = useTranslations("cms.blog");
@@ -216,6 +211,7 @@ function BlogPostEditorForm({
           setMessage(text);
           setValidationItems([]);
           toast.success(text);
+          onBack();
         };
 
         const onError = (error: Error) => {
@@ -235,9 +231,8 @@ function BlogPostEditorForm({
         createMutation.mutate(
           { status: formStatus, payload: payload as CmsBlogPostPayload },
           {
-            onSuccess: (response) => {
+            onSuccess: () => {
               onSuccess();
-              onCreated?.(response.post);
             },
             onError,
           },

@@ -9,6 +9,7 @@
     "home": "Home",
     "about": "About Us",
     "products": "Our Apps",
+    "projects": "Projects",
     "services": "Services",
     "blog": "Blog",
     "why": "Why Us",
@@ -167,6 +168,7 @@
     "sectionSettings": "Settings",
     "navOverview": "Dashboard",
     "navHome": "Home Page",
+    "navProducts": "Products",
     "navAbout": "About Page",
     "navBlog": "Blog",
     "navSettings": "Settings",
@@ -190,6 +192,7 @@
     "continueEditing": "Continue editing",
     "continueEditingBody": "Jump back into the page you were working on.",
     "openHomeCms": "Open Home CMS",
+    "openProductsCms": "Open Products",
     "openAboutCms": "Open About CMS",
     "statsTitle": "Statistic",
     "greeting": "Good morning, {name}",
@@ -217,7 +220,8 @@
       "savePassword": "Update password",
       "saving": "Saving...",
       "profileSaved": "Profile updated.",
-      "passwordSaved": "Password updated."
+      "passwordSaved": "Password updated.",
+      "currentPasswordIncorrect": "Current password is incorrect."
     }
   },
   "aboutPage": {
@@ -280,6 +284,7 @@
     "facebook": "Facebook"
   },
   "cms": {
+    "productsManager": {"title":"Products","subtitle":"The single source for Home, About, projects listing, and project detail pages.","homeNotice":"Product cards are managed from the unified Products page in the main dashboard navigation."},
     "editor": {
       "placeholder": "Write content here...",
       "linkPrompt": "Enter link URL",
@@ -484,7 +489,10 @@
         "copyright": "Copyright",
         "backToTop": "Back to top label",
         "kuwaitLabel": "Kuwait label",
-        "footerLogo": "Footer logo"
+        "footerLogo": "Footer logo",
+        "whatsappVisible": "Show floating WhatsApp button",
+        "whatsappNumber": "WhatsApp number with country code",
+        "whatsappMessage": "Default WhatsApp message"
       },
       "repeaters": {
         "navLinks": "Navigation links",
@@ -530,8 +538,13 @@
         "downloadTitle": "Download title",
         "preLabel": "Pre-label",
         "storeLabel": "Store label",
-        "storeUrl": "Store URL"
+        "storeUrl": "Store URL",
+        "platform": "Platform",
+        "otherPlatform": "Other platform",
+        "qrImage": "Download QR image"
+        ,"category":"Project category","sortOrder":"Display order","featuredInProjects":"Featured project","projectCardDescription":"Project card description","projectCardImage":"Project card image"
       },
+      "categories":{"marketplace":"Marketplace","property":"Property","fitness":"Fitness","other":"Other"},
       "repeaters": {
         "productSections": "Product sections",
         "product": "Product {index}",
@@ -554,16 +567,27 @@
         "deleteBody": "Are you sure you want to delete “{title}”? Save the draft to apply this change.",
         "cancel": "Cancel",
         "confirmDelete": "Yes, delete",
+        "deletedAfterSave": "The deletion of “{title}” has been saved to the draft.",
         "editTitle": "Edit product {index}",
         "createTitle": "Add product",
-        "dialogHint": "Edit the product details here, then click Done to close this window.",
-        "saveReminder": "Click Done to save this product into the About draft.",
+        "createDialogHint": "Add the new product details here, then click Done to add it to the draft.",
+        "editDialogHint": "Update this product’s details here, then click Done to apply the changes.",
+        "createSaveReminder": "Click Done to add this new product to the About draft.",
+        "editSaveReminder": "Click Done to update this product in the About draft.",
         "done": "Done",
         "detailEnabled": "Detail page enabled"
       },
       "detailPage": {
         "title": "Project detail page",
         "body": "Create a dedicated page at /projects/slug with extra information beyond the About section.",
+        "tabs": {
+          "basic": "General Info",
+          "stores": "Download Links",
+          "detail": "Detail Page",
+          "features": "Stats & Highlights",
+          "interactive": "Interactive Sections",
+          "seo": "SEO & Cards"
+        },
         "enable": "Enable project detail page",
         "slug": "Project URL slug",
         "tagline": "Hero tagline",
@@ -574,6 +598,7 @@
         "statItem": "Stat",
         "statValue": "Stat value",
         "statLabel": "Stat label",
+        "statDescription": "Stat description (detail page only)",
         "gallery": "Gallery",
         "galleryItem": "Image",
         "galleryImage": "Gallery image",
@@ -581,7 +606,27 @@
         "seoTitle": "Detail page SEO",
         "ctaLabel": "External CTA label",
         "ctaHref": "External CTA URL",
-        "slugPlaceholder": "bohamdan"
+        "slugPlaceholder": "bohamdan",
+        "useCaseStory": "Use-case story",
+        "launchOffer": "Launch offer",
+        "launchOfferHint": "Write a clear, limited incentive, for example: the first 500 users receive a free featured listing.",
+        "whatsapp": "WhatsApp URL",
+        "mockupMedia": "App video or mockup",
+        "comparison": "Comparison",
+        "comparisonItem": "Comparison",
+        "comparisonHint": "Add one row for each meaningful difference, for example: a week to sell the traditional way versus hours with the app.",
+        "traditional": "Traditional way",
+        "withApp": "With the app",
+        "testimonials": "Testimonials",
+        "testimonialItem": "Testimonial",
+        "quote": "Quote",
+        "personName": "User name",
+        "faqs": "FAQs",
+        "faqHint": "Answer the questions that might delay a download, such as: Is the app free? Does it work outside Kuwait?",
+        "faqItem": "Question",
+        "question": "Question",
+        "answer": "Answer"
+        ,"showUseCase": "Show use-case story","showLaunchOffer": "Show launch offer","launchOfferTerms":"Offer terms","launchOfferStartsAt":"Offer starts","launchOfferEndsAt":"Offer ends","launchOfferCtaLabel":"Offer button label","launchOfferCtaHref":"Offer button URL","mockupVideoUrl": "Mockup video URL (MP4 or WebM)","showMockup": "Show mockup","showComparison": "Show comparison","showTestimonials": "Show testimonials","showFaqs": "Show FAQs","personRole":"User role","personAvatar":"User avatar"
       }
     },
     "blog": {
@@ -715,11 +760,25 @@
     ]
   },
   "projects": {
+    "indexTitle": "Our projects and apps",
+    "indexBody": "Discover the digital products we build to make everyday life simpler and faster.",
+    "empty": "No published projects yet.",
+    "allProjects": "All projects",
+    "featured": "Featured",
+    "categories": {"marketplace":"Marketplace","property":"Property","fitness":"Fitness","other":"Other"},
     "backToProducts": "Back to our products",
     "exploreProject": "Explore project",
     "overviewTitle": "Project overview",
     "highlightsTitle": "Key highlights",
     "galleryTitle": "Gallery",
-    "externalCta": "Visit project"
+    "externalCta": "Visit project",
+    "launchOfferLabel": "Early-user incentive",
+    "launchIncentive": "Early-user incentive",
+    "comparisonTitle": "Compare before you download",
+    "comparisonTraditional": "Traditional way",
+    "comparisonWithApp": "With {app}",
+    "faqTitle": "Frequently asked questions",
+    "whatsappLabel": "Contact us on WhatsApp"
+    ,"quizTitle": "Which app is right for you?","quizBody": "Answer two quick questions and we will guide you.","quizQuestionOne": "What are you looking for?","quizQuestionTwo": "What would you like to do?","quizGoals":{"discover":"Explore features","download":"Download the app","support":"Contact support"},"quizCta": "Open project","qrAlt": "QR code to download the app","qrBody": "Scan with your phone to download","scanToDownload":"Scan to download the app","testimonialsTitle": "Real experiences","offerEnds":"Offer ends"
   }
 }

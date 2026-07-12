@@ -1,11 +1,12 @@
 import { ABOUT_CMS_SECTIONS, HOME_CMS_SECTIONS } from "@/lib/cms/section-nav";
 import type { DashboardView } from "@/components/dashboard/types";
 
-const DASHBOARD_VIEWS = ["overview", "home", "about", "blog", "profile"] as const satisfies readonly DashboardView[];
+const DASHBOARD_VIEWS = ["overview", "home", "products", "about", "blog", "profile"] as const satisfies readonly DashboardView[];
 
 export const DASHBOARD_VIEW_PATHS = {
   overview: "/dashboard",
   home: "/dashboard/home",
+  products: "/dashboard/products",
   about: "/dashboard/about",
   blog: "/dashboard/blog",
   profile: "/dashboard/profile",

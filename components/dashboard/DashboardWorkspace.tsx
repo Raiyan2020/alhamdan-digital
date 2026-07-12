@@ -39,6 +39,12 @@ export function DashboardWorkspace({
             {t("openHomeCms")}
           </Link>
           <Link
+            href={"/dashboard/products" satisfies `/dashboard/${DashboardView}`}
+            className="rounded-full border border-border bg-dashboard-surface px-5 py-2.5 text-sm font-medium text-dashboard-ink shadow-dashboard"
+          >
+            {t("openProductsCms")}
+          </Link>
+          <Link
             href={"/dashboard/about" satisfies `/dashboard/${DashboardView}`}
             className="rounded-full border border-border bg-dashboard-surface px-5 py-2.5 text-sm font-medium text-dashboard-ink shadow-dashboard"
           >

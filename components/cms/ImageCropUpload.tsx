@@ -260,140 +260,145 @@ export function ImageCropUpload({
       </div>
 
       <Dialog open={dialogOpen} onOpenChange={handleDialogOpenChange}>
-        <DialogContent className="gap-0 overflow-hidden p-0 sm:max-w-4xl" showCloseButton={!busy}>
-          <DialogHeader className="border-b border-border/60 px-6 py-5 pe-14 text-start">
+        <DialogContent
+          className="flex max-h-[calc(100dvh-2rem)] flex-col gap-0 overflow-hidden p-0 sm:max-w-4xl"
+          showCloseButton={!busy}
+        >
+          <DialogHeader className="shrink-0 border-b border-border/60 px-6 py-5 pe-14 text-start">
             <DialogTitle>{t("cropTitle")}</DialogTitle>
             <DialogDescription>{t("cropDescription")}</DialogDescription>
           </DialogHeader>
 
-          <div className="relative h-[min(68vh,560px)] min-h-[320px] w-full bg-black/90">
-            {imageSrc && uploadMode === "crop" ? (
-              <Cropper
-                image={imageSrc}
-                crop={crop}
-                zoom={zoom}
-                cropSize={cropBoxSize}
-                aspect={aspect}
-                onCropChange={setCrop}
-                onZoomChange={setZoom}
-                onCropComplete={onCropComplete}
-                objectFit="contain"
-              />
-            ) : null}
-            {imageSrc && uploadMode === "original" ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={imageSrc}
-                alt=""
-                className="h-full w-full object-contain"
-              />
-            ) : null}
-          </div>
-
-          <div className="grid gap-5 border-b border-border/60 px-6 py-5 sm:grid-cols-2">
-            <div className="space-y-3">
-              <Label>{t("uploadMode")}</Label>
-              <Select
-                value={uploadMode}
-                onValueChange={(value) => setUploadMode(value as UploadMode)}
-                disabled={busy}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="crop">{t("modeCrop")}</SelectItem>
-                  <SelectItem value="original">{t("modeOriginal")}</SelectItem>
-                </SelectContent>
-              </Select>
+          <div className="min-h-0 flex-1 overflow-y-auto">
+            <div className="relative h-[clamp(220px,42dvh,460px)] w-full bg-black/90">
+              {imageSrc && uploadMode === "crop" ? (
+                <Cropper
+                  image={imageSrc}
+                  crop={crop}
+                  zoom={zoom}
+                  cropSize={cropBoxSize}
+                  aspect={aspect}
+                  onCropChange={setCrop}
+                  onZoomChange={setZoom}
+                  onCropComplete={onCropComplete}
+                  objectFit="contain"
+                />
+              ) : null}
+              {imageSrc && uploadMode === "original" ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={imageSrc}
+                  alt=""
+                  className="h-full w-full object-contain"
+                />
+              ) : null}
             </div>
-            {uploadMode === "crop" ? (
-              <>
-                <div className="space-y-3">
-                  <Label htmlFor="crop-zoom">{t("zoom")}</Label>
-                  <Slider
-                    id="crop-zoom"
-                    min={1}
-                    max={3}
-                    step={0.05}
-                    value={[zoom]}
-                    onValueChange={(value) => setZoom(value[0] ?? 1)}
-                    disabled={busy}
-                  />
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <Label htmlFor="crop-box-width">{t("cropBoxWidth")}</Label>
-                    <span className="text-xs text-muted-foreground">{Math.round(cropBoxSize.width)}px</span>
-                  </div>
-                  <Slider
-                    id="crop-box-width"
-                    min={MIN_CROP_BOX_SIZE}
-                    max={MAX_CROP_BOX_WIDTH}
-                    step={10}
-                    value={[cropBoxSize.width]}
-                    onValueChange={(value) =>
-                      setCropBoxSize((current) => ({ ...current, width: value[0] ?? current.width }))
-                    }
-                    disabled={busy}
-                  />
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <Label htmlFor="crop-box-height">{t("cropBoxHeight")}</Label>
-                    <span className="text-xs text-muted-foreground">{Math.round(cropBoxSize.height)}px</span>
-                  </div>
-                  <Slider
-                    id="crop-box-height"
-                    min={MIN_CROP_BOX_SIZE}
-                    max={MAX_CROP_BOX_HEIGHT}
-                    step={10}
-                    value={[cropBoxSize.height]}
-                    onValueChange={(value) =>
-                      setCropBoxSize((current) => ({ ...current, height: value[0] ?? current.height }))
-                    }
-                    disabled={busy}
-                  />
-                </div>
-                <div className="space-y-3">
-                  <Label>{t("outputSize")}</Label>
-                  <Select
-                    value={outputWidth}
-                    onValueChange={(value) => setOutputWidth(value as OutputWidthValue)}
-                    disabled={busy}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="original">{t("sizeOriginal")}</SelectItem>
-                      <SelectItem value="1920">{t("size1920")}</SelectItem>
-                      <SelectItem value="1200">{t("size1200")}</SelectItem>
-                      <SelectItem value="800">{t("size800")}</SelectItem>
-                      <SelectItem value="400">{t("size400")}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex items-end">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="rounded-full"
-                    disabled={busy}
-                    onClick={() => setCropBoxSize(DEFAULT_CROP_BOX)}
-                  >
-                    {t("resetCropBox")}
-                  </Button>
-                </div>
-              </>
-            ) : (
-              <div className="rounded-xl border border-border/70 bg-muted/30 px-4 py-3 text-sm text-dashboard-ink-muted sm:col-span-1">
-                {t("originalModeHint")}
+
+            <div className="grid gap-5 px-6 py-5 sm:grid-cols-2">
+              <div className="space-y-3">
+                <Label>{t("uploadMode")}</Label>
+                <Select
+                  value={uploadMode}
+                  onValueChange={(value) => setUploadMode(value as UploadMode)}
+                  disabled={busy}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="crop">{t("modeCrop")}</SelectItem>
+                    <SelectItem value="original">{t("modeOriginal")}</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-            )}
+              {uploadMode === "crop" ? (
+                <>
+                  <div className="space-y-3">
+                    <Label htmlFor="crop-zoom">{t("zoom")}</Label>
+                    <Slider
+                      id="crop-zoom"
+                      min={1}
+                      max={3}
+                      step={0.05}
+                      value={[zoom]}
+                      onValueChange={(value) => setZoom(value[0] ?? 1)}
+                      disabled={busy}
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <Label htmlFor="crop-box-width">{t("cropBoxWidth")}</Label>
+                      <span className="text-xs text-muted-foreground">{Math.round(cropBoxSize.width)}px</span>
+                    </div>
+                    <Slider
+                      id="crop-box-width"
+                      min={MIN_CROP_BOX_SIZE}
+                      max={MAX_CROP_BOX_WIDTH}
+                      step={10}
+                      value={[cropBoxSize.width]}
+                      onValueChange={(value) =>
+                        setCropBoxSize((current) => ({ ...current, width: value[0] ?? current.width }))
+                      }
+                      disabled={busy}
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <Label htmlFor="crop-box-height">{t("cropBoxHeight")}</Label>
+                      <span className="text-xs text-muted-foreground">{Math.round(cropBoxSize.height)}px</span>
+                    </div>
+                    <Slider
+                      id="crop-box-height"
+                      min={MIN_CROP_BOX_SIZE}
+                      max={MAX_CROP_BOX_HEIGHT}
+                      step={10}
+                      value={[cropBoxSize.height]}
+                      onValueChange={(value) =>
+                        setCropBoxSize((current) => ({ ...current, height: value[0] ?? current.height }))
+                      }
+                      disabled={busy}
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <Label>{t("outputSize")}</Label>
+                    <Select
+                      value={outputWidth}
+                      onValueChange={(value) => setOutputWidth(value as OutputWidthValue)}
+                      disabled={busy}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="original">{t("sizeOriginal")}</SelectItem>
+                        <SelectItem value="1920">{t("size1920")}</SelectItem>
+                        <SelectItem value="1200">{t("size1200")}</SelectItem>
+                        <SelectItem value="800">{t("size800")}</SelectItem>
+                        <SelectItem value="400">{t("size400")}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex items-end">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="rounded-full"
+                      disabled={busy}
+                      onClick={() => setCropBoxSize(DEFAULT_CROP_BOX)}
+                    >
+                      {t("resetCropBox")}
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <div className="rounded-xl border border-border/70 bg-muted/30 px-4 py-3 text-sm text-dashboard-ink-muted sm:col-span-1">
+                  {t("originalModeHint")}
+                </div>
+              )}
+            </div>
           </div>
 
-          <DialogFooter className="mx-0 mb-0 gap-3 border-t border-border/60 bg-transparent px-6 py-5 sm:flex-row sm:justify-end">
+          <DialogFooter className="mx-0 mb-0 shrink-0 gap-3 border-t border-border/60 bg-popover px-6 py-5 sm:flex-row sm:justify-end">
             <Button
               type="button"
               variant="outline"

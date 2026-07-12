@@ -6,6 +6,7 @@ import {
   Home,
   LayoutDashboard,
   LogOut,
+  Package,
   UserRoundCog,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -28,10 +29,11 @@ type DashboardSidebarProps = {
 const overviewItems: Array<{
   view: DashboardView;
   icon: typeof LayoutDashboard;
-  labelKey: "navOverview" | "navHome" | "navAbout" | "navBlog";
+  labelKey: "navOverview" | "navHome" | "navProducts" | "navAbout" | "navBlog";
 }> = [
   { view: "overview", icon: LayoutDashboard, labelKey: "navOverview" },
   { view: "home", icon: Home, labelKey: "navHome" },
+  { view: "products", icon: Package, labelKey: "navProducts" },
   { view: "about", icon: FileText, labelKey: "navAbout" },
   { view: "blog", icon: FileText, labelKey: "navBlog" },
 ];

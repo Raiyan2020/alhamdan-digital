@@ -1,10 +1,5 @@
-import {
-  MutationCache,
-  QueryCache,
-  QueryClient,
-  type DefaultOptions,
-} from "@tanstack/react-query";
-import { toast } from "sonner";
+import { MutationCache, QueryCache, QueryClient, type DefaultOptions } from "@tanstack/react-query";
+import { toast } from "@/lib/toast";
 import { getErrorMessage } from "@/lib/api/errors";
 
 const defaultOptions: DefaultOptions = {

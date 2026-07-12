@@ -15,5 +15,5 @@ export const HOME_CMS_SECTIONS: readonly CmsSectionGroup[] = [
 
 export const ABOUT_CMS_SECTIONS: readonly CmsSectionGroup[] = [
   { groupKey: "settings", items: ["seo"] },
-  { groupKey: "content", items: ["hero", "products"] },
+  { groupKey: "content", items: ["hero"] },
 ] as const;

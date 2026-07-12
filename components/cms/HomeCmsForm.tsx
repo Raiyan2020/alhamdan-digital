@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm, useWatch, type FieldErrors } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { toast } from "sonner";
+import { toast } from "@/lib/toast";
 import type { CmsHomePayload } from "@/lib/cms/types";
 import { cmsHomePayloadSchema } from "@/lib/cms/validation";
 import { resolveHomeSectionFromFieldPath } from "@/lib/cms/form-errors";
@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { BilingualTextInput, BilingualTipTapField } from "./BilingualFields";
 import { CmsSectionNav } from "./CmsSectionNav";
 import { LocalizedMediaPicker } from "./LocalizedMediaPicker";
+import { CheckboxFormField } from "./CheckboxFormField";
 import {
   AboutCardsRepeater,
   ContactMethodsRepeater,
@@ -29,7 +30,6 @@ import {
   MarketOutcomesRepeater,
   NavRepeater,
   ProcessStepsRepeater,
-  ProductItemsRepeater,
   SectorItemsRepeater,
   ServiceItemsRepeater,
   SocialLinksRepeater,
@@ -292,7 +292,9 @@ export function HomeCmsForm({ initialValue, embedded = false }: HomeCmsFormProps
                     </FormItem>
                   )}
                 />
-                <ProductItemsRepeater />
+                <p className="rounded-xl border border-border bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
+                  {t("productsManager.homeNotice")}
+                </p>
               </SectionCard>
             ) : null}
 
@@ -344,6 +346,11 @@ export function HomeCmsForm({ initialValue, embedded = false }: HomeCmsFormProps
                 <BilingualTextInput control={form.control} name="footer.backToTop" label={field("backToTop")} />
                 <BilingualTextInput control={form.control} name="footer.kuwait" label={field("kuwaitLabel")} />
                 <LocalizedMediaPicker control={form.control} name="footer.logo" label={field("footerLogo")} />
+                <div className="grid gap-5 rounded-xl border border-border p-5">
+                  <CheckboxFormField<CmsHomePayload> name="footer.whatsappVisible" label={field("whatsappVisible")} />
+                  <FormField control={form.control} name="footer.whatsappNumber" render={({ field: whatsappField }) => <FormItem><FormLabel>{field("whatsappNumber")}</FormLabel><FormControl><Input dir="ltr" placeholder="96550000000" {...whatsappField} /></FormControl><FormMessage /></FormItem>} />
+                  <BilingualTextInput control={form.control} name="footer.whatsappMessage" label={field("whatsappMessage")} />
+                </div>
                 <FooterLinksRepeater />
                 <ContactMethodsRepeater />
                 <SocialLinksRepeater />

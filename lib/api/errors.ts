@@ -1,22 +1,37 @@
 export class ApiError extends Error {
   readonly status?: number;
   readonly issues?: unknown;
+  readonly code?: string;
 
-  constructor(message: string, status?: number, issues?: unknown) {
+  constructor(message: string, status?: number, issues?: unknown, code?: string) {
     super(message);
     this.name = "ApiError";
     this.status = status;
     this.issues = issues;
+    this.code = code;
   }
 }
 
 export function getErrorMessage(error: unknown): string {
   if (error instanceof ApiError) {
     const issues = formatApiIssues(error.issues);
-    return issues ? `${error.message}\n${issues}` : error.message;
+    const message = localizeApiError(error.code) ?? error.message;
+    return issues ? `${message}\n${issues}` : message;
   }
   if (error instanceof Error && error.message) return error.message;
   return "Something went wrong. Please try again.";
+}
+
+function localizeApiError(code?: string): string | null {
+  if (code !== "CURRENT_PASSWORD_INCORRECT") return null;
+
+  const locale = typeof document !== "undefined" && document.documentElement.lang.startsWith("ar")
+    ? "ar"
+    : "en";
+
+  return locale === "ar"
+    ? "كلمة المرور الحالية غير صحيحة."
+    : "Current password is incorrect.";
 }
 
 function formatApiIssues(issues: unknown): string | null {

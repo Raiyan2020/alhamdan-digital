@@ -21,6 +21,8 @@ import {
   ensureAboutProductsDetailPages,
   ensureProductDetailPage,
 } from "./project-detail";
+import { createDefaultAboutProduct } from "./about-product-defaults";
+import { slugify } from "@/lib/slugify";
 
 type StoredCmsContent = {
   home?: CmsHomePayload;
@@ -31,9 +33,9 @@ const locales: CmsLocale[] = ["ar", "en"];
 
 export async function getHomeContent(): Promise<LocalizedHomeContent> {
   const locale = (await getLocale()) as CmsLocale;
-  const payload = await getCmsHomePayload();
+  const [payload, about] = await Promise.all([getCmsHomePayload(), getCmsAboutPayload()]);
 
-  return localizeHomePayload(payload, locale);
+  return localizeHomePayload(payload, locale, about.products);
 }
 
 export async function getCmsHomePayload(): Promise<CmsHomePayload> {
@@ -70,7 +72,8 @@ export async function getCmsAboutPayload(): Promise<CmsAboutPayload> {
   ]);
 
   if (!stored) {
-    return ensureAboutProductsDetailPages(fallback);
+    const home = await getCmsHomePayload();
+    return mergeLegacyHomeProducts(ensureAboutProductsDetailPages(fallback), home);
   }
 
   const repaired = sanitizeCmsAboutPayload(fixMojibakeDeep(stored));
@@ -83,6 +86,28 @@ export async function getCmsAboutPayload(): Promise<CmsAboutPayload> {
   };
 
   return ensureAboutProductsDetailPages(payload);
+}
+
+function mergeLegacyHomeProducts(about: CmsAboutPayload, home: CmsHomePayload): CmsAboutPayload {
+  const products = [...about.products];
+  const identities = new Set(products.flatMap((product) => [product.id, slugify(product.title.ar), slugify(product.title.en)].filter(Boolean)));
+  for (const legacy of home.products.items) {
+    const candidates = [legacy.id, legacy.key, slugify(legacy.title.ar), slugify(legacy.title.en)].filter(Boolean);
+    if (candidates.some((candidate) => identities.has(candidate))) continue;
+    const product = createDefaultAboutProduct(products.length);
+    product.id = legacy.id || legacy.key;
+    product.number = `${String(products.length + 1).padStart(2, "0")}/`;
+    product.title = legacy.title;
+    product.body = legacy.body;
+    product.image = legacy.image;
+    product.imageSide = legacy.layout === "text-start" ? "right" : "left";
+    product.isVisible = legacy.isVisible;
+    product.sortOrder = products.length;
+    product.detailPage = createDefaultProjectDetailPage(product.id, product.title);
+    products.push(product);
+    candidates.forEach((candidate) => identities.add(candidate));
+  }
+  return { ...about, products };
 }
 
 async function readStoredHomePayload() {
@@ -127,7 +152,7 @@ async function readStoredPagePayload(routeKey: "home" | "about") {
     const stored = content?.contentJson as StoredCmsContent | CmsHomePayload | CmsAboutPayload | undefined;
     if (!stored) return null;
     return stored;
-  } catch (error) {
+  } catch {
     // Silent fail and fallback
   }
 
@@ -171,7 +196,7 @@ export async function getFallbackHomePayload(): Promise<CmsHomePayload> {
     nav: [
       { label: b((m) => m.nav.home), href: `/#${sectionIds.hero}`, isVisible: true },
       { label: b((m) => m.nav.about), href: "/about", isVisible: true },
-      { label: b((m) => m.nav.products), href: `/#${sectionIds.products}`, isVisible: true },
+      { label: b((m) => m.nav.products), href: "/projects", isVisible: true },
       { label: b((m) => m.nav.services), href: `/#${sectionIds.services}`, isVisible: true },
       { label: b((m) => m.nav.blog), href: "/blogs", isVisible: true },
       { label: b((m) => m.nav.why), href: `/#${sectionIds.why}`, isVisible: true },
@@ -180,6 +205,7 @@ export async function getFallbackHomePayload(): Promise<CmsHomePayload> {
       { label: b((m) => m.nav.home), href: `/#${sectionIds.hero}`, isVisible: true },
       { label: b((m) => m.nav.about), href: `/#${sectionIds.about}`, isVisible: true },
       { label: b((m) => m.footer.products), href: `/#${sectionIds.products}`, isVisible: true },
+      { label: b((m) => m.nav.projects), href: "/projects", isVisible: true },
       { label: b((m) => m.nav.services), href: `/#${sectionIds.services}`, isVisible: true },
       { label: b((m) => m.nav.blog), href: "/blogs", isVisible: true },
     ],
@@ -296,6 +322,9 @@ export async function getFallbackHomePayload(): Promise<CmsHomePayload> {
       visualImage: media("/figma/market-visual.webp"),
     },
     footer: {
+      whatsappVisible: true,
+      whatsappNumber: "201212043552",
+      whatsappMessage: { ar: "مرحبا، أحتاج مساعدة", en: "Hello, I need some help" },
       contactTitle: b((m) => m.footer.contactTitle),
       quickLinks: b((m) => m.footer.quickLinks),
       description: rich((m) => m.footer.description),
@@ -432,6 +461,7 @@ export async function getFallbackAboutPayload(): Promise<CmsAboutPayload> {
   const storeButtons = [
     {
       id: "app-store",
+      platform: "app-store" as const,
       preLabel: b((m) => m.aboutPage.labels.storePreLabel),
       label: { ar: "App Store", en: "App Store" },
       href: "#",
@@ -439,6 +469,7 @@ export async function getFallbackAboutPayload(): Promise<CmsAboutPayload> {
     },
     {
       id: "google-play",
+      platform: "google-play" as const,
       preLabel: b((m) => m.aboutPage.labels.storePreLabel),
       label: { ar: "Google Play", en: "Google Play" },
       href: "#",
@@ -487,12 +518,14 @@ export async function getFallbackAboutPayload(): Promise<CmsAboutPayload> {
           id: `${item.id}-stat-1`,
           value: { ar: "4", en: "4" },
           label: { ar: "قطاعات مستهدفة", en: "Target sectors" },
+          description: { ar: "", en: "" },
           isVisible: true,
         },
         {
           id: `${item.id}-stat-2`,
           value: { ar: "24/7", en: "24/7" },
           label: { ar: "تجربة رقمية", en: "Digital experience" },
+          description: { ar: "", en: "" },
           isVisible: true,
         },
       ];
@@ -525,13 +558,17 @@ export async function getFallbackAboutPayload(): Promise<CmsAboutPayload> {
   };
 }
 
-export function localizeHomePayload(payload: CmsHomePayload, locale: CmsLocale): LocalizedHomeContent {
+export function localizeHomePayload(payload: CmsHomePayload, locale: CmsLocale, canonicalProducts?: CmsAboutPayload["products"]): LocalizedHomeContent {
   const text = (value: BilingualText) => value[locale];
   const mediaUrl = (field: LocalizedMediaField, fallback = "") =>
     pickLocalizedMediaUrl(field, locale, fallback) ?? fallback;
   const mediaAlt = (field: LocalizedMediaField) => text(field.alt);
   const blogLabel = locale === "ar" ? "المدونة" : "Blog";
-  const normalizeHref = (href: string) => href === "/blog" ? "/blogs" : href;
+  const normalizeHref = (href: string) => {
+    if (href === "/blog") return "/blogs";
+    if (href === `/#${sectionIds.products}`) return "/projects";
+    return href;
+  };
   const nav = payload.nav.filter((item) => item.isVisible).map((item) => ({
     key: normalizeHref(item.href),
     label: text(item.label),
@@ -607,15 +644,65 @@ export function localizeHomePayload(payload: CmsHomePayload, locale: CmsLocale):
       body: localizeRichText(payload.products.body, locale),
       cta: text(payload.products.cta),
       ctaHref: payload.products.ctaHref,
-      items: payload.products.items.filter((item) => item.isVisible).map((item) => ({
-        key: item.key,
-        title: text(item.title),
-        body: localizeRichText(item.body, locale),
-        image: mediaUrl(item.image, imageFallbacks.aboutProduct),
-        imageAlt: mediaAlt(item.image),
-        layout: item.layout,
-      })),
+      items: canonicalProducts
+        ? canonicalProducts.filter((item) => item.isVisible).sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0)).map((item) => {
+            const withDetail = ensureProductDetailPage(item);
+            const projectSlug = withDetail.detailPage.slug;
+            return {
+              key: item.id,
+              title: text(item.title),
+              body: localizeRichText(item.body, locale),
+              image: item.projectCardImage ? mediaUrl(item.projectCardImage, mediaUrl(item.image, imageFallbacks.aboutProduct)) : mediaUrl(item.image, imageFallbacks.aboutProduct),
+              imageAlt: mediaAlt(item.projectCardImage ?? item.image),
+              layout: item.imageSide === "right" ? "text-start" as const : "text-end" as const,
+              storeButtons: (item.storeButtons || []).filter((btn) => btn.isVisible && (btn.platform === "app-store" || btn.platform === "google-play")).map((btn) => ({
+                id: btn.id,
+                platform: (btn.platform ?? "other") as "app-store" | "google-play" | "other",
+                label: text(btn.label),
+                href: btn.href,
+                qrImage: btn.qrImage ? mediaUrl(btn.qrImage) : "",
+              })),
+              projectSlug,
+              projectHref: projectSlug ? `/projects/${projectSlug}` : null,
+              stats: (withDetail.detailPage.stats || [])
+                .filter((s) => s.isVisible)
+                .map((s) => ({
+                  id: s.id,
+                  value: text(s.value),
+                  label: text(s.label),
+                })),
+            };
+          })
+        : payload.products.items.filter((item) => item.isVisible).map((item) => ({
+            key: item.key,
+            title: text(item.title),
+            body: localizeRichText(item.body, locale),
+            image: mediaUrl(item.image, imageFallbacks.aboutProduct),
+            imageAlt: mediaAlt(item.image),
+            layout: item.layout,
+            storeButtons: [],
+            projectSlug: null,
+            projectHref: null,
+            stats: [],
+          })),
     },
+    appDownloadLinks: (() => {
+      const sources = canonicalProducts ?? [];
+      const seen = new Set<string>();
+      const links: Array<{ id: string; platform: "app-store" | "google-play" | "other"; label: string; href: string }> = [];
+      for (const product of sources) {
+        if (!product.isVisible) continue;
+        for (const btn of product.storeButtons) {
+          if (!btn.isVisible) continue;
+          const platform = btn.platform ?? "other";
+          if (seen.has(platform)) continue;
+          seen.add(platform);
+          links.push({ id: btn.id, platform, label: text(btn.label), href: btn.href });
+        }
+        if (seen.has("app-store") && seen.has("google-play")) break;
+      }
+      return links;
+    })(),
     services: {
       title: text(payload.services.title),
       body: localizeRichText(payload.services.body, locale),
@@ -658,6 +745,9 @@ export function localizeHomePayload(payload: CmsHomePayload, locale: CmsLocale):
       visualImageAlt: mediaAlt(payload.market.visualImage),
     },
     footer: {
+      whatsappVisible: payload.footer.whatsappVisible,
+      whatsappNumber: payload.footer.whatsappNumber,
+      whatsappMessage: text(payload.footer.whatsappMessage),
       contactTitle: text(payload.footer.contactTitle),
       quickLinks: text(payload.footer.quickLinks),
       description: localizeRichText(payload.footer.description, locale),
@@ -681,6 +771,23 @@ export function localizeHomePayload(payload: CmsHomePayload, locale: CmsLocale):
         href: item.href,
       })),
     },
+    testimonials: (canonicalProducts || [])
+      .filter((product) => product.isVisible && product.detailPage?.enabled)
+      .flatMap((product) => {
+        const withDetail = ensureProductDetailPage(product);
+        if (!withDetail.detailPage.testimonialsVisible) return [];
+        return (withDetail.detailPage.testimonials || [])
+          .filter((item) => item.isVisible)
+          .map((item) => ({
+            id: item.id,
+            quote: text(item.quote),
+            name: text(item.name),
+            role: text(item.role),
+            avatar: item.avatar ? pickLocalizedMediaUrl(item.avatar, locale) ?? null : null,
+            productName: text(product.title),
+            productSlug: withDetail.detailPage.slug,
+          }));
+      }),
   };
 }
 
@@ -698,7 +805,7 @@ export function localizeAboutPayload(payload: CmsAboutPayload, locale: CmsLocale
     },
     products: payload.products.filter((item) => item.isVisible).map((item) => {
       const withDetail = ensureProductDetailPage(item);
-      const projectSlug = withDetail.detailPage.enabled ? withDetail.detailPage.slug : null;
+      const projectSlug = withDetail.detailPage.slug;
 
       return {
         id: item.id,
@@ -715,8 +822,9 @@ export function localizeAboutPayload(payload: CmsAboutPayload, locale: CmsLocale
         image: mediaUrl(item.image, imageFallbacks.aboutProduct),
         imageAlt: text(item.image.alt),
         imageSide: item.imageSide,
-        storeButtons: item.storeButtons.filter((button) => button.isVisible).map((button) => ({
+        storeButtons: (item.storeButtons || []).filter((button) => button.isVisible).map((button) => ({
           id: button.id,
+          platform: (button.platform ?? "other") as "app-store" | "google-play" | "other",
           preLabel: text(button.preLabel),
           label: text(button.label),
           href: button.href,
@@ -754,6 +862,7 @@ async function readMessages(locale: CmsLocale) {
       home: t("nav.home"),
       about: t("nav.about"),
       products: t("nav.products"),
+      projects: t("nav.projects"),
       services: t("nav.services"),
       blog: t("nav.blog"),
       why: t("nav.why"),

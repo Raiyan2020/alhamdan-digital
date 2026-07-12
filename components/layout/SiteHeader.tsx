@@ -40,7 +40,7 @@ type SiteHeaderProps = {
 const navHrefs = [
   { key: "home", href: `/#${sectionIds.hero}` },
   { key: "about", href: "/about" },
-  { key: "products", href: `/#${sectionIds.products}` },
+  { key: "products", href: "/projects" },
   { key: "services", href: `/#${sectionIds.services}` },
   { key: "why", href: `/#${sectionIds.why}` },
   { key: "blog", href: "/blogs" },
@@ -85,6 +85,7 @@ export function SiteHeader({ layout, navItems, header, className }: SiteHeaderPr
     if (href === "/blogs") {
       return pathname === "/blogs" || pathname.startsWith("/blogs/");
     }
+    if (href === "/projects") return pathname === "/projects" || pathname.startsWith("/projects/");
     return pathname === "/" && href === `/#${sectionIds.hero}`;
   };
 

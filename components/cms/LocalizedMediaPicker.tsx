@@ -4,7 +4,7 @@ import { useRef } from "react";
 import type { Control, FieldValues, Path } from "react-hook-form";
 import { useFormContext } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { toast } from "sonner";
+import { toast } from "@/lib/toast";
 import { useUploadCmsMediaMutation } from "@/hooks/use-cms-mutations";
 import type { UploadCmsMediaInput } from "@/lib/api/cms";
 import {

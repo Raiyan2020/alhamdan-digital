@@ -3,9 +3,11 @@ import { SiteFooter } from "@/components/home/SiteFooter";
 import { getHomeContent } from "@/lib/i18n/home-content";
 import { SiteHeader } from "./SiteHeader";
 import { SiteLoadingOverlay } from "./SiteLoadingOverlay";
+import { FloatingWhatsApp } from "./FloatingWhatsApp";
+import { StickyDownloadBar } from "./StickyDownloadBar";
 
 export async function SiteShell({ children }: { children: ReactNode }) {
-  const { footer, footerLinks, header, loading, nav } = await getHomeContent();
+  const { footer, footerLinks, header, loading, nav, appDownloadLinks } = await getHomeContent();
 
   return (
     <div className="relative">
@@ -17,6 +19,8 @@ export async function SiteShell({ children }: { children: ReactNode }) {
         </div>
       </div>
       {children}
+      <FloatingWhatsApp visible={footer.whatsappVisible} number={footer.whatsappNumber} message={footer.whatsappMessage} label="WhatsApp" />
+      <StickyDownloadBar links={appDownloadLinks} />
       <SiteFooter footer={footer} footerLinks={footerLinks} />
     </div>
   );
