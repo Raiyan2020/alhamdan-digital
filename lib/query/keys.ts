@@ -8,4 +8,8 @@ export const queryKeys = {
     posts: ["blog", "posts"] as const,
     post: (id: string) => ["blog", "post", id] as const,
   },
+  chatbot: {
+    admin: ["chatbot", "admin"] as const,
+    public: (locale: string) => ["chatbot", "public", locale] as const,
+  },
 } as const;

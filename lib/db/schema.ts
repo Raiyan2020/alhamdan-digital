@@ -157,6 +157,32 @@ export const blogPosts = mysqlTable(
   }),
 );
 
+export const chatbotItems = mysqlTable(
+  "chatbot_items",
+  {
+    id: varchar("id", { length: 36 }).primaryKey(),
+    // References an existing About-payload product by its `id`; that product
+    // stays the source of truth for defaults (title/description/redirect).
+    productId: varchar("product_id", { length: 191 }).notNull(),
+    // Optional bilingual overrides ({ ar, en }); null/empty falls back to product.
+    titleJson: json("title_json"),
+    descriptionJson: json("description_json"),
+    redirectUrl: varchar("redirect_url", { length: 1024 }),
+    icon: varchar("icon", { length: 64 }),
+    isActive: boolean("is_active").notNull().default(true),
+    sortOrder: int("sort_order").notNull().default(0),
+    createdAt: datetime("created_at", { mode: "date", fsp: 3 }).notNull(),
+    updatedAt: datetime("updated_at", { mode: "date", fsp: 3 }).notNull(),
+  },
+  (table) => ({
+    activeSortIdx: index("chatbot_items_active_sort_idx").on(
+      table.isActive,
+      table.sortOrder,
+    ),
+    productIdx: index("chatbot_items_product_idx").on(table.productId),
+  }),
+);
+
 export const adminUsers = mysqlTable(
   "admin_users",
   {

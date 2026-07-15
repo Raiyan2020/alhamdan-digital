@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import {
+  Bot,
   FileText,
   Home,
   LayoutDashboard,
@@ -29,13 +30,14 @@ type DashboardSidebarProps = {
 const overviewItems: Array<{
   view: DashboardView;
   icon: typeof LayoutDashboard;
-  labelKey: "navOverview" | "navHome" | "navProducts" | "navAbout" | "navBlog";
+  labelKey: "navOverview" | "navHome" | "navProducts" | "navAbout" | "navBlog" | "navAssistant";
 }> = [
   { view: "overview", icon: LayoutDashboard, labelKey: "navOverview" },
   { view: "home", icon: Home, labelKey: "navHome" },
   { view: "products", icon: Package, labelKey: "navProducts" },
   { view: "about", icon: FileText, labelKey: "navAbout" },
   { view: "blog", icon: FileText, labelKey: "navBlog" },
+  { view: "assistant", icon: Bot, labelKey: "navAssistant" },
 ];
 
 export function DashboardSidebar({

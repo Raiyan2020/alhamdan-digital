@@ -5,6 +5,7 @@ import { SiteHeader } from "./SiteHeader";
 import { SiteLoadingOverlay } from "./SiteLoadingOverlay";
 import { FloatingWhatsApp } from "./FloatingWhatsApp";
 import { StickyDownloadBar } from "./StickyDownloadBar";
+import { FloatingAssistant } from "@/components/chatbot/FloatingAssistant";
 
 export async function SiteShell({ children }: { children: ReactNode }) {
   const { footer, footerLinks, header, loading, nav, appDownloadLinks } = await getHomeContent();
@@ -20,6 +21,7 @@ export async function SiteShell({ children }: { children: ReactNode }) {
       </div>
       {children}
       <FloatingWhatsApp visible={footer.whatsappVisible} number={footer.whatsappNumber} message={footer.whatsappMessage} label="WhatsApp" />
+      <FloatingAssistant />
       <StickyDownloadBar links={appDownloadLinks} />
       <SiteFooter footer={footer} footerLinks={footerLinks} />
     </div>
