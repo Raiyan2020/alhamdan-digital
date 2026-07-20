@@ -5,7 +5,6 @@ import { motion } from "motion/react";
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { Reveal, Stagger, WordRevealText, richTextToPlainText } from "@/components/motion";
-import { useSmoothScroll } from "@/components/motion/SmoothScrollProvider";
 import { RichTextHtml } from "@/lib/cms/rich-text";
 import type { LocalizedAboutContent } from "@/lib/cms/types";
 import { Link } from "@/i18n/navigation";
@@ -86,19 +85,13 @@ type AboutHeroProps = {
   desktop?: boolean;
 };
 
-export function AboutHero({ title, body, cta, ctaHref, desktop = false }: AboutHeroProps) {
-  const { scrollToId } = useSmoothScroll();
+export function AboutHero({ title, body, cta, desktop = false }: AboutHeroProps) {
   const plainBody = useMemo(() => richTextToPlainText(body), [body]);
   const titleWordCount = title.trim().split(/\s+/).filter(Boolean).length;
   const bodyWordCount = plainBody.split(/\s+/).filter(Boolean).length;
   const bodyStartDelayMs = titleWordCount > 0 ? titleWordCount * 120 + 280 : 0;
   const ctaDelayMs =
     bodyStartDelayMs + (bodyWordCount > 0 ? bodyWordCount * 120 + 280 : 0);
-
-  // In-page hash CTA (e.g. "#about-products") scrolls to the section below via
-  // scrollToId, which resolves to the visible layout when the id is duplicated
-  // across the desktop/responsive trees.
-  const inPageHashId = ctaHref.startsWith("#") ? ctaHref.slice(1) : null;
 
   const content = (
     <div className="text-center">
@@ -129,15 +122,7 @@ export function AboutHero({ title, body, cta, ctaHref, desktop = false }: AboutH
       </div>
       <Reveal variant="fade-up" immediate delay={ctaDelayMs} className="mt-8">
         <Link
-          href={ctaHref}
-          onClick={
-            inPageHashId
-              ? (event) => {
-                  event.preventDefault();
-                  scrollToId(inPageHashId);
-                }
-              : undefined
-          }
+          href="/projects"
           className={
             desktop
               ? "inline-flex h-[76px] items-center rounded-2xl bg-brand px-10 text-[24px] leading-9 text-white"

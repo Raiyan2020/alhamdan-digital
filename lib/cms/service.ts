@@ -489,7 +489,7 @@ export async function getFallbackAboutPayload(): Promise<CmsAboutPayload> {
       title: b((m) => m.aboutPage.hero.title),
       body: rich((m) => m.aboutPage.hero.body),
       cta: b((m) => m.aboutPage.hero.cta),
-      ctaHref: "#about-products",
+      ctaHref: "/projects",
     },
     products: productOrder.map((item) => {
       const title = b((m) => m.aboutPage.products[item.id].title);
