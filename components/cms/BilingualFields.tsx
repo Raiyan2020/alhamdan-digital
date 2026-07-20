@@ -16,12 +16,14 @@ type BilingualFieldProps<T extends FieldValues> = {
   control: Control<T, unknown, T>;
   name: Path<T>;
   label: string;
+  placeholder?: string;
 };
 
 export function BilingualTextInput<T extends FieldValues>({
   control,
   name,
   label,
+  placeholder,
 }: BilingualFieldProps<T>) {
   const t = useTranslations("cms.common");
 
@@ -36,7 +38,7 @@ export function BilingualTextInput<T extends FieldValues>({
               {label} ({t("arabic")})
             </FormLabel>
             <FormControl>
-              <Input dir="rtl" {...field} />
+              <Input dir="rtl" placeholder={placeholder ?? label} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -51,7 +53,7 @@ export function BilingualTextInput<T extends FieldValues>({
               {label} ({t("english")})
             </FormLabel>
             <FormControl>
-              <Input dir="ltr" {...field} />
+              <Input dir="ltr" placeholder={placeholder ?? label} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

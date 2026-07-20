@@ -67,7 +67,8 @@ export function SectorsCarousel({ className, label, sectors }: SectorsCarouselPr
     >
       <Carousel
         opts={{
-          loop: false,
+          // Seamless infinite loop — the ribbon scrolls forever with no stop/jump at the end.
+          loop: true,
           align: "start",
           dragFree: true,
         }}
@@ -75,15 +76,19 @@ export function SectorsCarousel({ className, label, sectors }: SectorsCarouselPr
         className="w-full"
       >
         <CarouselContent
-          className="-ml-0"
-          style={{ columnGap: `${CARD_GAP_PX}px` }}
+          // Spacing lives on each slide (padding-left) rather than the container's
+          // column-gap, so the gap is preserved at the auto-scroll loop seam too —
+          // otherwise the last card wraps flush against the first and overlaps it.
+          // The negative margin cancels the leading slide's padding to keep alignment.
+          style={{ marginInlineStart: `-${CARD_GAP_PX}px` }}
         >
           {slides.map(({ id, title, icon, slideKey }) => (
             <CarouselItem
               key={slideKey}
-              className="basis-auto pl-0"
+              className="basis-auto"
               style={{
-                flexBasis: `${CARD_WIDTH_PX}px`,
+                flexBasis: `${CARD_WIDTH_PX + CARD_GAP_PX}px`,
+                paddingInlineStart: `${CARD_GAP_PX}px`,
               }}
             >
               <SectorCard

@@ -1,7 +1,6 @@
 "use client";
 
 import type { LocalizedAboutContent } from "@/lib/cms/types";
-import { ABOUT_DESKTOP_LAYOUT } from "./aboutLayout";
 import { AboutHero } from "./AboutProductContent";
 import { AboutProductSection } from "./AboutProductSection";
 import { useLocale } from "next-intl";
@@ -22,7 +21,7 @@ function DesktopAboutPage({ content }: AboutPageProps) {
         cta={content.hero.cta}
         ctaHref={content.hero.ctaHref}
       />
-      <div className="relative">
+      <div id="about-products" className="relative">
         {content.products.map((product, index) => (
           <AboutProductSection key={product.id} product={product} index={index} layout="desktop" />
         ))}

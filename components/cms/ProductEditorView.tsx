@@ -162,6 +162,13 @@ export function ProductEditorView({ initialPayload, productId }: ProductEditorVi
 
   const isCreating = !productId;
 
+  const watchedTitle = form.watch(`products.${productIndex}.title`);
+  const productName =
+    (locale === "ar" ? watchedTitle?.ar : watchedTitle?.en)?.trim() ||
+    watchedTitle?.ar?.trim() ||
+    watchedTitle?.en?.trim() ||
+    t("about.repeaters.product", { index: productIndex + 1 });
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-5xl mx-auto py-6">
@@ -170,7 +177,7 @@ export function ProductEditorView({ initialPayload, productId }: ProductEditorVi
             <h1 className="text-3xl font-semibold">
               {isCreating
                 ? t("about.productsUi.createTitle")
-                : t("about.productsUi.editTitle", { index: productIndex + 1 })}
+                : t("about.productsUi.editTitle", { name: productName })}
             </h1>
             <p className="text-sm text-muted-foreground">
               {isCreating
@@ -193,7 +200,7 @@ export function ProductEditorView({ initialPayload, productId }: ProductEditorVi
             <CardTitle className="text-lg">
               {isCreating
                 ? t("about.productsUi.createTitle")
-                : t("about.productsUi.editTitle", { index: productIndex + 1 })}
+                : t("about.productsUi.editTitle", { name: productName })}
             </CardTitle>
           </CardHeader>
           <CardContent className="px-6 py-6 sm:px-8 sm:py-8">

@@ -1,6 +1,6 @@
 import type { BilingualText, CmsAboutPayload, CmsLocale, CmsRichText, CmsSeo, LocalizedMediaField } from "./types";
 import { slugify } from "@/lib/slugify";
-import { imageFallbacks, pickLocalizedMediaUrl } from "@/lib/media/image-url";
+import { imageFallbacks, pickLocalizedMediaUrl, pickStrictLocalizedMediaUrl } from "@/lib/media/image-url";
 import { localizeRichText } from "./rich-text";
 
 export type CmsProjectDetailPage = {
@@ -265,7 +265,7 @@ export function localizeProjectPage(
         preLabel: text(item.preLabel),
         label: text(item.label),
         href: item.href,
-        qrImage: item.qrImage ? mediaUrl(item.qrImage, locale) ?? "" : "",
+        qrImage: pickStrictLocalizedMediaUrl(item.qrImage, locale),
       })),
     detailCtaLabel: text(product.detailPage.detailCtaLabel),
     detailCtaHref: product.detailPage.detailCtaHref,

@@ -160,7 +160,12 @@
     "passwordMinLength": "Password must be at least 8 characters.",
     "passwordsDoNotMatch": "Passwords do not match.",
     "invalidSlug": "Use lowercase letters, numbers, and hyphens only.",
-    "invalidUrl": "Enter a valid URL."
+    "invalidUrl": "Enter a valid URL.",
+    "dateInPast": "The date cannot be in the past.",
+    "endBeforeStart": "The end date must be after the start date.",
+    "selectProduct": "Select a product.",
+    "invalidRedirectUrl": "Use a relative path or an http(s) URL.",
+    "sortOrderRange": "Enter a whole number between 0 and 9999."
   },
   "dashboard": {
     "brandTagline": "Content Dashboard",
@@ -229,6 +234,10 @@
       "titleEnLabel": "Title (English)",
       "descriptionArLabel": "Description (Arabic)",
       "descriptionEnLabel": "Description (English)",
+      "titleArPlaceholder": "Option title in Arabic",
+      "titleEnPlaceholder": "Option title in English",
+      "descriptionArPlaceholder": "Short description in Arabic",
+      "descriptionEnPlaceholder": "Short description in English",
       "redirectLabel": "Project page link",
       "redirectHint": "Leave empty to use the product's project page, or enter a custom link.",
       "iconLabel": "Icon",
@@ -599,7 +608,7 @@
         "platform": "Platform",
         "otherPlatform": "Other platform",
         "qrImage": "Download QR image"
-        ,"category":"Project category","sortOrder":"Display order","featuredInProjects":"Featured project","projectCardDescription":"Project card description","projectCardImage":"Project card image"
+        ,"category":"Project category","sortOrder":"Display order","projectCard":"Project card","featuredInProjects":"Featured project","projectCardDescription":"Project card description","projectCardImage":"Project card image"
       },
       "categories":{"marketplace":"Marketplace","property":"Property","fitness":"Fitness","other":"Other"},
       "repeaters": {
@@ -625,7 +634,7 @@
         "cancel": "Cancel",
         "confirmDelete": "Yes, delete",
         "deletedAfterSave": "The deletion of “{title}” has been saved to the draft.",
-        "editTitle": "Edit product {index}",
+        "editTitle": "Edit {name}",
         "createTitle": "Add product",
         "createDialogHint": "Add the new product details here, then click Done to add it to the draft.",
         "editDialogHint": "Update this product’s details here, then click Done to apply the changes.",
@@ -826,6 +835,8 @@
     "backToProducts": "Back to our products",
     "exploreProject": "Explore project",
     "overviewTitle": "Project overview",
+    "useCaseTitle": "Use case",
+    "mockupTitle": "App preview",
     "highlightsTitle": "Key highlights",
     "galleryTitle": "Gallery",
     "externalCta": "Visit project",

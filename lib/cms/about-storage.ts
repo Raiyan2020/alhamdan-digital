@@ -165,7 +165,21 @@ function pruneInvalidDetailGallery(payload: CmsAboutPayload): CmsAboutPayload {
 }
 
 export function normalizeAboutPayloadForSubmit(payload: CmsAboutPayload): CmsAboutPayload {
-  return pruneInvalidDetailGallery(ensureAboutProductsDetailPages(payload));
+  const normalized = pruneInvalidDetailGallery(ensureAboutProductsDetailPages(payload));
+  return { ...normalized, products: reindexProductSortOrder(normalized.products) };
+}
+
+/**
+ * The dashboard list order (array position, controlled by the up/down arrows) is the
+ * single source of truth for product order. Stamp each product's `sortOrder` to match
+ * its list position so the public site — which sorts by `sortOrder` — mirrors exactly
+ * what admins arranged. We deliberately do NOT re-sort by the existing `sortOrder`,
+ * since that would undo an arrow reorder that didn't touch the numbers.
+ */
+function reindexProductSortOrder(
+  products: CmsAboutPayload["products"],
+): CmsAboutPayload["products"] {
+  return products.map((product, index) => ({ ...product, sortOrder: index }));
 }
 
 export function prepareAboutPayloadForStorage(payload: CmsAboutPayload): CmsAboutPayload {

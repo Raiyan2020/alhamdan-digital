@@ -9,6 +9,11 @@ export const validationMessages = {
   passwordsDoNotMatch: "validation.passwordsDoNotMatch",
   invalidSlug: "validation.invalidSlug",
   invalidUrl: "validation.invalidUrl",
+  dateInPast: "validation.dateInPast",
+  endBeforeStart: "validation.endBeforeStart",
+  selectProduct: "validation.selectProduct",
+  invalidRedirectUrl: "validation.invalidRedirectUrl",
+  sortOrderRange: "validation.sortOrderRange",
 } as const;
 
 export type ValidationMessageKey =

@@ -591,10 +591,7 @@ export function AboutProductFields({
           <CheckboxFormField<CmsAboutPayload> name={`products.${index}.detailPage.launchOfferVisible`} label={t("about.detailPage.showLaunchOffer")} />
           <BilingualTextInput control={form.control} name={`products.${index}.detailPage.launchOffer`} label={t("about.detailPage.launchOffer")} />
           <BilingualTextInput control={form.control} name={`products.${index}.detailPage.launchOfferTerms`} label={t("about.detailPage.launchOfferTerms")} />
-          <div className="grid gap-5 md:grid-cols-2">
-            <FormField control={form.control} name={`products.${index}.detailPage.launchOfferStartsAt`} render={({ field }) => <FormItem><FormLabel>{t("about.detailPage.launchOfferStartsAt")}</FormLabel><FormControl><Input type="datetime-local" {...field} /></FormControl><FormMessage /></FormItem>} />
-            <FormField control={form.control} name={`products.${index}.detailPage.launchOfferEndsAt`} render={({ field }) => <FormItem><FormLabel>{t("about.detailPage.launchOfferEndsAt")}</FormLabel><FormControl><Input type="datetime-local" {...field} /></FormControl><FormMessage /></FormItem>} />
-          </div>
+          <LaunchOfferDateFields index={index} />
           <div className="grid gap-5 md:grid-cols-2">
             <BilingualTextInput control={form.control} name={`products.${index}.detailPage.launchOfferCtaLabel`} label={t("about.detailPage.launchOfferCtaLabel")} />
             <FormField control={form.control} name={`products.${index}.detailPage.launchOfferCtaHref`} render={({ field }) => <FormItem><FormLabel>{t("about.detailPage.launchOfferCtaHref")}</FormLabel><FormControl><Input dir="ltr" {...field} /></FormControl><FormMessage /></FormItem>} />
@@ -777,6 +774,56 @@ function StoreLinksEditor({ productIndex }: { productIndex: number }) {
           );
         })}
       </div>
+    </div>
+  );
+}
+
+function LaunchOfferDateFields({ index }: { index: number }) {
+  const t = useTranslations("cms");
+  const form = useFormContext<CmsAboutPayload>();
+  const startValue = useWatch({
+    control: form.control,
+    name: `products.${index}.detailPage.launchOfferStartsAt`,
+  });
+
+  // Computed on the client only to avoid an SSR/client hydration mismatch on "today".
+  const [minToday, setMinToday] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    const now = new Date();
+    const pad = (n: number) => String(n).padStart(2, "0");
+    setMinToday(`${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T00:00`);
+  }, []);
+
+  const endMin = startValue?.trim() ? startValue : minToday;
+
+  return (
+    <div className="grid gap-5 md:grid-cols-2">
+      <FormField
+        control={form.control}
+        name={`products.${index}.detailPage.launchOfferStartsAt`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t("about.detailPage.launchOfferStartsAt")}</FormLabel>
+            <FormControl>
+              <Input type="datetime-local" min={minToday} {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name={`products.${index}.detailPage.launchOfferEndsAt`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t("about.detailPage.launchOfferEndsAt")}</FormLabel>
+            <FormControl>
+              <Input type="datetime-local" min={endMin} {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
     </div>
   );
 }

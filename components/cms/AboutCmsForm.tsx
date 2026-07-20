@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { toast } from "@/lib/toast";
@@ -68,11 +68,17 @@ export function AboutCmsForm({ initialValue, embedded = false, productsOnly = fa
   const sectionTitle = useCallback((key: string) => t(`about.sections.${key}`), [t]);
   const field = useCallback((key: string) => t(`about.fields.${key}`), [t]);
 
+  // Adopt fresh server data ONLY when `initialValue` actually changes (e.g. after a
+  // save/refresh). Re-running on every dirty-state flip would reset the form mid-edit —
+  // reverting in-progress reordering ("move down" snapping back up).
+  const lastInitialValue = useRef(initialValue);
   useEffect(() => {
+    if (lastInitialValue.current === initialValue) return;
+    lastInitialValue.current = initialValue;
     if (!form.formState.isDirty && !saveMutation.isPending) {
       form.reset(initialValue);
     }
-  }, [initialValue, form, saveMutation.isPending, form.formState.isDirty]);
+  }, [initialValue, form, saveMutation.isPending]);
 
   const describeErrorPath = useCallback((path: string) =>
     describeAboutErrorPath(path, {

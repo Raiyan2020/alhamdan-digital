@@ -119,6 +119,27 @@ function refineNonDecorativeMediaAlt(
   }
 }
 
+/** Reject values that are not empty and not a usable image src (path, http(s), or blob URL). */
+function refineMediaUrlFormat(
+  value: { defaultUrl?: string; arUrl?: string | null; enUrl?: string | null },
+  ctx: z.RefinementCtx,
+) {
+  const check = (url: string | null | undefined, path: string) => {
+    const trimmed = url?.trim();
+    if (trimmed && !isValidImageSrc(trimmed)) {
+      ctx.addIssue({
+        code: "custom",
+        message: validationMessages.invalidUrl,
+        path: [path],
+      });
+    }
+  };
+
+  check(value.defaultUrl, "defaultUrl");
+  check(value.arUrl, "arUrl");
+  check(value.enUrl, "enUrl");
+}
+
 const mediaFieldBaseSchema = z.object({
   defaultAssetId: z.string().nullable().default(null),
   arAssetId: z.string().nullable().optional(),
@@ -135,6 +156,7 @@ export const optionalMediaSchema = mediaFieldBaseSchema
   })
   .superRefine((value, ctx) => {
     refineNonDecorativeMediaAlt(value, ctx);
+    refineMediaUrlFormat(value, ctx);
 
     if (!value.isDecorative && !value.defaultUrl.trim()) {
       ctx.addIssue({
@@ -149,7 +171,10 @@ export const mediaSchema = mediaFieldBaseSchema
   .extend({
     defaultUrl: z.string().min(1),
   })
-  .superRefine(refineNonDecorativeMediaAlt);
+  .superRefine((value, ctx) => {
+    refineNonDecorativeMediaAlt(value, ctx);
+    refineMediaUrlFormat(value, ctx);
+  });
 
 const productItemSchema = visibleSchema.extend({
   id: z.string().min(1),
@@ -176,6 +201,35 @@ const looseBilingualTextSchema = z.object({
 const looseRichTextSchema = z.object({
   json: looseBilingualTextSchema.optional(),
   html: looseBilingualTextSchema,
+});
+
+/** True when rich-text HTML has no visible text (empty string, blank tags, or &nbsp; only). */
+function isRichHtmlEmpty(html: string) {
+  return (
+    html
+      .replace(/<[^>]*>/g, "")
+      .replace(/&nbsp;/gi, " ")
+      .trim().length === 0
+  );
+}
+
+/** Rich text that must contain visible content in both languages. */
+const requiredRichTextSchema = looseRichTextSchema.superRefine((value, ctx) => {
+  if (isRichHtmlEmpty(value.html.ar)) {
+    ctx.addIssue({
+      code: "custom",
+      message: validationMessages.arabicRequired,
+      path: ["html", "ar"],
+    });
+  }
+
+  if (isRichHtmlEmpty(value.html.en)) {
+    ctx.addIssue({
+      code: "custom",
+      message: validationMessages.englishRequired,
+      path: ["html", "en"],
+    });
+  }
 });
 
 const projectDetailHighlightSchema = z.object({
@@ -246,7 +300,29 @@ const projectDetailPageSchema = z.object({
   comparisonRows: z.array(projectDetailComparisonSchema),
   testimonials: z.array(projectDetailTestimonialSchema),
   faqs: z.array(projectDetailFaqSchema),
+}).superRefine((value, ctx) => {
+  const start = parseDateTime(value.launchOfferStartsAt);
+  const end = parseDateTime(value.launchOfferEndsAt);
+
+  // Only enforce the relationship between the two dates. "Not in the past" is handled
+  // at input time via the date picker's `min` — enforcing it here would reject any save
+  // (e.g. reordering products) once a previously-valid start date rolls into the past.
+  if (start && end && end <= start) {
+    ctx.addIssue({
+      code: "custom",
+      message: validationMessages.endBeforeStart,
+      path: ["launchOfferEndsAt"],
+    });
+  }
 });
+
+/** Parse a datetime-local string to a Date, or null when empty/invalid. */
+function parseDateTime(value: string | undefined | null) {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+  const date = new Date(trimmed);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
 
 export const aboutProductSchema = z.object({
   id: z.string().min(1),
@@ -256,8 +332,8 @@ export const aboutProductSchema = z.object({
   projectCardDescription: looseBilingualTextSchema.optional(),
   projectCardImage: optionalMediaSchema.nullable().optional(),
   number: z.string().min(1),
-  title: looseBilingualTextSchema,
-  body: looseRichTextSchema,
+  title: bilingualTextSchema,
+  body: requiredRichTextSchema,
   offersLabel: looseBilingualTextSchema,
   offers: z.array(
     z.object({

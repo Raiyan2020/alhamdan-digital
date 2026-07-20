@@ -160,7 +160,12 @@
     "passwordMinLength": "يجب أن تكون كلمة المرور 8 أحرف على الأقل.",
     "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين.",
     "invalidSlug": "استخدم حروفًا إنجليزية صغيرة وأرقامًا وشرطات فقط.",
-    "invalidUrl": "أدخل رابطًا صحيحًا."
+    "invalidUrl": "أدخل رابطًا صحيحًا.",
+    "dateInPast": "لا يمكن أن يكون التاريخ في الماضي.",
+    "endBeforeStart": "يجب أن يكون تاريخ النهاية بعد تاريخ البداية.",
+    "selectProduct": "اختر منتجًا.",
+    "invalidRedirectUrl": "استخدم مسارًا نسبيًا أو رابط http(s).",
+    "sortOrderRange": "أدخل رقمًا صحيحًا بين 0 و 9999."
   },
   "dashboard": {
     "brandTagline": "لوحة إدارة المحتوى",
@@ -229,6 +234,10 @@
       "titleEnLabel": "العنوان (إنجليزي)",
       "descriptionArLabel": "الوصف (عربي)",
       "descriptionEnLabel": "الوصف (إنجليزي)",
+      "titleArPlaceholder": "عنوان الخيار بالعربية",
+      "titleEnPlaceholder": "عنوان الخيار بالإنجليزية",
+      "descriptionArPlaceholder": "وصف مختصر بالعربية",
+      "descriptionEnPlaceholder": "وصف مختصر بالإنجليزية",
       "redirectLabel": "رابط صفحة المشروع",
       "redirectHint": "اتركه فارغًا لاستخدام صفحة المنتج، أو أدخل رابطًا مخصصًا.",
       "iconLabel": "الأيقونة",
@@ -599,7 +608,7 @@
         "platform": "المنصة",
         "otherPlatform": "منصة أخرى",
         "qrImage": "صورة QR للتحميل"
-        ,"category":"تصنيف المشروع","sortOrder":"ترتيب الظهور","featuredInProjects":"مشروع مميز","projectCardDescription":"وصف بطاقة المشروع","projectCardImage":"صورة بطاقة المشروع"
+        ,"category":"تصنيف المشروع","sortOrder":"ترتيب الظهور","projectCard":"بطاقة المشروع","featuredInProjects":"مشروع مميز","projectCardDescription":"وصف بطاقة المشروع","projectCardImage":"صورة بطاقة المشروع"
       },
       "categories":{"marketplace":"سوق وإعلانات","property":"عقار","fitness":"رياضة","other":"أخرى"},
       "repeaters": {
@@ -625,7 +634,7 @@
         "cancel": "إلغاء",
         "confirmDelete": "أي، احذف",
         "deletedAfterSave": "تم حفظ حذف التطبيق «{title}» من المسودة.",
-        "editTitle": "تعديل منتج {index}",
+        "editTitle": "تعديل {name}",
         "createTitle": "إضافة منتج",
         "createDialogHint": "أضف تفاصيل المنتج الجديد هنا، ثم اضغط «تم» لإضافته للمسودة.",
         "editDialogHint": "حدّث تفاصيل هذا المنتج هنا، ثم اضغط «تم» لتطبيق التعديل.",
@@ -826,6 +835,8 @@
     "backToProducts": "رجوع لمنتجاتنا",
     "exploreProject": "تعرّف على المشروع",
     "overviewTitle": "نظرة عامة عن المشروع",
+    "useCaseTitle": "قصة الاستخدام",
+    "mockupTitle": "معاينة التطبيق",
     "highlightsTitle": "أبرز النقاط",
     "galleryTitle": "معرض الصور",
     "externalCta": "زيارة المشروع",

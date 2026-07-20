@@ -14,7 +14,7 @@ import type {
 } from "./types";
 import { makeRichText, localizeRichText } from "./rich-text";
 import { fixMojibakeDeep } from "./fix-encoding";
-import { imageFallbacks, pickLocalizedMediaUrl } from "@/lib/media/image-url";
+import { imageFallbacks, pickLocalizedMediaUrl, pickStrictLocalizedMediaUrl } from "@/lib/media/image-url";
 import { sanitizeCmsAboutPayload, sanitizeCmsHomePayload } from "./validation";
 import {
   createDefaultProjectDetailPage,
@@ -266,7 +266,7 @@ export async function getFallbackHomePayload(): Promise<CmsHomePayload> {
       title: b((m) => m.products.title),
       body: rich((m) => m.products.body),
       cta: b((m) => m.products.cta),
-      ctaHref: "/about",
+      ctaHref: "/projects",
       items: [
         product("diddeed", "/figma/market-visual.webp", "text-start"),
         product("bohamdan", "/figma/services-phone.webp", "text-start"),
@@ -660,7 +660,7 @@ export function localizeHomePayload(payload: CmsHomePayload, locale: CmsLocale, 
                 platform: (btn.platform ?? "other") as "app-store" | "google-play" | "other",
                 label: text(btn.label),
                 href: btn.href,
-                qrImage: btn.qrImage ? mediaUrl(btn.qrImage) : "",
+                qrImage: pickStrictLocalizedMediaUrl(btn.qrImage, locale),
               })),
               projectSlug,
               projectHref: projectSlug ? `/projects/${projectSlug}` : null,

@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import type { LocalizedProjectPage } from "@/lib/cms/project-detail";
-import { AnimatedStats, ProjectsFloatingActions, ProjectQuiz, CardStat, track } from "./ProjectConversionWidgets";
+import { ProjectsFloatingActions, CardStat, track } from "./ProjectConversionWidgets";
 import { ImageWithFallback } from "@/components/ui/image-with-fallback";
 import { AppDownloadQr } from "./AppDownloadQr";
 
@@ -73,9 +73,6 @@ export function ProjectsIndexView({ projects }: { projects: LocalizedProjectPage
   const t = useTranslations("projects");
   const locale = useLocale();
   const Arrow = locale === "ar" ? ArrowLeft : ArrowRight;
-  const stats = projects.flatMap((project) => project.stats.slice(0, 1)).slice(0, 4);
-  const testimonials = projects.flatMap((project) => project.visibility.testimonials ? project.testimonials.slice(0, 1) : []).slice(0, 4);
-  const faqs = projects.flatMap((project) => project.visibility.faqs ? project.faqs.slice(0, 1) : []).slice(0, 4);
   const [category, setCategory] = useState("all");
   const categories = Array.from(new Set(projects.map((project) => project.category)));
   const visibleProjects = category === "all" ? projects : projects.filter((project) => project.category === category);
@@ -112,10 +109,6 @@ export function ProjectsIndexView({ projects }: { projects: LocalizedProjectPage
           </div>
         )}
       </section>
-      <ProjectQuiz projects={projects} />
-      {stats.length ? <section className="border-y border-border-soft bg-card-surface px-5 py-12 sm:px-8"><div className="mx-auto max-w-6xl"><AnimatedStats stats={stats} /></div></section> : null}
-      {testimonials.length ? <section className="mx-auto max-w-6xl px-5 py-12 sm:px-8"><h2 className="text-2xl font-semibold">{t("testimonialsTitle")}</h2><div className="mt-6 grid gap-4 md:grid-cols-2">{testimonials.map((item) => <blockquote key={item.id} className="rounded-lg border border-border-soft bg-card-surface p-6"><p className="leading-8">{`“${item.quote}”`}</p><footer className="mt-3 text-sm font-semibold text-brand">{item.name}</footer></blockquote>)}</div></section> : null}
-      {faqs.length ? <section className="mx-auto max-w-4xl px-5 py-12 sm:px-8"><h2 className="text-2xl font-semibold">{t("faqTitle")}</h2><div className="mt-6 divide-y divide-border-soft rounded-lg border border-border-soft px-6">{faqs.map((faq) => <details key={faq.id} className="py-5"><summary className="cursor-pointer font-semibold">{faq.question}</summary><p className="mt-3 text-sm leading-7 text-ink-muted">{faq.answer}</p></details>)}</div></section> : null}
       <ProjectsFloatingActions projects={projects} />
     </main>
   );

@@ -87,7 +87,7 @@ export function LocalizedMediaPicker<T extends FieldValues>({
           <FormItem>
             <FormLabel>{tMedia("sharedUrl")}</FormLabel>
             <FormControl>
-              <Input dir="ltr" {...field} />
+              <Input dir="ltr" placeholder={t("urlPlaceholder")} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -101,7 +101,7 @@ export function LocalizedMediaPicker<T extends FieldValues>({
             <FormItem>
               <FormLabel>{tMedia("arabicOverrideUrl")}</FormLabel>
               <FormControl>
-                <Input dir="ltr" value={field.value ?? ""} onChange={field.onChange} />
+                <Input dir="ltr" placeholder={t("urlPlaceholder")} value={field.value ?? ""} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -114,7 +114,7 @@ export function LocalizedMediaPicker<T extends FieldValues>({
             <FormItem>
               <FormLabel>{tMedia("englishOverrideUrl")}</FormLabel>
               <FormControl>
-                <Input dir="ltr" value={field.value ?? ""} onChange={field.onChange} />
+                <Input dir="ltr" placeholder={t("urlPlaceholder")} value={field.value ?? ""} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>

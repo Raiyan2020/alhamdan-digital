@@ -2,10 +2,11 @@
 
 import { ArrowLeft, CheckCircle2, ExternalLink, XCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { LocalizedProjectPage } from "@/lib/cms/project-detail";
 import { RichTextHtml } from "@/lib/cms/rich-text";
 import { Link } from "@/i18n/navigation";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { AboutFeaturePills } from "@/components/about/AboutFeaturePills";
 import { AboutStoreButtons } from "@/components/about/AboutStoreButtons";
 import { AnimatedStats, ProjectFloatingActions, track } from "./ProjectConversionWidgets";
@@ -20,6 +21,7 @@ export function ProjectPageView({ project }: ProjectPageViewProps) {
   const t = useTranslations("projects");
   const hasLaunchOffer = project.visibility.launchOffer && Boolean(project.launchOffer);
   const hasComparison = project.visibility.comparison && project.comparisonRows.length > 0;
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   useEffect(() => track("project_detail_view", { project: project.slug }), [project.slug]);
 
   return (
@@ -56,18 +58,19 @@ export function ProjectPageView({ project }: ProjectPageViewProps) {
               className="mt-6 max-w-2xl text-sm leading-7 text-white/85 sm:text-base [&_p]:mb-3"
             />
           </div>
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[30px] border border-white/30 bg-white/15 p-2 shadow-2xl backdrop-blur-sm">
-            {project.image ? (
+          {project.image ? (
+            <div className="mx-auto w-full max-w-md overflow-hidden rounded-[30px] border border-white/30 bg-white/15 p-2 shadow-2xl backdrop-blur-sm">
               <ImageWithFallback
                 src={project.image}
                 alt={project.imageAlt || project.title}
-                fill
-                className="rounded-[22px] object-contain bg-white/95 p-5"
+                width={800}
+                height={800}
+                className="h-auto w-full rounded-[22px] bg-white/95 object-contain"
                 priority
                 sizes="(max-width: 1024px) 100vw, 420px"
               />
-            ) : null}
-          </div>
+            </div>
+          ) : null}
           </div>
         </div>
       </section>
@@ -93,10 +96,10 @@ export function ProjectPageView({ project }: ProjectPageViewProps) {
         </section>
       ) : null}
 
-      {project.visibility.useCase && project.useCaseStory ? <section className="mx-auto max-w-5xl px-5 py-8 sm:px-8"><p className="rounded-[24px] border-s-4 border-brand bg-brand/[0.04] p-6 text-lg leading-9 text-ink-secondary shadow-sm sm:p-8">{project.useCaseStory}</p></section> : null}
+      {project.visibility.useCase && project.useCaseStory ? <section className="mx-auto max-w-5xl px-5 py-8 sm:px-8"><h2 className="mb-6 text-2xl font-semibold sm:text-3xl">{t("useCaseTitle")}</h2><p className="rounded-[24px] border-s-4 border-brand bg-brand/[0.04] p-6 text-lg leading-9 text-ink-secondary shadow-sm sm:p-8">{project.useCaseStory}</p></section> : null}
 
       {hasLaunchOffer || hasComparison ? <section className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
-        <div className={hasLaunchOffer && hasComparison ? "grid gap-6 lg:grid-cols-[0.9fr_1.1fr]" : "grid gap-6"}>
+        <div className="flex flex-col gap-6">
           {hasLaunchOffer ? <div className="relative overflow-hidden rounded-[28px] bg-brand px-6 py-8 text-brand-on shadow-[0_18px_45px_rgba(3,57,108,0.20)] sm:p-10">
             <div className="pointer-events-none absolute -end-12 -top-12 h-40 w-40 rounded-full border-[20px] border-white/10" />
             <div className="relative">
@@ -110,22 +113,20 @@ export function ProjectPageView({ project }: ProjectPageViewProps) {
           </div> : null}
           {hasComparison ? (
             <section className="overflow-hidden rounded-[28px] border border-border-soft bg-card-surface shadow-[0_18px_45px_rgba(3,57,108,0.10)]">
-              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border-soft bg-gradient-to-l from-brand/[0.07] to-transparent px-5 py-6 sm:px-8 sm:py-7">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand/70">{project.title}</p>
-                  <h2 className="mt-1 text-2xl font-semibold text-ink sm:text-3xl">{t("comparisonTitle")}</h2>
-                </div>
-                <span className="rounded-full bg-brand px-4 py-2 text-xs font-semibold text-white shadow-sm">VS</span>
+              <div className="border-b border-border-soft bg-gradient-to-l from-brand/[0.07] to-transparent px-5 py-6 text-center sm:px-8 sm:py-7 sm:text-start">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand/70">{project.title}</p>
+                <h2 className="mt-1 text-2xl font-semibold text-ink sm:text-3xl">{t("comparisonTitle")}</h2>
               </div>
-              <div className="grid grid-cols-2 border-b border-border-soft text-xs font-bold sm:text-sm">
-                <div className="flex items-center gap-2 bg-rose-50 px-4 py-4 text-rose-700 sm:px-6 sm:py-5">
+              <div className="relative grid grid-cols-2 border-b border-border-soft text-xs font-bold sm:text-sm">
+                <div className="flex items-center justify-center gap-2 bg-rose-50 px-4 py-4 text-center text-rose-700 sm:px-6 sm:py-5">
                   <XCircle className="h-5 w-5 shrink-0" strokeWidth={2.5} aria-hidden="true" />
                   <span>{t("comparisonTraditional")}</span>
                 </div>
-                <div className="flex items-center gap-2 bg-emerald-50 px-4 py-4 text-emerald-700 sm:px-6 sm:py-5">
+                <div className="flex items-center justify-center gap-2 bg-emerald-50 px-4 py-4 text-center text-emerald-700 sm:px-6 sm:py-5">
                   <CheckCircle2 className="h-5 w-5 shrink-0" strokeWidth={2.5} aria-hidden="true" />
                   <span>{t("comparisonWithApp", { app: project.title })}</span>
                 </div>
+                <span className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand px-3 py-1.5 text-[11px] font-bold text-white shadow-md ring-4 ring-card-surface">VS</span>
               </div>
               <div className="divide-y divide-border-soft">
                 {project.comparisonRows.map((row, index) => (
@@ -165,9 +166,14 @@ export function ProjectPageView({ project }: ProjectPageViewProps) {
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {project.gallery.map((item) => (
               <figure key={item.id} className="group overflow-hidden rounded-[28px] border border-border-soft bg-card-surface shadow-sm">
-                <div className="relative aspect-[16/10]">
-                <ImageWithFallback src={item.image} alt={item.imageAlt || item.caption || project.title} fill className="object-cover transition duration-500 group-hover:scale-[1.03]" sizes="(max-width: 768px) 100vw, 50vw" />
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setLightbox({ src: item.image, alt: item.imageAlt || item.caption || project.title })}
+                  className="relative block aspect-[16/10] w-full cursor-zoom-in"
+                  aria-label={item.caption || project.title}
+                >
+                  <ImageWithFallback src={item.image} alt={item.imageAlt || item.caption || project.title} fill className="object-cover transition duration-500 group-hover:scale-[1.03]" sizes="(max-width: 768px) 100vw, 50vw" />
+                </button>
                 {item.caption ? (
                   <figcaption className="px-5 py-4 text-sm text-ink-muted">{item.caption}</figcaption>
                 ) : null}
@@ -177,9 +183,9 @@ export function ProjectPageView({ project }: ProjectPageViewProps) {
         </section>
       ) : null}
 
-      {project.visibility.mockup && (project.mockupVideoUrl || project.mockupMedia) ? <section className="mx-auto max-w-5xl px-5 py-10 sm:px-8"><div className="relative aspect-video overflow-hidden rounded-[28px] border-8 border-card-surface bg-[#031d3b] shadow-2xl">{project.mockupVideoUrl ? <video className="h-full w-full object-contain" controls muted playsInline preload="metadata" poster={project.mockupMedia || undefined}><source src={project.mockupVideoUrl} /></video> : <ImageWithFallback src={project.mockupMedia} alt={project.title} fill className="object-contain p-6" sizes="(max-width: 1024px) 100vw, 800px" />}</div></section> : null}
+      {project.visibility.mockup && (project.mockupVideoUrl || project.mockupMedia) ? <section className="mx-auto max-w-5xl px-5 py-10 sm:px-8"><h2 className="mb-6 text-2xl font-semibold sm:text-3xl">{t("mockupTitle")}</h2><div className="relative aspect-video overflow-hidden rounded-[28px] border-8 border-card-surface bg-[#031d3b] shadow-2xl">{project.mockupVideoUrl ? <video className="h-full w-full object-contain" controls muted playsInline preload="metadata" poster={project.mockupMedia || undefined}><source src={project.mockupVideoUrl} /></video> : <ImageWithFallback src={project.mockupMedia} alt={project.title} fill className="object-contain p-6" sizes="(max-width: 1024px) 100vw, 800px" />}</div></section> : null}
 
-      {project.visibility.testimonials && project.testimonials.length > 0 ? <section className="px-5 py-12 sm:px-8"><div className="mx-auto max-w-6xl"><h2 className="text-2xl font-semibold sm:text-3xl">{t("testimonialsTitle")}</h2><div className="mt-7 grid gap-5 md:grid-cols-2">{project.testimonials.map((item) => <blockquote key={item.id} className="rounded-[24px] border border-border-soft bg-card-surface p-6 shadow-sm"><p className="text-lg leading-8 text-ink-secondary">“{item.quote}”</p><footer className="mt-6 flex items-center gap-3 border-t border-border-soft pt-5">{item.avatar ? <ImageWithFallback src={item.avatar} width={48} height={48} alt={item.name} className="h-12 w-12 rounded-full object-cover" /> : <span className="grid h-12 w-12 place-items-center rounded-full bg-brand/10 font-semibold text-brand">{item.name.slice(0, 1)}</span>}<span><strong className="block text-sm text-brand">{item.name}</strong>{item.role ? <span className="mt-1 block text-xs text-ink-muted">{item.role}</span> : null}</span></footer></blockquote>)}</div></div></section> : null}
+      {project.visibility.testimonials && project.testimonials.length > 0 ? <section className="px-5 py-12 sm:px-8"><div className="mx-auto max-w-6xl"><h2 className="text-2xl font-semibold sm:text-3xl">{t("testimonialsTitle")}</h2><div className="mt-7 grid gap-5 md:grid-cols-2">{project.testimonials.map((item) => <blockquote key={item.id} className="rounded-[24px] border border-border-soft bg-card-surface p-6 shadow-sm"><p className="text-lg leading-8 text-ink-secondary">{item.quote}</p><footer className="mt-6 flex items-center gap-3 border-t border-border-soft pt-5">{item.avatar ? <ImageWithFallback src={item.avatar} width={48} height={48} alt={item.name} className="h-12 w-12 rounded-full object-cover" /> : <span className="grid h-12 w-12 place-items-center rounded-full bg-brand/10 font-semibold text-brand">{item.name.slice(0, 1)}</span>}<span><strong className="block text-sm text-brand">{item.name}</strong>{item.role ? <span className="mt-1 block text-xs text-ink-muted">{item.role}</span> : null}</span></footer></blockquote>)}</div></div></section> : null}
 
       {project.visibility.faqs && project.faqs.length ? <section className="mx-auto max-w-5xl px-5 py-12 sm:px-8">
         <h2 className="text-2xl font-semibold sm:text-3xl">{t("faqTitle")}</h2>
@@ -189,41 +195,61 @@ export function ProjectPageView({ project }: ProjectPageViewProps) {
       </section> : null}
 
       <section className="mt-8 bg-[#032e5d] px-5 py-12 text-white sm:px-8 sm:py-16">
-        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2">
+        <div className="mx-auto flex max-w-6xl flex-col gap-10">
           <div>
             <h2 className="text-2xl font-semibold">{project.offersLabel}</h2>
             <div className="mt-5">
-              <AboutFeaturePills items={project.offers} columns={2} itemKeyPrefix={`${project.id}-offer`} />
+              <AboutFeaturePills items={project.offers} columns={3} itemKeyPrefix={`${project.id}-offer`} />
             </div>
           </div>
           <div>
             <h2 className="text-2xl font-semibold">{project.audienceLabel}</h2>
             <div className="mt-5">
-              <AboutFeaturePills items={project.audience} columns={2} itemKeyPrefix={`${project.id}-audience`} />
+              <AboutFeaturePills items={project.audience} columns={3} itemKeyPrefix={`${project.id}-audience`} />
             </div>
           </div>
         </div>
 
         <div className="mx-auto mt-12 max-w-6xl rounded-[28px] bg-white p-6 text-ink shadow-2xl sm:p-10">
-          <h2 className="text-xl font-bold text-brand sm:text-2xl">{project.downloadTitle}</h2>
-          <div className="mt-5">
-            <AboutStoreButtons buttons={project.storeButtons} size="lg" />
+          <div className="grid items-center gap-8 lg:grid-cols-2">
+            <div>
+              <h2 className="text-xl font-bold text-brand sm:text-2xl">{project.downloadTitle}</h2>
+              <div className="mt-6">
+                <AboutStoreButtons buttons={project.storeButtons} size="lg" />
+              </div>
+              {project.detailCtaHref ? (
+                <a
+                  href={project.detailCtaHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-brand-on hover:bg-brand/90"
+                >
+                  {project.detailCtaLabel || t("externalCta")}
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              ) : null}
+            </div>
+            <AppDownloadQr buttons={project.storeButtons} className="justify-center lg:justify-start" />
           </div>
-          <AppDownloadQr buttons={project.storeButtons} className="mt-6" />
-          {project.detailCtaHref ? (
-            <a
-              href={project.detailCtaHref}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-brand-on hover:bg-brand/90"
-            >
-              {project.detailCtaLabel || t("externalCta")}
-              <ExternalLink className="h-4 w-4" />
-            </a>
-          ) : null}
         </div>
       </section>
       <ProjectFloatingActions project={project} />
+
+      <Dialog open={lightbox !== null} onOpenChange={(open) => { if (!open) setLightbox(null); }}>
+        <DialogContent className="w-fit max-w-[96vw] border-none bg-transparent p-0 shadow-none">
+          <DialogTitle className="sr-only">{lightbox?.alt || t("galleryTitle")}</DialogTitle>
+          {lightbox ? (
+            // Natural-size image capped to the viewport — no forced aspect box, so it
+            // shows as large as possible with no black letterboxing.
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={lightbox.src}
+              alt={lightbox.alt}
+              className="mx-auto max-h-[88vh] w-auto max-w-full rounded-2xl object-contain"
+            />
+          ) : null}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

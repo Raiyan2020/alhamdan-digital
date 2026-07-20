@@ -35,6 +35,22 @@ type LocalizedMediaLike = {
   enUrl?: string | null;
 };
 
+/**
+ * Return the field's own uploaded image URL (localized override or default) only when it
+ * is a real, valid src — otherwise "". Unlike {@link pickLocalizedMediaUrl}, this never
+ * falls back to the brand placeholder. Use it for optional images like QR codes, where
+ * "no image" must stay empty (so the caller can generate one) instead of showing the logo.
+ */
+export function pickStrictLocalizedMediaUrl(
+  field: LocalizedMediaLike | null | undefined,
+  locale: "ar" | "en",
+): string {
+  if (!field) return "";
+  const localized = locale === "ar" ? field.arUrl : field.enUrl;
+  const raw = (localized?.trim() || field.defaultUrl?.trim()) ?? "";
+  return isValidImageSrc(raw) ? raw : "";
+}
+
 export function pickLocalizedMediaUrl(
   field: LocalizedMediaLike | null | undefined,
   locale: "ar" | "en",

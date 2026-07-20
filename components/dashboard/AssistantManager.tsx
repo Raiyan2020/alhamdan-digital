@@ -59,9 +59,10 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { validationMessages } from "@/lib/validation/messages";
 
 const formSchema = z.object({
-  productId: z.string().min(1, "Select a product."),
+  productId: z.string().min(1, validationMessages.selectProduct),
   titleAr: z.string().max(2000),
   titleEn: z.string().max(2000),
   descriptionAr: z.string().max(2000),
@@ -71,11 +72,15 @@ const formSchema = z.object({
     .max(1024)
     .refine(
       (v) => v.trim() === "" || v.startsWith("/") || /^https?:\/\//.test(v),
-      "Use a relative path or an http(s) URL.",
+      validationMessages.invalidRedirectUrl,
     ),
   icon: z.string().max(64),
   isActive: z.boolean(),
-  sortOrder: z.coerce.number().int().min(0).max(9999),
+  sortOrder: z.coerce
+    .number(validationMessages.sortOrderRange)
+    .int(validationMessages.sortOrderRange)
+    .min(0, validationMessages.sortOrderRange)
+    .max(9999, validationMessages.sortOrderRange),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -443,7 +448,7 @@ function ItemFormDialog({
                       <Input
                         {...field}
                         dir="rtl"
-                        placeholder={selectedProduct?.title.ar}
+                        placeholder={selectedProduct?.title.ar || t("titleArPlaceholder")}
                         className="h-11 rounded-xl"
                       />
                     </FormControl>
@@ -461,7 +466,7 @@ function ItemFormDialog({
                       <Input
                         {...field}
                         dir="ltr"
-                        placeholder={selectedProduct?.title.en}
+                        placeholder={selectedProduct?.title.en || t("titleEnPlaceholder")}
                         className="h-11 rounded-xl"
                       />
                     </FormControl>
@@ -471,7 +476,7 @@ function ItemFormDialog({
               />
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid items-start gap-4 sm:grid-cols-2">
               <FormField
                 control={form.control}
                 name="descriptionAr"
@@ -483,7 +488,7 @@ function ItemFormDialog({
                         {...field}
                         dir="rtl"
                         rows={3}
-                        placeholder={selectedProduct?.defaultDescription.ar}
+                        placeholder={selectedProduct?.defaultDescription.ar || t("descriptionArPlaceholder")}
                         className="rounded-xl"
                       />
                     </FormControl>
@@ -502,7 +507,7 @@ function ItemFormDialog({
                         {...field}
                         dir="ltr"
                         rows={3}
-                        placeholder={selectedProduct?.defaultDescription.en}
+                        placeholder={selectedProduct?.defaultDescription.en || t("descriptionEnPlaceholder")}
                         className="rounded-xl"
                       />
                     </FormControl>
@@ -568,6 +573,7 @@ function ItemFormDialog({
                       <Input
                         type="number"
                         min={0}
+                        max={9999}
                         value={field.value}
                         onChange={(event) => field.onChange(event.target.valueAsNumber || 0)}
                         className="h-11 rounded-xl"

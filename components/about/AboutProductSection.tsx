@@ -3,12 +3,6 @@
 import { motion } from "motion/react";
 import type { LocalizedAboutContent } from "@/lib/cms/types";
 import { cn } from "@/lib/utils";
-import { useLocale } from "next-intl";
-import {
-  ABOUT_DESKTOP_LAYOUT,
-  getAboutProductContentLeft,
-  getAboutProductTop,
-} from "./aboutLayout";
 import { AboutProductContent } from "./AboutProductContent";
 import { AboutProductVisual } from "./AboutProductVisual";
 
@@ -23,19 +17,12 @@ type AboutProductSectionProps = {
 const IMAGE_FRAME_CLASS = "h-[640px] w-[520px]";
 
 export function AboutProductSection({ product, index, layout }: AboutProductSectionProps) {
-  const locale = useLocale();
-  const isRtl = locale === "ar";
-  const imageOnLeft = isRtl ? (product.imageSide === "right") : (product.imageSide === "left");
-
   if (layout === "desktop") {
-    const top = getAboutProductTop(index);
-    const { image, contentTop } = ABOUT_DESKTOP_LAYOUT;
-    const contentLeft = getAboutProductContentLeft(imageOnLeft);
-
     return (
       <motion.section
-        className="relative mx-auto w-[1440px]"
-        style={{ height: ABOUT_DESKTOP_LAYOUT.productSectionHeight }}
+        // Auto-height grid: the section grows with its content instead of a fixed
+        // height, so longer/added products can never overflow onto the next one.
+        className="mx-auto grid w-[1440px] grid-cols-2 items-center gap-6 px-16 py-16"
         initial={{ opacity: 0, y: 32 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
@@ -46,22 +33,10 @@ export function AboutProductSection({ product, index, layout }: AboutProductSect
           alt={product.imageAlt}
           priority={index === 0}
           animate={false}
-          className="absolute"
-          frameClassName={IMAGE_FRAME_CLASS}
-          style={
-            imageOnLeft
-              ? { left: image.left, top: image.topLeft, width: image.width }
-              : { left: image.right, top: image.topRight, width: image.width }
-          }
+          frameClassName={cn(IMAGE_FRAME_CLASS, "mx-auto")}
+          className={product.imageSide === "right" ? "order-2" : undefined}
         />
-        <div
-          className="absolute text-center"
-          style={{
-            top: contentTop,
-            left: contentLeft,
-            width: ABOUT_DESKTOP_LAYOUT.contentWidth,
-          }}
-        >
+        <div className={cn("mx-auto text-center", product.imageSide === "right" ? "order-1" : undefined)}>
           <AboutProductContent product={product} desktop />
         </div>
       </motion.section>
