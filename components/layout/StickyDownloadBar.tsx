@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { usePathname } from "@/i18n/navigation";
 import type { LocalizedHomeContent } from "@/lib/cms/types";
 
 type AppDownloadLink = LocalizedHomeContent["appDownloadLinks"][number];
@@ -74,6 +75,11 @@ export function StickyDownloadBar({
   const [dismissed, setDismissed] = useState(false);
   const [footerInView, setFooterInView] = useState(false);
   const ticking = useRef(false);
+  const pathname = usePathname();
+
+  // The projects index and project detail pages render their own store bar
+  // (ProjectsFloatingActions / ProjectFloatingActions), so the generic one would stack on top of it.
+  const suppressedByRoute = pathname === "/projects" || pathname.startsWith("/projects/");
 
   // Filter to only App Store + Google Play with valid hrefs
   const activeLinks = links.filter(
@@ -81,7 +87,7 @@ export function StickyDownloadBar({
   );
 
   useEffect(() => {
-    if (dismissed || activeLinks.length === 0) return;
+    if (dismissed || suppressedByRoute || activeLinks.length === 0) return;
 
     const onScroll = () => {
       if (ticking.current) return;
@@ -94,7 +100,7 @@ export function StickyDownloadBar({
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [dismissed, activeLinks.length, scrollThreshold]);
+  }, [dismissed, suppressedByRoute, activeLinks.length, scrollThreshold]);
 
   // Retract the bar once the footer scrolls into view so it never covers the footer content.
   useEffect(() => {
@@ -105,7 +111,7 @@ export function StickyDownloadBar({
     return () => observer.disconnect();
   }, []);
 
-  const showBar = visible && !dismissed && !footerInView;
+  const showBar = visible && !dismissed && !footerInView && !suppressedByRoute;
 
   // Publish the bar's height as a CSS variable; every floating element (WhatsApp button,
   // assistant button, assistant teaser) adds it to its own bottom offset so they all rise

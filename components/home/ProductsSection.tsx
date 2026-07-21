@@ -207,11 +207,11 @@ type ProductsSectionProps = {
   id?: string;
 };
 
-function ProductsCta({ cta, href }: { cta: string; href: string }) {
+function ProductsCta({ cta }: { cta: string }) {
   return (
     <Reveal variant="fade-up">
       <MotionLinkButton
-        href={href}
+        href="/projects"
         className="inline-flex h-[76px] min-w-[220px] items-center justify-center rounded-2xl border border-white/20 bg-brand px-10 text-[24px] font-medium text-white shadow-[0_16px_48px_rgba(0,0,0,0.28)]"
       >
         {cta}
@@ -261,7 +261,7 @@ export function ProductsSection({
   showCta = true,
   id,
 }: ProductsSectionProps) {
-  const { title, body, cta, ctaHref, items } = products;
+  const { title, body, cta, items } = products;
 
   return (
     <section id={id ?? sectionIds.products} className={cn("relative", className)}>
@@ -282,7 +282,7 @@ export function ProductsSection({
 
       {showCta ? (
         <div className="relative z-20 mt-10 flex justify-center">
-          <ProductsCta cta={cta} href={ctaHref} />
+          <ProductsCta cta={cta} />
         </div>
       ) : null}
     </section>
@@ -306,7 +306,7 @@ export function ProductsSectionDesktop({
         </div>
       </div>
       <div className="flex justify-center bg-page pt-16">
-        <ProductsCta cta={products.cta} href={products.ctaHref} />
+        <ProductsCta cta={products.cta} />
       </div>
     </section>
   );
@@ -325,7 +325,7 @@ export function ProductsSectionMobile({
         </div>
       </div>
       <div className="flex justify-center px-5 pt-5 pb-3 md:py-10">
-        <ProductsCta cta={products.cta} href={products.ctaHref} />
+        <ProductsCta cta={products.cta} />
       </div>
     </div>
   );
