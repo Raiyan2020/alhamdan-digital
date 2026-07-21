@@ -847,6 +847,6 @@
     "comparisonWithApp": "مع {app}",
     "faqTitle": "الأسئلة الشائعة",
     "whatsappLabel": "تواصل معنا عبر واتساب"
-    ,"quizTitle": "أي تطبيق يناسبك؟","quizBody": "جاوب سؤالين وسنوجهك للمشروع المناسب.","quizQuestionOne": "شنو الشي اللي تدور عليه؟","quizQuestionTwo": "ماذا تريد أن تفعل؟","quizGoals":{"discover":"استكشاف المزايا","download":"تحميل التطبيق","support":"التواصل مع الدعم"},"quizCta": "افتح المشروع","qrAlt": "رمز QR لتحميل التطبيق","qrBody": "امسح الرمز من هاتفك للتحميل","scanToDownload":"امسح لتحميل التطبيق","testimonialsTitle": "تجارب حقيقية","offerEnds":"ينتهي العرض"
+    ,"quizTitle": "أي تطبيق يناسبك؟","quizBody": "جاوب سؤالين وسنوجهك للمشروع المناسب.","quizQuestionOne": "شنو الشي اللي تدور عليه؟","quizQuestionTwo": "ماذا تريد أن تفعل؟","quizGoals":{"discover":"استكشاف المزايا","download":"تحميل التطبيق","support":"التواصل مع الدعم"},"quizCta": "افتح المشروع","qrAlt": "رمز QR لتحميل التطبيق","qrBody": "امسح الرمز من هاتفك للتحميل","scanToDownload":"امسح لتحميل التطبيق","scanToDownloadFrom":"امسح لتحميل من {store}","testimonialsTitle": "تجارب حقيقية","offerEnds":"ينتهي العرض"
   }
 }

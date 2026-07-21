@@ -69,7 +69,11 @@ export function FloatingAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reducedMotion ? undefined : { opacity: 0, y: 12, scale: 0.96 }}
             transition={transition}
-            className="fixed bottom-24 start-5 z-[60] w-[min(280px,calc(100vw-2rem))]"
+            // z-[59]: one below the trigger button, so the button stays clickable if they ever meet.
+            className="fixed start-5 z-[59] w-[min(280px,calc(100vw-2rem))] transition-[bottom] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            // Clears the h-14 button (20px offset + 56px tall) with room to spare, and rises
+            // with the sticky download bar so the two never collide.
+            style={{ bottom: "calc(6.5rem + var(--sticky-bar-lift, 0px))" }}
           >
             <div className="relative rounded-2xl rounded-es-sm border border-border/70 bg-page/95 p-3 pe-8 shadow-2xl backdrop-blur-xl">
               <button
@@ -101,11 +105,12 @@ export function FloatingAssistant() {
             type="button"
             aria-label={t("openLabel")}
             className={cn(
-              "group fixed bottom-5 start-5 z-[60] inline-flex h-14 w-14 items-center justify-center rounded-full",
+              "group fixed start-5 z-[60] inline-flex h-14 w-14 items-center justify-center rounded-full",
               "bg-gradient-to-br from-brand-deep to-dashboard-gulf text-brand-on shadow-xl",
-              "transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105",
+              "transition-[transform,bottom] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dashboard-gulf focus-visible:ring-offset-2 focus-visible:ring-offset-page",
             )}
+            style={{ bottom: "calc(1.25rem + var(--sticky-bar-lift, 0px))" }}
           >
             <AnimatePresence mode="wait" initial={false}>
               {open ? (

@@ -8,6 +8,7 @@ import { useReducedMotion } from "@/components/motion";
 import { useInViewOnce } from "@/components/motion/useInViewOnce";
 import type { LocalizedProjectPage } from "@/lib/cms/project-detail";
 import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 
 export function track(name: string, detail: Record<string, string> = {}) {
   const analyticsWindow = window as Window & { dataLayer?: Array<Record<string, unknown>>; gtag?: (...args: unknown[]) => void };
@@ -16,8 +17,18 @@ export function track(name: string, detail: Record<string, string> = {}) {
   window.dispatchEvent(new CustomEvent("alhamdan:analytics", { detail: { name, ...detail } }));
 }
 
+// Full literal class strings so Tailwind's scanner picks them up; keyed by stat count
+// so the row always fills the container instead of leaving empty grid tracks.
+const STATS_COLUMNS: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-1 sm:grid-cols-2",
+  3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+  4: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
+};
+
 export function AnimatedStats({ stats }: { stats: LocalizedProjectPage["stats"] }) {
-  return <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{stats.map((stat) => <AnimatedStat key={stat.id} {...stat} />)}</div>;
+  const columns = STATS_COLUMNS[Math.min(stats.length, 4)] ?? STATS_COLUMNS[4];
+  return <div className={cn("grid gap-4", columns)}>{stats.map((stat) => <AnimatedStat key={stat.id} {...stat} />)}</div>;
 }
 
 function AnimatedStat({ value, label, description }: { value: string; label: string; description?: string }) {

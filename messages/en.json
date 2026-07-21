@@ -847,6 +847,6 @@
     "comparisonWithApp": "With {app}",
     "faqTitle": "Frequently asked questions",
     "whatsappLabel": "Contact us on WhatsApp"
-    ,"quizTitle": "Which app is right for you?","quizBody": "Answer two quick questions and we will guide you.","quizQuestionOne": "What are you looking for?","quizQuestionTwo": "What would you like to do?","quizGoals":{"discover":"Explore features","download":"Download the app","support":"Contact support"},"quizCta": "Open project","qrAlt": "QR code to download the app","qrBody": "Scan with your phone to download","scanToDownload":"Scan to download the app","testimonialsTitle": "Real experiences","offerEnds":"Offer ends"
+    ,"quizTitle": "Which app is right for you?","quizBody": "Answer two quick questions and we will guide you.","quizQuestionOne": "What are you looking for?","quizQuestionTwo": "What would you like to do?","quizGoals":{"discover":"Explore features","download":"Download the app","support":"Contact support"},"quizCta": "Open project","qrAlt": "QR code to download the app","qrBody": "Scan with your phone to download","scanToDownload":"Scan to download the app","scanToDownloadFrom":"Scan to download from {store}","testimonialsTitle": "Real experiences","offerEnds":"Offer ends"
   }
 }

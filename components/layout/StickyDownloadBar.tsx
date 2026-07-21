@@ -72,6 +72,7 @@ export function StickyDownloadBar({
 }) {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const [footerInView, setFooterInView] = useState(false);
   const ticking = useRef(false);
 
   // Filter to only App Store + Google Play with valid hrefs
@@ -95,19 +96,31 @@ export function StickyDownloadBar({
     return () => window.removeEventListener("scroll", onScroll);
   }, [dismissed, activeLinks.length, scrollThreshold]);
 
-  // Push floating WhatsApp button up when bar is visible
+  // Retract the bar once the footer scrolls into view so it never covers the footer content.
   useEffect(() => {
-    const el = document.querySelector<HTMLAnchorElement>(".floating-whatsapp-btn");
-    if (!el) return;
-    el.style.bottom = visible && !dismissed ? "calc(72px + 20px)" : "";
-    return () => { el.style.bottom = ""; };
-  }, [visible, dismissed]);
+    const footer = document.querySelector("[data-site-footer]");
+    if (!footer) return;
+    const observer = new IntersectionObserver(([entry]) => setFooterInView(entry.isIntersecting));
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
+
+  const showBar = visible && !dismissed && !footerInView;
+
+  // Publish the bar's height as a CSS variable; every floating element (WhatsApp button,
+  // assistant button, assistant teaser) adds it to its own bottom offset so they all rise
+  // together and keep their relative spacing.
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty("--sticky-bar-lift", showBar ? "72px" : "0px");
+    return () => { root.style.removeProperty("--sticky-bar-lift"); };
+  }, [showBar]);
 
   if (activeLinks.length === 0) return null;
 
   return (
     <AnimatePresence>
-      {visible && !dismissed && (
+      {showBar && (
         <motion.div
           role="complementary"
           aria-label="تحميل التطبيق"

@@ -6,7 +6,12 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
-type StoreButton = { id: string; label: string; href: string; qrImage?: string };
+type StoreButton = { id: string; label: string; href: string; qrImage?: string; platform?: "app-store" | "google-play" | "other" };
+
+// Store names are brand names, so they stay untranslated in both locales.
+const PLATFORM_NAMES: Record<string, string> = { "app-store": "App Store", "google-play": "Google Play" };
+
+const storeName = (store: StoreButton) => store.label?.trim() || PLATFORM_NAMES[store.platform ?? "other"] || "";
 
 export function AppDownloadQr({
   buttons,
@@ -45,20 +50,25 @@ export function AppDownloadQr({
 
   if (!stores.length) return null;
 
-  if (variant === "compact") {
-    const store = stores[0];
-    const src = store.qrImage || generatedCodes[store.id];
-    if (!src) return null;
-    return <div className={cn("flex items-center justify-center rounded-xl bg-white p-1.5", className)} title={t("scanToDownload")}><Image unoptimized src={src} width={96} height={96} alt={`${t("qrAlt")} ${store.label}`} className="h-24 w-24 rounded-lg" /></div>;
-  }
-
   // Collapse store buttons that point to the same link so the same QR isn't shown twice.
   const uniqueStores = stores.filter(
     (store, index) => stores.findIndex((other) => other.href === store.href) === index,
   );
 
+  if (variant === "compact") {
+    const tiles = uniqueStores
+      .map((store) => ({ store, src: store.qrImage || generatedCodes[store.id] }))
+      .filter((tile) => Boolean(tile.src));
+    if (!tiles.length) return null;
+    return <div className={cn("flex flex-wrap items-start justify-center gap-3", className)}>{tiles.map(({ store, src }) => {
+      const name = storeName(store);
+      return <div key={store.id} className="flex flex-col items-center gap-1" title={name ? t("scanToDownloadFrom", { store: name }) : t("scanToDownload")}><div className="rounded-xl bg-white p-1.5"><Image unoptimized src={src} width={96} height={96} alt={`${t("qrAlt")} ${store.label}`} className="h-20 w-20 rounded-lg" /></div>{name ? <p className="text-[10px] font-bold leading-4 text-ink-heading" dir="ltr">{name}</p> : null}</div>;
+    })}</div>;
+  }
+
   return <div className={cn("flex flex-wrap gap-3", className)}>{uniqueStores.map((store) => {
     const src = store.qrImage || generatedCodes[store.id];
-    return <div key={store.id} className="flex flex-col items-center gap-2 rounded-2xl border border-border-soft bg-page p-3 text-center shadow-sm"><div className="grid h-24 w-24 place-items-center rounded-xl bg-white">{src ? <Image unoptimized src={src} width={88} height={88} alt={`${t("qrAlt")} ${store.label}`} className="h-20 w-20 rounded-lg" /> : null}</div><p className="max-w-28 text-xs font-semibold leading-5 text-ink-secondary">{t("scanToDownload")}</p></div>;
+    const name = storeName(store);
+    return <div key={store.id} className="flex flex-col items-center gap-2 rounded-2xl border border-border-soft bg-page p-3 text-center shadow-sm"><div className="grid h-24 w-24 place-items-center rounded-xl bg-white">{src ? <Image unoptimized src={src} width={88} height={88} alt={`${t("qrAlt")} ${store.label}`} className="h-20 w-20 rounded-lg" /> : null}</div><div className="max-w-28"><p className="text-xs font-semibold leading-5 text-ink-secondary">{t("scanToDownload")}</p>{name ? <p className="text-xs font-bold leading-5 text-ink-heading" dir="ltr">{name}</p> : null}</div></div>;
   })}</div>;
 }
