@@ -194,9 +194,6 @@ export function SiteFooter({ footerLinks, footer, className }: SiteFooterProps) 
   return (
     <footer
       id={sectionIds.contact}
-      // Hook for StickyDownloadBar — a plain "footer" selector would match the
-      // <footer> bylines inside testimonial cards, which precede this in the DOM.
-      data-site-footer=""
       dir={isRtl ? "rtl" : "ltr"}
       className={cn("w-full bg-brand text-white", className)}
     >
