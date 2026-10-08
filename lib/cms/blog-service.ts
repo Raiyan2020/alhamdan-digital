@@ -83,8 +83,8 @@ export async function getBlogIndexContent(): Promise<BlogIndexContent> {
 }
 
 async function getFallbackBlogRecords(): Promise<CmsBlogPostRecord[]> {
-  const locale = (await getLocale()) as CmsLocale;
-  const t = await getTranslations({ locale, namespace: "blog" });
+  // Samples carry both languages, so any locale works; avoids getLocale() at build time.
+  const t = await getTranslations({ locale: "ar", namespace: "blog" });
   const samples = t.raw("samples") as Array<{
     id: string;
     slug: string;

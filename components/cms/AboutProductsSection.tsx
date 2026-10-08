@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { isValidImageSrc } from "@/lib/media/image-url";
 import { ArrowDown, ArrowUp, Eye, EyeOff, Pencil, Plus, Trash2 } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -778,6 +778,14 @@ function StoreLinksEditor({ productIndex }: { productIndex: number }) {
   );
 }
 
+const subscribeNoop = () => () => {};
+
+function getTodayInputMin() {
+  const now = new Date();
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T00:00`;
+}
+
 function LaunchOfferDateFields({ index }: { index: number }) {
   const t = useTranslations("cms");
   const form = useFormContext<CmsAboutPayload>();
@@ -787,12 +795,7 @@ function LaunchOfferDateFields({ index }: { index: number }) {
   });
 
   // Computed on the client only to avoid an SSR/client hydration mismatch on "today".
-  const [minToday, setMinToday] = useState<string | undefined>(undefined);
-  useEffect(() => {
-    const now = new Date();
-    const pad = (n: number) => String(n).padStart(2, "0");
-    setMinToday(`${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T00:00`);
-  }, []);
+  const minToday = useSyncExternalStore(subscribeNoop, getTodayInputMin, () => undefined);
 
   const endMin = startValue?.trim() ? startValue : minToday;
 
